@@ -1,82 +1,166 @@
 /* News Page Specific Styles */
 
-/* News Hero Section */
-.news-hero {
-    background-color: var(--light-bg);
-    color: var(--text-color);
-    padding: calc(var(--spacing-unit) * 8) 0 calc(var(--spacing-unit) * 6);
-    text-align: center;
+/* News Section */
+.news-section {
+    background-color: #FAFAFA;
+    padding: 96px 0;
 }
 
-.news-hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: calc(var(--spacing-unit) * 1);
-    font-weight: 700;
-}
-
-.news-hero .tagline {
-    font-size: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    opacity: 0.9;
-}
-
-/* Section Styling */
-.section {
-    padding: calc(var(--spacing-unit) * 6) 0;
-}
-
-.section.bg-light {
-    background-color: var(--light-bg);
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: calc(var(--spacing-unit) * 4);
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-/* News Container Styling */
 .news-container {
-    max-width: 900px;
+    max-width: 920px;
     margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* News Header */
+.news-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.news-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.news-subtitle {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #757575;
+    margin: 0;
+}
+
+/* News Content Layout */
+.news-content-wrapper {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+}
+
+/* Filter Tabs */
+.news-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter-tab {
+    background: none;
+    border: 1px solid #E5E5E5;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #333;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.filter-tab:hover {
+    border-color: #000;
+}
+
+.filter-tab.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* News List */
+.news-list {
+    display: flex;
+    flex-direction: column;
 }
 
 .news-item {
-    background-color: var(--bg-color);
-    border-radius: 8px;
-    padding: calc(var(--spacing-unit) * 3);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: calc(var(--spacing-unit) * 3);
     display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: calc(var(--spacing-unit) * 2);
-}
-
-.news-item:last-child {
-    margin-bottom: 0;
+    grid-template-columns: 100px 120px 1fr;
+    align-items: center;
+    height: 56px;
+    border-bottom: 1px solid #F0F0F0;
 }
 
 .news-date {
-    font-weight: 600;
-    color: var(--primary-color);
-    font-size: 1rem;
+    font-size: 14px;
+    color: #757575;
 }
 
-.news-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: calc(var(--spacing-unit) * 1);
-    color: var(--primary-color);
-    font-weight: 600;
+.news-category {
+    background: none;
+    border: 1px solid #E5E5E5;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    text-align: center;
+    color: #333;
+    display: inline-block;
+    white-space: nowrap;
 }
 
-.news-content p {
-    margin-bottom: calc(var(--spacing-unit) * 1.5);
-    line-height: 1.8;
-    font-size: 1rem;
+.news-item-title {
+    font-size: 16px;
 }
+
+.news-item-title a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.news-item-title a:hover {
+    text-decoration: underline;
+}
+
+.news-item-title i {
+    font-size: 16px;
+    color: #757575;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .news-content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .news-filter {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .news-item {
+        grid-template-columns: 80px 100px 1fr;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .news-title {
+        font-size: 32px;
+    }
+    
+    .news-item {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+        padding: 16px 0;
+        gap: 8px;
+    }
+    
+    .news-date, .news-category {
+        margin-bottom: 0;
+    }
+}
+
+/* 古いスタイルを削除 */
 
 .news-link {
     display: inline-block;
@@ -89,7 +173,6 @@
 
 .news-link::after {
     content: '→';
-    margin-left: 5px;
     transition: transform 0.3s ease;
     display: inline-block;
 }

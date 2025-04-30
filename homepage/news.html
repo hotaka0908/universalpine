@@ -10,12 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="news-page.css">
+    <script src="news-filter.js" defer></script>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                <div class="logo-placeholder"></div>
+                <a href="index.html" class="logo-link">
+                    <div class="logo-image"></div>
+                    <span class="logo-text">Universal Pine</span>
+                </a>
             </div>
             <nav>
                 <ul>
@@ -53,49 +57,82 @@
         </div>
     </header>
 
-    <!-- News Hero Section -->
-    <section class="news-hero">
-        <div class="container">
-            <h1>ニュース</h1>
-            <p class="tagline">ユニバーサルパインからの最新情報</p>
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="news-container">
+            <div class="news-header">
+                <h2 class="news-title">ニュース</h2>
+                <p class="news-subtitle">NEWS</p>
+            </div>
+            
+            <div class="news-content-wrapper">
+                <div class="news-filter">
+                    <button class="filter-tab active" data-filter="all">すべて</button>
+                    <button class="filter-tab" data-filter="press">プレスリリース</button>
+                    <button class="filter-tab" data-filter="announcement">お知らせ</button>
+                    <button class="filter-tab" data-filter="other">その他</button>
+                </div>
+                
+                <div class="news-list">
+                    <div class="news-item" data-category="press">
+                        <div class="news-date">2025.4.26</div>
+                        <div class="news-category">プレスリリース</div>
+                        <div class="news-item-title">
+                            <a href="#">AIネックレス発売予定のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.4.15</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="#">新しいウェブサイト公開のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="press">
+                        <div class="news-date">2025.3.20</div>
+                        <div class="news-category">プレスリリース</div>
+                        <div class="news-item-title">
+                            <a href="#">AI技術に関する特許取得のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="other">
+                        <div class="news-date">2025.3.10</div>
+                        <div class="news-category">その他</div>
+                        <div class="news-item-title">
+                            <a href="#">業界イベント出展のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.2.26</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="#">新オフィス移転のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="press">
+                        <div class="news-date">2025.2.10</div>
+                        <div class="news-category">プレスリリース</div>
+                        <div class="news-item-title">
+                            <a href="#">資金調達完了のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.2.1</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="#">会社設立のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-    <!-- Announcements Section -->
-    <section id="announcements" class="section">
-        <div class="container">
-            <h2 class="section-title">お知らせ</h2>
-            <div class="news-container">
-                <div class="news-item">
-                    <div class="news-date">2025年4月25日</div>
-                    <div class="news-content">
-                        <h3>新しいウェブサイトを公開しました</h3>
-                        <p>ユニバーサルパインの新しいウェブサイトを公開しました。新しいデザインと使いやすいインターフェースで、当社の製品やサービスについてより詳しくご紹介しています。</p>
-                        <a href="#" class="news-link">詳細を見る</a>
-                    </div>
-                </div>
-
-                <div class="news-item">
-                    <div class="news-date">2025年4月15日</div>
-                    <div class="news-content">
-                        <h3>AIネックレスの新しいモデルを発表しました</h3>
-                        <p>ユニバーサルパインは、AIネックレスの新しいモデルを発表しました。新しいモデルは、より高性能なAIチップを搭載し、より多くの機能を提供します。</p>
-                        <a href="#" class="news-link">詳細を見る</a>
-                    </div>
-                </div>
-
-                <div class="news-item">
-                    <div class="news-date">2025年4月10日</div>
-                    <div class="news-content">
-                        <h3>新しいAIウェアラブルデバイスを発表しました</h3>
-                        <p>ユニバーサルパインは、新しいAIウェアラブルデバイスを発表しました。新しいデバイスは、より小型化されたデザインとより多くの機能を提供します。</p>
-                        <a href="#" class="news-link">詳細を見る</a>
-                    </div>
-                </div>
-
-                <div class="news-item">
-                    <div class="news-date">2025年4月5日</div>
-                    <div class="news-content">
                         <h3>カスタマーサポートセンターを設立しました</h3>
                         <p>ユニバーサルパインは、カスタマーサポートセンターを設立しました。新しいセンターは、より迅速なサポートを提供し、より多くの機能を提供します。</p>
                         <a href="#" class="news-link">詳細を見る</a>
