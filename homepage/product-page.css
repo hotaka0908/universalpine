@@ -1,0 +1,204 @@
+/* Product Page Specific Styles */
+
+/* Product Hero Section */
+.product-hero {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    padding: calc(var(--spacing-unit) * 8) 0 calc(var(--spacing-unit) * 6);
+    text-align: center;
+}
+
+.product-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    font-weight: 700;
+}
+
+.product-hero .tagline {
+    font-size: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* Product Overview Section */
+.product-overview {
+    padding: calc(var(--spacing-unit) * 6) 0;
+    background-color: var(--bg-color);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing-unit) * 4);
+    align-items: center;
+}
+
+.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ai-necklace-css.large {
+    width: 240px;
+    height: 320px;
+}
+
+.product-details h2 {
+    font-size: 2.2rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    text-align: left;
+}
+
+.product-details p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.product-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.feature {
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 2);
+    border-radius: 8px;
+    background-color: var(--light-bg);
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.feature i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.feature h3 {
+    font-size: 1.2rem;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    color: var(--accent-color);
+}
+
+.feature p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+/* Product Specs Section */
+.product-specs {
+    padding: calc(var(--spacing-unit) * 6) 0;
+    background-color: var(--light-bg);
+}
+
+.product-specs h2 {
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.spec {
+    background-color: var(--bg-color);
+    padding: calc(var(--spacing-unit) * 2);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.spec h3 {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.spec p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Product CTA Section */
+.product-cta {
+    padding: calc(var(--spacing-unit) * 6) 0;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.product-cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.product-cta p {
+    font-size: 1.2rem;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    color: #555;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-features {
+        grid-template-columns: 1fr;
+    }
+
+    .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .product-hero .tagline {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-hero h1 {
+        font-size: 2rem;
+    }
+
+    .product-hero .tagline {
+        font-size: 1rem;
+    }
+}
