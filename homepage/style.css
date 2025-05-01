@@ -459,6 +459,13 @@ nav a:hover {
     text-align: left;
 }
 
+.button-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: calc(var(--spacing-unit) * 2);
+}
+
 .more-button {
     display: inline-block;
     width: 160px;
@@ -472,7 +479,6 @@ nav a:hover {
     font-size: 1rem;
     font-weight: 700;
     transition: all 0.3s ease;
-    margin-top: calc(var(--spacing-unit) * 2);
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
 }
