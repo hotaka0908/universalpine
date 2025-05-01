@@ -42,8 +42,25 @@
     z-index: 2;
 }
 
-.product-hero h1 {
-    font-size: 3.5rem;
+.product-hero .section-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.product-hero .hero-title {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.product-hero h2 {
+    font-size: 2.5rem;
     margin-bottom: calc(var(--spacing-unit) * 1);
     font-weight: 700;
 }
@@ -269,7 +286,7 @@
 
 .timeline-item {
     position: relative;
-    margin-bottom: calc(var(--spacing-unit) * 4);
+    margin-bottom: calc(var(--spacing-unit) * 3);
     padding-left: 160px;
 }
 
@@ -318,7 +335,7 @@
 .prototype-image {
     display: flex;
     justify-content: center;
-    margin-top: calc(var(--spacing-unit) * 2);
+    margin-top: calc(var(--spacing-unit) * 1);
 }
 
 .progress-bar {
