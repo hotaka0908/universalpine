@@ -306,23 +306,30 @@ nav a:hover {
 /* Button Styles */
 .btn {
     display: inline-block;
-    padding: 12px 24px;
-    border-radius: 4px;
-    font-weight: 500;
+    width: 160px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0;
+    border-radius: 22px;
+    font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
+    text-align: center;
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
+    background-color: #006CFF;
     color: white;
-    border: 2px solid var(--primary-color);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
 }
 
 .btn-primary:hover {
-    background-color: transparent;
-    color: var(--primary-color);
+    background-color: #005BDB;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
 }
 
 
@@ -454,21 +461,26 @@ nav a:hover {
 
 .more-button {
     display: inline-block;
-    background-color: var(--primary-color);
+    width: 160px;
+    height: 44px;
+    line-height: 44px;
+    background-color: #006CFF;
     color: white;
     text-decoration: none;
-    padding: 0.8rem 2.5rem;
-    border-radius: 50px;
+    padding: 0;
+    border-radius: 22px;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 700;
     transition: all 0.3s ease;
     margin-top: calc(var(--spacing-unit) * 2);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
 }
 
 .more-button:hover {
-    background-color: var(--accent-color);
+    background-color: #005BDB;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
 }
 
 /* Company Overview Section */
