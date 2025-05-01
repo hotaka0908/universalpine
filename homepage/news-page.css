@@ -103,15 +103,22 @@
 
 .news-item-title {
     font-size: 16px;
+    text-align: center;
+    padding: 0 20px;
 }
 
 .news-item-title a {
     color: #333;
     text-decoration: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     transition: all 0.2s ease;
+    position: relative;
+    padding-right: 24px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .news-item-title a:hover {
@@ -121,6 +128,10 @@
 .news-item-title i {
     font-size: 16px;
     color: #757575;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Responsive Styles */

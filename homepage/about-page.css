@@ -137,6 +137,16 @@
     border-radius: 50%;
 }
 
+.message-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: calc(var(--spacing-unit) * 0.8);
+    display: inline-block;
+}
+
 .message-text p {
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     line-height: 1.8;
@@ -158,6 +168,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: calc(var(--spacing-unit) * 3);
+}
+
+.founders-grid-single {
+    display: flex;
+    justify-content: center;
 }
 
 .founder-card {
