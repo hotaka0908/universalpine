@@ -235,7 +235,16 @@ nav a:hover {
 
 /* Philosophy Section */
 #philosophy {
-    background-color: var(--light-bg);
+    background-color: #FFF;
+    padding: 140px 0;
+}
+
+.philosophy-heading {
+    font-size: 56px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-color);
+    line-height: 1.2;
 }
 
 #philosophy p {
@@ -248,113 +257,109 @@ nav a:hover {
 /* Products Section */
 #products {
     background-color: var(--light-bg);
+    padding: calc(var(--spacing-unit) * 8) 0;
 }
 
-.product-container {
-    display: flex;
-    justify-content: center;
-    margin-top: calc(var(--spacing-unit) * 2);
+.product-heading {
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.product-card {
-    background-color: var(--bg-color);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    position: relative;
-    padding: calc(var(--spacing-unit) * 2);
-    width: 100%;
-}
-
-.product-card.single-product {
-    max-width: 600px;
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
     margin: 0 auto;
+    max-width: 1200px;
 }
 
-.product-card.featured {
+.product-item {
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.product-caption {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
+    color: var(--text-color);
+}
+
+.product-cta {
+    text-align: center;
+    margin-top: 48px;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
     border: 2px solid var(--primary-color);
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--primary-color);
 }
 
-.product-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
+
+
+
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .product-heading {
+        font-size: 36px;
+    }
 }
 
-.product-image-container {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: calc(var(--spacing-unit) * 1.5);
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .product-heading {
+        font-size: 28px;
+    }
 }
 
-.product-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: calc(var(--spacing-unit) * 1);
-    color: var(--accent-color);
-}
-
-.product-card p {
-    color: #333;
-}
-
-/* AI Necklace CSS */
-.ai-necklace-css {
-    width: 160px;
-    height: 220px;
-    background: linear-gradient(135deg, #4a90e2, #1e5799);
-    border-radius: 80px;
-    position: relative;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
-                inset 0 5px 10px rgba(255, 255, 255, 0.3),
-                inset 0 -5px 10px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: all 0.3s ease;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
-
-.ai-necklace-css:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3),
-                inset 0 5px 10px rgba(255, 255, 255, 0.3),
-                inset 0 -5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.camera-lens {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, #000 60%, #333 100%);
-    border-radius: 50%;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.inner-lens {
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, #4a90e2 30%, #1e5799 100%);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+/* Section Label */
+.section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #666;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 /* Careers Section */
