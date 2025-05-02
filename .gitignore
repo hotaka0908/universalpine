@@ -1,0 +1,5 @@
+# Mac OS metadata
+.DS_Store
+
+# Environment variables
+*.env
