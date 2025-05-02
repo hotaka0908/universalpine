@@ -158,7 +158,8 @@ nav a:hover {
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(135deg, #f9d7b9 0%, #e6b89c 25%, #a4c4e0 75%, #c9e0f5 100%);
+    background: #FFCCA8;
+    background: linear-gradient(135deg, rgba(255,204,168,1) 2%, #FFCCA8 100%);
     height: 80vh;
     display: flex;
     align-items: center;
