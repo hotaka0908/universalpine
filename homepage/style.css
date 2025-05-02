@@ -202,35 +202,72 @@ nav a:hover {
 /* News Section */
 #news {
     background-color: var(--bg-color);
-    padding: calc(var(--spacing-unit) * 2) 0;
+    padding: calc(var(--spacing-unit) * 4) 0;
 }
 
-.minimal-news {
+.news-list {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--spacing-unit) * 1);
-    margin-top: calc(var(--spacing-unit) * 1);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: calc(var(--spacing-unit) * 2);
+    width: 100%;
 }
 
 .news-entry {
-    display: flex;
+    border-bottom: 1px solid #E5E5E5;
+    transition: background-color 0.2s ease;
+}
+
+.news-entry:hover {
+    background-color: #FAFAFA;
+}
+
+.news-link {
+    display: grid;
+    grid-template-columns: 120px 80px 1fr 24px;
     align-items: center;
-    padding: calc(var(--spacing-unit) * 0.8) 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 16px 0;
+    width: 100%;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .news-date {
     color: #666;
     font-size: 0.9rem;
-    min-width: 80px;
+    grid-column: 1;
+}
+
+.news-category {
+    grid-column: 2;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    display: inline-block;
+    width: 80px;
+}
+
+.news-category.press {
+    background-color: #4CAF50;
+}
+
+.news-category.info {
+    background-color: #2196F3;
 }
 
 .news-title {
     font-size: 1rem;
     color: #333;
+    grid-column: 3;
+    padding-left: 16px;
+}
+
+.news-arrow {
+    grid-column: 4;
+    text-align: right;
+    color: #999;
+    font-size: 0.8rem;
 }
 
 /* Philosophy Section */
