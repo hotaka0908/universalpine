@@ -2,7 +2,7 @@
 
 /* Hero Banner Section */
 .hero-banner {
-    background-color: #EEF6F1;
+    background-color: #F3F5F6;
     color: var(--text-color);
     padding: 0;
     text-align: center;
@@ -150,12 +150,12 @@
     border-radius: 4px;
     font-family: 'Noto Sans JP', 'Inter', sans-serif;
     font-size: 1rem;
-    background-color: #F0F9F4;
+    background-color: #F3F5F6;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: #8E9892;
+    color: #9EA3A8;
 }
 
 .form-group textarea {
