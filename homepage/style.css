@@ -223,7 +223,7 @@ nav a:hover {
 
 .news-link {
     display: grid;
-    grid-template-columns: 120px 80px 1fr 24px;
+    grid-template-columns: 120px 120px 1fr 24px;
     align-items: center;
     padding: 16px 0;
     width: 100%;
@@ -245,7 +245,7 @@ nav a:hover {
     text-align: center;
     color: white;
     display: inline-block;
-    width: 80px;
+    width: 120px;
 }
 
 .news-category.press {
