@@ -2,7 +2,8 @@
 
 /* Product Hero Section */
 .product-hero {
-    background: linear-gradient(135deg, #FF8A00 0%, #40C4FF 100%);
+    background: #FFCCA8;
+    background: linear-gradient(135deg, rgba(255, 204, 168, 1) 2%, rgba(255, 255, 230, 1) 21%, rgba(255, 255, 255, 1) 32%, rgba(204, 237, 250, 1) 70%, rgba(136, 204, 255, 1) 100%);
     color: var(--text-color);
     padding: 160px 0;
     text-align: center;
