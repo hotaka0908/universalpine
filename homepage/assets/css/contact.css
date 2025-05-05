@@ -1,0 +1,123 @@
+/* Confirmation Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.modal-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    color: #006CFF;
+    margin: 0;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.confirmation-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.confirmation-item:last-child {
+    border-bottom: none;
+}
+
+.confirmation-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.confirmation-value {
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.back-button, .submit-final-button {
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.back-button:hover {
+    background-color: #eee;
+}
+
+.submit-final-button {
+    background-color: #006CFF;
+    color: white;
+    border: none;
+}
+
+.submit-final-button:hover {
+    background-color: #005BDB;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 108, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .back-button, .submit-final-button {
+        width: 100%;
+        text-align: center;
+    }
+}
