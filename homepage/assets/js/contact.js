@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Contact form script loaded');
+    
+    // Get form elements
     const contactForm = document.getElementById('contactForm');
     const confirmationModal = document.getElementById('confirmationModal');
-    const confirmationContent = document.getElementById('confirmationContent');
     const closeModalBtn = document.getElementById('closeModal');
     const submitFormBtn = document.getElementById('submitForm');
     const formFields = {
