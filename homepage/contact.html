@@ -116,7 +116,7 @@
         <div class="container">
             <div class="form-container-full">
                 <h2>お問い合わせフォーム</h2>
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" action="#">
                     <div class="form-group">
                         <label for="name">お名前 <span class="required">*</span></label>
                         <input type="text" id="name" name="name" placeholder="例）山田 太郎" required>
@@ -150,7 +150,7 @@
                         <div id="privacy-error" class="error-message"></div>
                     </div>
                     <div class="form-submit">
-                        <button type="submit" class="submit-button">入力内容の確認</button>
+                        <button type="button" class="submit-button">入力内容の確認</button>
                     </div>
                 </form>
                 
@@ -163,19 +163,19 @@
                         </div>
                         <div class="confirmation-item">
                             <span class="confirmation-label">お名前</span>
-                            <div id="confirm-name" class="confirmation-value"></div>
+                            <span id="confirm-name" class="confirmation-value"></span>
                         </div>
                         <div class="confirmation-item">
                             <span class="confirmation-label">メールアドレス</span>
-                            <div id="confirm-email" class="confirmation-value"></div>
+                            <span id="confirm-email" class="confirmation-value"></span>
                         </div>
                         <div class="confirmation-item">
                             <span class="confirmation-label">お問い合わせカテゴリ</span>
-                            <div id="confirm-category" class="confirmation-value"></div>
+                            <span id="confirm-category" class="confirmation-value"></span>
                         </div>
                         <div class="confirmation-item">
                             <span class="confirmation-label">お問い合わせ内容</span>
-                            <div id="confirm-message" class="confirmation-value"></div>
+                            <span id="confirm-message" class="confirmation-value"></span>
                         </div>
                         <div class="modal-buttons">
                             <button id="backButton" class="back-button">戻る</button>
@@ -213,8 +213,8 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="assets/js/contact.js"></script>
     <script src="responsive.js"></script>
+    <script src="assets/js/contact.js" defer></script>
 </body>
 </html>
 
