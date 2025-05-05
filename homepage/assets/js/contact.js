@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmationModal = document.getElementById('confirmationModal');
     const closeModalBtn = document.getElementById('closeModal');
     const submitFormBtn = document.getElementById('submitForm');
+    const confirmButton = document.querySelector('.submit-button');
     const formFields = {
         name: document.getElementById('name'),
         email: document.getElementById('email'),
@@ -94,6 +95,60 @@ document.addEventListener('DOMContentLoaded', function() {
             showConfirmation(formData);
         }
     });
+
+    // Handle confirmation button click
+    if (confirmButton) {
+        confirmButton.addEventListener('click', function() {
+            console.log('Confirmation button clicked');
+            
+            // Basic validation
+            let isValid = true;
+            
+            if (!formFields.name.value.trim()) {
+                document.getElementById('name-error').textContent = 'お名前を入力してください';
+                isValid = false;
+            } else {
+                document.getElementById('name-error').textContent = '';
+            }
+            
+            if (!formFields.email.value.trim()) {
+                document.getElementById('email-error').textContent = 'メールアドレスを入力してください';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formFields.email.value.trim())) {
+                document.getElementById('email-error').textContent = '有効なメールアドレスを入力してください';
+                isValid = false;
+            } else {
+                document.getElementById('email-error').textContent = '';
+            }
+            
+            if (formFields.category.value === '') {
+                document.getElementById('category-error').textContent = 'カテゴリを選択してください';
+                isValid = false;
+            } else {
+                document.getElementById('category-error').textContent = '';
+            }
+            
+            if (!formFields.message.value.trim()) {
+                document.getElementById('message-error').textContent = 'お問い合わせ内容を入力してください';
+                isValid = false;
+            } else {
+                document.getElementById('message-error').textContent = '';
+            }
+            
+            if (!formFields.privacy.checked) {
+                document.getElementById('privacy-error').textContent = 'プライバシーポリシーに同意してください';
+                isValid = false;
+            } else {
+                document.getElementById('privacy-error').textContent = '';
+            }
+            
+            if (isValid) {
+                console.log('Form is valid, showing confirmation');
+                const formData = new FormData(contactForm);
+                showConfirmation(formData);
+            }
+        });
+    }
 
     // Close modal when clicking the close button
     if (closeModalBtn) {
