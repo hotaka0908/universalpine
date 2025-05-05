@@ -535,16 +535,27 @@ nav a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.accordion-button {
+    min-width: 40px;
+    min-height: 40px;
+    position: relative;
+}
+
 .accordion-button:after {
-    content: '\002B';
-    color: white;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -25%) rotate(135deg);
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transition: transform 0.3s ease;
 }
 
 .accordion-button.active:after {
-    content: '\2212';
+    transform: translate(-50%, -75%) rotate(-45deg);
 }
 
 .accordion-content {
