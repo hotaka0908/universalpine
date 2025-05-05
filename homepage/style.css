@@ -279,11 +279,12 @@ nav a:hover {
 }
 
 .philosophy-heading {
-    font-size: 56px;
+    font-size: 48px;
     font-weight: 700;
     text-align: center;
     color: var(--primary-color);
     line-height: 1.2;
+    margin-bottom: 40px;
 }
 
 #philosophy p {
@@ -299,7 +300,7 @@ nav a:hover {
     padding: calc(var(--spacing-unit) * 8) 0;
 }
 
-.product-heading {
+.product-heading, .section-heading {
     font-size: 48px;
     font-weight: 700;
     text-align: center;
@@ -380,7 +381,7 @@ nav a:hover {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .product-heading {
+    .product-heading, .section-heading {
         font-size: 36px;
     }
     
@@ -411,8 +412,9 @@ nav a:hover {
         margin: 0 auto;
     }
     
-    .product-heading {
+    .product-heading, .section-heading {
         font-size: 28px;
+        margin-bottom: 25px;
     }
     
     .news-link {
