@@ -736,6 +736,11 @@ nav a:hover {
         margin-bottom: 25px;
     }
     
+    #careers .section-heading::after {
+        content: "\A";
+        white-space: pre;
+    }
+    
     .careers-simple, .contact-simple {
         padding: calc(var(--spacing-unit) * 4) 0;
     }
