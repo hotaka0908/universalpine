@@ -282,7 +282,8 @@
 
 /* Company Logo Styling */
 .company-logo-container {
-    margin-top: calc(var(--spacing-unit) * 4);
+    margin-top: calc(var(--spacing-unit) * 2);
+    margin-bottom: calc(var(--spacing-unit) * 3);
     text-align: center;
 }
 
@@ -300,6 +301,15 @@
     color: var(--primary-color);
     margin: 0;
     letter-spacing: 0.05em;
+}
+
+.company-logo h2::before {
+    content: "\u30E6\u30FC\u30B8\u30FC\u304C\u63D0\u4F9B\u3057\u305F\u30B5\u30F3\u30D7\u30EB\u30B3\u30FC\u30C9";
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-color);
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    display: block;
 }
 
 /* Responsive Styles */
