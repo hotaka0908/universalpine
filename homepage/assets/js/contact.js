@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(contactForm);
             
             // Send form data to server
-            fetch('https://formsubmit.co/ho@universalpine.com', {
+            fetch('https://formsubmit.co/01304b0c4bb0329755e77d5adc3d5138', {
                 method: 'POST',
                 body: formData
             })
