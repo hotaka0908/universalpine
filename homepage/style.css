@@ -230,6 +230,7 @@ nav a:hover {
     width: 100%;
     text-decoration: none;
     transition: all 0.2s ease;
+    gap: 10px;
 }
 
 .news-date {
@@ -382,6 +383,25 @@ nav a:hover {
     .product-heading {
         font-size: 36px;
     }
+    
+    .news-link {
+        grid-template-columns: 90px 100px 1fr 24px;
+        padding: 12px 0;
+    }
+    
+    .news-date {
+        font-size: 0.8rem;
+    }
+    
+    .news-category {
+        width: 90px;
+        font-size: 0.7rem;
+    }
+    
+    .news-title {
+        font-size: 0.9rem;
+        padding-left: 0;
+    }
 }
 
 @media (max-width: 480px) {
@@ -393,6 +413,46 @@ nav a:hover {
     
     .product-heading {
         font-size: 28px;
+    }
+    
+    .news-link {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 5px;
+        padding: 15px 0;
+    }
+    
+    .news-date {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: 0.8rem;
+    }
+    
+    .news-category {
+        grid-column: 1;
+        grid-row: 2;
+        width: auto;
+        max-width: 100px;
+        margin-top: 5px;
+    }
+    
+    .news-title {
+        grid-column: 1;
+        grid-row: 3;
+        padding-left: 0;
+        margin-top: 5px;
+        font-weight: 500;
+    }
+    
+    .news-arrow {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+    }
+    
+    .news-entry {
+        position: relative;
     }
 }
 
