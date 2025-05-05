@@ -82,11 +82,15 @@
     align-items: center;
     height: 56px;
     border-bottom: 1px solid #F0F0F0;
+    gap: 15px;
+    position: relative;
+    padding: 10px 0;
 }
 
 .news-date {
     font-size: 14px;
     color: #757575;
+    font-weight: 500;
 }
 
 .news-category {
@@ -103,8 +107,9 @@
 
 .news-item-title {
     font-size: 16px;
-    text-align: center;
-    padding: 0 20px;
+    text-align: left;
+    padding: 0 20px 0 0;
+    line-height: 1.4;
 }
 
 .news-item-title a {
@@ -207,11 +212,35 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 8px;
+    }
+    
+    .filter-tab {
+        padding: 6px 12px;
+        font-size: 13px;
     }
     
     .news-item {
         grid-template-columns: 80px 100px 1fr;
         font-size: 14px;
+        height: auto;
+        min-height: 50px;
+    }
+    
+    .news-date {
+        font-size: 13px;
+    }
+    
+    .news-category {
+        font-size: 11px;
+        padding: 3px 8px;
+        width: auto;
+        min-width: 80px;
+    }
+    
+    .news-item-title {
+        font-size: 14px;
+        padding-right: 15px;
     }
 }
 
@@ -228,8 +257,29 @@
         gap: 8px;
     }
     
-    .news-date, .news-category {
+    .news-date {
         margin-bottom: 0;
+        grid-row: 1;
+    }
+    
+    .news-category {
+        margin-bottom: 0;
+        grid-row: 2;
+        justify-self: start;
+    }
+    
+    .news-item-title {
+        grid-row: 3;
+        padding: 5px 25px 0 0;
+    }
+    
+    .news-item-title a {
+        justify-content: flex-start;
+        text-align: left;
+    }
+    
+    .news-item-title i {
+        right: 0;
     }
 }
 
