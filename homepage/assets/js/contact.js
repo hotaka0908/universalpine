@@ -96,38 +96,48 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Close modal when clicking the close button
-    closeModalBtn.addEventListener('click', closeModal);
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
     
     // Close modal when clicking the back button
-    document.getElementById('backButton').addEventListener('click', closeModal);
+    const backButton = document.getElementById('backButton');
+    if (backButton) {
+        backButton.addEventListener('click', closeModal);
+    }
 
     // Close modal when clicking outside the content
-    confirmationModal.addEventListener('click', function(e) {
-        if (e.target === confirmationModal) {
-            closeModal();
-        }
-    });
+    if (confirmationModal) {
+        confirmationModal.addEventListener('click', function(e) {
+            if (e.target === confirmationModal) {
+                closeModal();
+            }
+        });
+    }
 
     // Handle final form submission
-    submitFormBtn.addEventListener('click', function() {
-        const formData = new FormData(contactForm);
-        
-        // Send form data to server
-        fetch('https://formsubmit.co/ho@universalpine.com', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redirect to thanks page
-                window.location.href = 'thanks.html';
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('送信中にエラーが発生しました。後でもう一度お試しください。');
+    if (submitFormBtn) {
+        submitFormBtn.addEventListener('click', function() {
+            console.log('Final form submission clicked');
+            const formData = new FormData(contactForm);
+            
+            // Send form data to server
+            fetch('https://formsubmit.co/ho@universalpine.com', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to thanks page
+                    window.location.href = 'thanks.html';
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('送信中にエラーが発生しました。後でもう一度お試しください。');
+            });
         });
-    });
+    }
 });
