@@ -372,111 +372,28 @@ nav a:hover {
     box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
 }
 
-
-
-
-
-@media (max-width: 768px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .product-heading, .section-heading {
-        font-size: 36px;
-    }
-    
-    .news-link {
-        grid-template-columns: 90px 100px 1fr 24px;
-        padding: 12px 0;
-    }
-    
-    .news-date {
-        font-size: 0.8rem;
-    }
-    
-    .news-category {
-        width: 90px;
-        font-size: 0.7rem;
-    }
-    
-    .news-title {
-        font-size: 0.9rem;
-        padding-left: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .product-grid {
-        grid-template-columns: 1fr;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-    
-    .product-heading, .section-heading {
-        font-size: 28px;
-        margin-bottom: 25px;
-    }
-    
-    .news-link {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 5px;
-        padding: 15px 0;
-    }
-    
-    .news-date {
-        grid-column: 1;
-        grid-row: 1;
-        font-size: 0.8rem;
-    }
-    
-    .news-category {
-        grid-column: 1;
-        grid-row: 2;
-        width: auto;
-        max-width: 100px;
-        margin-top: 5px;
-    }
-    
-    .news-title {
-        grid-column: 1;
-        grid-row: 3;
-        padding-left: 0;
-        margin-top: 5px;
-        font-weight: 500;
-    }
-    
-    .news-arrow {
-        position: absolute;
-        top: 50%;
-        right: 5px;
-        transform: translateY(-50%);
-    }
-    
-    .news-entry {
-        position: relative;
-    }
-}
-
-/* Section Label */
-.section-label {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #666;
-    text-align: center;
-    margin-bottom: 8px;
-}
-
 /* Careers Section */
 .careers-simple {
     background-image: url('images/recruit.image.png');
     background-size: cover;
     background-position: center;
     position: relative;
-    padding: calc(var(--spacing-unit) * 6) 0;
+    padding: calc(var(--spacing-unit) * 4) 0;
     color: white;
+}
+
+.careers-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.careers-simple h3 {
+    font-size: 1rem;
+    margin-top: 8px;
+    margin-bottom: 16px;
 }
 
 /* Contact Simple Section */
@@ -779,28 +696,106 @@ nav a:hover {
 }
 
 @media (max-width: 768px) {
-    .company-info-container {
-        grid-template-columns: 1fr;
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .message-content {
-        grid-template-columns: 1fr;
+    .product-heading, .section-heading {
+        font-size: 36px;
     }
     
-    .ceo-image-placeholder {
-        margin: 0 auto calc(var(--spacing-unit) * 2);
+    .news-link {
+        grid-template-columns: 90px 100px 1fr 24px;
+        padding: 12px 0;
     }
     
-    .founders-grid {
-        grid-template-columns: 1fr;
-        gap: calc(var(--spacing-unit) * 4);
+    .news-date {
+        font-size: 0.8rem;
+    }
+    
+    .news-category {
+        width: 90px;
+        font-size: 0.7rem;
+    }
+    
+    .news-title {
+        font-size: 0.9rem;
+        padding-left: 0;
     }
 }
 
-.company-info th {
-    width: 30%;
-    color: var(--primary-color);
-    font-weight: 600;
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .product-heading, .section-heading {
+        font-size: 32px;
+        margin-bottom: 25px;
+    }
+    
+    .careers-simple, .contact-simple {
+        padding: calc(var(--spacing-unit) * 4) 0;
+    }
+    
+    .careers-content h3 {
+        font-size: 1rem;
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+    
+    .news-link {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 5px;
+        padding: 15px 0;
+    }
+    
+    .news-date {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: 0.8rem;
+    }
+    
+    .news-category {
+        grid-column: 1;
+        grid-row: 2;
+        width: auto;
+        max-width: 100px;
+        margin-top: 5px;
+    }
+    
+    .news-title {
+        grid-column: 1;
+        grid-row: 3;
+        padding-left: 0;
+        margin-top: 5px;
+        font-weight: 500;
+    }
+    
+    .news-arrow {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+    }
+    
+    .news-entry {
+        position: relative;
+    }
+}
+
+/* Section Label */
+.section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #666;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 /* Contact Section */
@@ -987,4 +982,10 @@ footer {
         padding-bottom: 0;
         border-bottom: none;
     }
+}
+
+.company-info th {
+    width: 30%;
+    color: var(--primary-color);
+    font-weight: 600;
 }
