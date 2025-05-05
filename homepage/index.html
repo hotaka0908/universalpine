@@ -147,8 +147,23 @@
         <div class="container">
             <p class="philosophy-label" style="text-align: center;">MISSION</p>
             <h2 class="section-heading">人々の生活をより良くする</h2>
-            <div class="product-cta">
-                <a href="about.html" class="btn btn-primary">more</a>
+            <div class="accordion-container">
+                <button class="accordion-button">詳しく見る</button>
+                <div class="accordion-content">
+                    <p>どうすれば人々の生活をもっと良くできるか？</p>
+                    <p>これを考えれば良い。</p>
+                    <p>思いついたらそれをやろう。それを作ろう。</p>
+                    <p>それを届ければ人々の生活はより良くなる。</p>
+                    <p>ただそれだけ。</p>
+                    <p>それだけを考えれば、良いものは自然と生まれる。</p>
+                    <p>逆に人々の生活を良くすることを考えなければ</p>
+                    <p>一瞬でも後回しにするならば</p>
+                    <p>良いものは何も生まれない。</p>
+                    <p>我々はどうすれば人々の生活をもっと良くできるか？</p>
+                    <p>この一点だけを考え</p>
+                    <p>お客様のために</p>
+                    <p>最高の製品を作り届けます。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -233,5 +248,23 @@
 
     <script src="script.js"></script>
     <script src="responsive.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
