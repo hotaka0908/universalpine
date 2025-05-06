@@ -995,17 +995,17 @@ footer {
 }
 
 /* Mission Text Styling */
-.mission-first, .mission-second {
+.mission-first, .mission-second, .team-first, .team-second {
     display: inline;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .mission-first, .mission-second {
+    .mission-first, .mission-second, .team-first, .team-second {
         display: block;
     }
     
-    .mission-first {
+    .mission-first, .team-first {
         margin-bottom: 0.5rem;
     }
     header .container {
