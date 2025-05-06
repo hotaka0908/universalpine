@@ -994,8 +994,20 @@ footer {
     padding-top: calc(var(--spacing-unit) * 2);
 }
 
+/* Mission Text Styling */
+.mission-first, .mission-second {
+    display: inline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .mission-first, .mission-second {
+        display: block;
+    }
+    
+    .mission-first {
+        margin-bottom: 0.5rem;
+    }
     header .container {
         flex-direction: column;
         padding: calc(var(--spacing-unit) * 1);
