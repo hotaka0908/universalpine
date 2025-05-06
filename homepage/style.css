@@ -1000,7 +1000,8 @@ footer {
 
 /* Mission Text Styling */
 .mission-first, .mission-second, .team-first, .team-second {
-    display: inline;
+    display: block;
+    text-align: center;
 }
 
 /* Responsive Design */
@@ -1078,4 +1079,10 @@ footer {
     width: 30%;
     color: var(--primary-color);
     font-weight: 600;
+}
+
+/* Ensure team heading spans are centered */
+.team-first, .team-second {
+    text-align: center;
+    display: block;
 }
