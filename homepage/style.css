@@ -800,6 +800,10 @@ nav a:hover {
         margin-bottom: 25px;
     }
     
+    #careers .section-heading {
+        font-size: 20px;
+    }
+    
     #careers .section-heading::after {
         content: "\A";
         white-space: pre;
