@@ -796,9 +796,8 @@ nav a:hover {
     }
     
     .product-heading, .section-heading {
-        font-size: 28px;
+        font-size: 24px;
         margin-bottom: 25px;
-        line-height: 1.3;
     }
     
     #careers .section-heading::after {
@@ -1004,10 +1003,15 @@ footer {
 @media (max-width: 768px) {
     .mission-first, .mission-second, .team-first, .team-second {
         display: block;
+        text-align: center;
     }
     
     .mission-first, .team-first {
         margin-bottom: 0.5rem;
+    }
+    
+    .section-heading {
+        text-align: center;
     }
     header .container {
         flex-direction: column;
