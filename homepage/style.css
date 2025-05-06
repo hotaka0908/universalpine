@@ -796,12 +796,12 @@ nav a:hover {
     }
     
     .product-heading, .section-heading {
-        font-size: 24px;
+        font-size: 26px;
         margin-bottom: 25px;
     }
     
     #careers .section-heading {
-        font-size: 20px;
+        font-size: 24px;
     }
     
     #careers .section-heading::after {
