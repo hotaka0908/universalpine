@@ -997,12 +997,7 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: calc(var(--spacing-unit) * 2);
 }
-
-/* Mission Text Styling */
-.mission-first, .mission-second, .team-first, .team-second {
-    display: block;
-    text-align: center;
-}
+/* Mission Text Styling */n.mission-first, .mission-second, .team-first, .team-second {n    display: inline;n    text-align: center;n}}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1085,4 +1080,9 @@ footer {
 .team-first, .team-second {
     text-align: center;
     display: block;
+}
+/* Mission Text Styling */
+.mission-first, .mission-second, .team-first, .team-second {
+    display: inline;
+    text-align: center;
 }
