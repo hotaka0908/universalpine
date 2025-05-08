@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>応募フォーム - Universal Pine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <div class="logo-image"></div>
+                    <div class="logo-text">Universal Pine</div>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="#news">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="#announcements">お知らせ</a>
+                            <a href="#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#philosophy">理念</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#products">製品</a>
+                        <div class="dropdown-content">
+                            <a href="#ai-necklace">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="recruit.html">採用情報</a>
+                        <div class="dropdown-content">
+                            <a href="recruit.html#hardware-engineer">ハードウェアエンジニア</a>
+                            <a href="recruit.html#software-engineer">ソフトウェアエンジニア</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#company-information">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="#ceo-message">代表メッセージ</a>
+                            <a href="#philosophy">理念</a>
+                            <a href="#history">沿革</a>
+                            <a href="#company-overview">会社概要</a>
+                        </div>
+                    </li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="apply-section">
+        <div class="container">
+            <h2 class="section-title">応募フォーム</h2>
+            <p class="apply-lead">Universal Pineでは、AIの未来を共に創る仲間を募集しています。<br>以下のフォームに必要事項をご記入の上、ご応募ください。</p>
+            
+            <form id="apply-form" class="apply-form" action="thanks.html" method="post">
+                <div class="form-group">
+                    <label for="name">お名前 <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">メールアドレス <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="position">応募職種 <span class="required">*</span></label>
+                    <select id="position" name="position" required>
+                        <option value="">選択してください</option>
+                        <option value="electronics-engineer">エレクトロニクスエンジニア</option>
+                        <option value="ai-engineer">AIエンジニア</option>
+                        <option value="mechanical-engineer">メカニカルエンジニア</option>
+                        <option value="embedded-engineer">組み込みエンジニア</option>
+                        <option value="mobile-app-engineer">モバイルアプリエンジニア</option>
+                        <option value="open-entry">オープンエントリー</option>
+                        <option value="part-time">アルバイト</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resume">履歴書 <span class="required">*</span></label>
+                    <input type="file" id="resume" name="resume" required>
+                    <p class="form-note">PDFまたはWord形式でアップロードしてください。</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="portfolio">職務経歴書 <span class="required">*</span></label>
+                    <input type="file" id="portfolio" name="portfolio" required>
+                    <p class="form-note">PDFまたはWord形式でアップロードしてください。</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">自己PR</label>
+                    <textarea id="message" name="message" rows="5" placeholder="あなたの強みや、Universal Pineで実現したいことなどをご記入ください。"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">応募する</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Universal Pine</h2>
+                </div>
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="#news">ニュース</a></li>
+                        <li><a href="#philosophy">理念</a></li>
+                        <li><a href="#products">製品</a></li>
+                        <li><a href="recruit.html">採用情報</a></li>
+                        <li><a href="#company-overview">会社概要</a></li>
+                        <li><a href="#contact">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Universal Pine, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="apply.js"></script>
+</body>
+</html>
