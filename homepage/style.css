@@ -997,7 +997,11 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: calc(var(--spacing-unit) * 2);
 }
-/* Mission Text Styling */n.mission-first, .mission-second, .team-first, .team-second {n    display: inline;n    text-align: center;n}}
+/* Mission Text Styling */
+.mission-first, .mission-second, .team-first, .team-second {
+    display: inline;
+    text-align: center;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
