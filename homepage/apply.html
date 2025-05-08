@@ -59,7 +59,7 @@
     <section class="apply-section">
         <div class="container">
             <h2 class="section-title">応募フォーム</h2>
-            <p class="apply-lead">Universal Pineでは、AIの未来を共に創る仲間を募集しています。<br>以下のフォームに必要事項をご記入の上、ご応募ください。</p>
+            <!-- 説明文を削除 -->
             
             <form id="apply-form" class="apply-form" action="thanks.html" method="post">
                 <div class="form-group">
@@ -75,6 +75,11 @@
                 <div class="form-group">
                     <label for="phone">電話番号</label>
                     <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">住所 <span class="required">*</span></label>
+                    <input type="text" id="address" name="address" placeholder="郵便番号、都道府県、市区町村、番地、建物名等" required>
                 </div>
                 
                 <div class="form-group">
@@ -104,8 +109,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="message">自己PR</label>
-                    <textarea id="message" name="message" rows="5" placeholder="あなたの強みや、Universal Pineで実現したいことなどをご記入ください。"></textarea>
+                    <label for="message">応募先へのメッセージ</label>
+                    <textarea id="message" name="message" rows="5" placeholder="※AIを活用し、300字程度でご入力ください。"></textarea>
                 </div>
                 
                 <button type="submit" class="submit-button">応募する</button>
