@@ -61,7 +61,9 @@
             <h2 class="section-title">応募フォーム</h2>
             <!-- 説明文を削除 -->
             
-            <form id="apply-form" class="apply-form" action="mailto:ho@universalpine.com" method="post" enctype="text/plain">
+            <form id="apply-form" class="apply-form" action="mailto:ho@universalpine.com" method="post" enctype="text/plain" autocomplete="on">
+                <!-- CSRF Protection Token -->
+                <input type="hidden" name="csrf_token" id="csrf_token" value="">
                 <div class="form-group">
                     <label for="name">お名前 <span class="required">*</span></label>
                     <input type="text" id="name" name="name" required>
