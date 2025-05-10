@@ -61,7 +61,7 @@
             <h2 class="section-title">応募フォーム</h2>
             <!-- 説明文を削除 -->
             
-            <form id="apply-form" class="apply-form" action="thanks.html" method="post">
+            <form id="apply-form" class="apply-form" action="mailto:ho@universalpine.com" method="post" enctype="text/plain">
                 <div class="form-group">
                     <label for="name">お名前 <span class="required">*</span></label>
                     <input type="text" id="name" name="name" required>
@@ -73,23 +73,23 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="phone">電話番号</label>
-                    <input type="tel" id="phone" name="phone">
+                    <label for="phone">電話番号 <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="postal_code">郵便番号 <span class="required">*</span></label>
-                    <input type="text" id="postal_code" name="postal_code" placeholder="123-4567" required>
+                    <input type="text" id="postal_code" name="postal_code" placeholder="例)123-4567" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="address_line1">住所（都道府県市区町村番地） <span class="required">*</span></label>
-                    <input type="text" id="address_line1" name="address_line1" placeholder="東京都渋谷区代々木1-2-3" required>
+                    <label for="address_line1">住所 <span class="required">*</span></label>
+                    <input type="text" id="address_line1" name="address_line1" placeholder="例)東京都渋谷区代々木1-2-3" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="address_line2">住所（建物名）</label>
-                    <input type="text" id="address_line2" name="address_line2" placeholder="〇〇マンション101号室">
+                    <label for="address_line2"></label>
+                    <input type="text" id="address_line2" name="address_line2" placeholder="例)東京マンション101号室">
                 </div>
                 
                 <div class="form-group">
@@ -120,7 +120,7 @@
                 
                 <div class="form-group">
                     <label for="message">応募先へのメッセージ</label>
-                    <textarea id="message" name="message" rows="5" placeholder="※AIを活用し、300字程度でご入力ください。"></textarea>
+                    <textarea id="message" name="message" rows="5" placeholder="※AIを80%活用し、300字程度でご入力ください。"></textarea>
                 </div>
                 
                 <button type="submit" class="submit-button">応募する</button>
