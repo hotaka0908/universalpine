@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "standard",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error",
+    "no-param-reassign": "error",
+    "no-return-assign": "error",
+    "no-unused-expressions": "error",
+    "no-useless-concat": "error",
+    "no-useless-escape": "error",
+    "prefer-template": "error"
+  }
+}
