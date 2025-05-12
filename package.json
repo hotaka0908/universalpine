@@ -1,0 +1,33 @@
+{
+  "name": "universalpine",
+  "version": "1.0.0",
+  "description": "Universal Pine company website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotaka0908/universalpine.git"
+  },
+  "keywords": [
+    "website",
+    "company",
+    "ai"
+  ],
+  "author": "Universal Pine",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
