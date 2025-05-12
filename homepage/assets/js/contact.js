@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 入力値の検証（より厳格なパターン）
     function validateEmail(email) {
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         return emailRegex.test(email);
     }
     
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Redirect to thanks page
                     window.location.href = 'thanks.html';
                 } else {
-                    throw new Error('Network response was not ok: ' + response.status);
+                    throw new Error(`Network response was not ok: ${response.status}`);
                 }
             })
             .catch(error => {
