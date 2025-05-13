@@ -429,8 +429,9 @@ nav a:hover {
 .contact-label {
     font-size: 15px;
     font-family: 'Inter';
-    color: #333333;
+    color: #fff;
     margin-bottom: 25px;
+    font-weight: 600;
 }
 
 .contact-simple h2 {
@@ -464,8 +465,9 @@ nav a:hover {
 .recruit-label {
     font-size: 15px;
     font-family: 'Inter';
-    color: #333333;
+    color: #fff;
     margin-bottom: 25px;
+    font-weight: 600;
 }
 
 .careers-simple h2 {
@@ -868,6 +870,7 @@ nav a:hover {
     margin-bottom: 25px;
     text-transform: uppercase;
     text-align: center;
+    font-weight: 600;
 }
 
 /* Section Label */
@@ -878,6 +881,7 @@ nav a:hover {
     margin-bottom: 25px;
     text-transform: uppercase;
     text-align: center;
+    font-weight: 600;
 }
 
 /* Contact Section */
