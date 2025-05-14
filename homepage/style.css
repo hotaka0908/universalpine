@@ -80,11 +80,7 @@ header .container {
 }
 
 .logo-image {
-    width: 32px;
-    height: 32px;
-    background-color: var(--primary-color);
-    border-radius: 4px;
-    margin-right: 10px;
+    display: none;
 }
 
 .logo-text {
