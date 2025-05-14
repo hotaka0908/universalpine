@@ -66,7 +66,7 @@
             <h2 class="section-title">応募フォーム</h2>
             <!-- 説明文を削除 -->
             
-            <form id="apply-form" class="apply-form" action="mailto:ho@universalpine.com" method="post" enctype="text/plain" autocomplete="on">
+            <form id="apply-form" class="apply-form" onsubmit="sendEmail(event)" autocomplete="on">
                 <!-- CSRF Protection Token -->
                 <input type="hidden" name="csrf_token" id="csrf_token" value="">
                 <div class="form-group">
@@ -130,7 +130,7 @@
                     <textarea id="message" name="message" rows="5" placeholder="※AIを80%活用し、300字程度でご入力ください。"></textarea>
                 </div>
                 
-                <button type="submit" class="submit-button">応募する</button>
+                <button type="submit" id="submit-button" class="submit-button">応募する</button>
             </form>
         </div>
     </section>
@@ -158,6 +158,87 @@
         </div>
     </footer>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="apply.js"></script>
+    
+    <script>
+        // フォーム送信時の処理をグローバルスコープに定義
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            // 必須項目のバリデーション
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const postalCode = document.getElementById('postal_code').value.trim();
+            const address = document.getElementById('address_line1').value.trim();
+            const position = document.getElementById('position').value;
+            
+            if (!name || !email || !phone || !postalCode || !address || !position) {
+                alert('必須項目をすべて入力してください。');
+                return;
+            }
+            
+            // 電話番号のバリデーション（日本の電話番号形式）
+            const phonePattern = /^(0[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{9,10}|0[0-9]{9,10})$/;
+            if (!phonePattern.test(phone)) {
+                alert('電話番号の形式が正しくありません。例: 03-1234-5678 または 090-1234-5678');
+                return;
+            }
+            
+            // メールアドレスの追加検証
+            const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            if (!emailPattern.test(email)) {
+                alert('メールアドレスの形式が正しくありません。');
+                return;
+            }
+            
+            // フォームデータの収集
+            const formData = {
+                name: name,
+                email: email,
+                phone: phone,
+                postal_code: postalCode,
+                address: document.getElementById('address_line1').value,
+                position: position,
+                message: document.getElementById('message').value || '記入なし'
+            };
+            
+            // ローディング表示
+            document.getElementById('submit-button').disabled = true;
+            document.getElementById('submit-button').innerText = '送信中...';
+            
+            // EmailJSを使用してメール送信
+            emailjs.init("universalpine"); // ここにEmailJSのユーザーIDを入力
+            
+            emailjs.send('service_3yh528p', 'template_dgwmc1n', {
+                to_name: 'Universal Pine 採用担当者様',
+                to_email: 'ho@universalpine.com',
+                from_name: formData.name,
+                from_email: formData.email,
+                subject: '採用応募: ' + formData.position,
+                message: `
+                    名前: ${formData.name}\n
+                    メールアドレス: ${formData.email}\n
+                    電話番号: ${formData.phone}\n
+                    郵便番号: ${formData.postal_code}\n
+                    住所: ${formData.address}\n
+                    希望ポジション: ${formData.position}\n
+                    メッセージ: ${formData.message}\n
+                `
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // 送信成功時、thanks.htmlにリダイレクト
+                window.location.href = 'thanks.html';
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('送信に失敗しました。後ほど再度お試しください。');
+                document.getElementById('submit-button').disabled = false;
+                document.getElementById('submit-button').innerText = '送信';
+            });
+        }
+    </script>
 </body>
 </html>

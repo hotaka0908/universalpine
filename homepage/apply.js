@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // セッションストレージにトークンを保存（サーバー検証用）
     sessionStorage.setItem('csrf_token', csrfToken);
     
+    // EmailJSの初期化
+    (function() {
+        emailjs.init("YOUR_USER_ID"); // ここにEmailJSのユーザーIDを入力
+    })();
+    
     // 入力値のサニタイズ
     function sanitizeInput(input) {
         return input.replace(/[<>&"']/g, function(match) {
@@ -30,25 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    if (applyForm) {
-        applyForm.addEventListener('submit', function(e) {
-            // フォームのネイティブバリデーションを活用するため、条件付きでpreventDefault()を使用
-            
-            // 必須項目のバリデーション
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const postalCode = document.getElementById('postal_code').value.trim();
-            const address = document.getElementById('address_line1').value.trim();
-            const position = document.getElementById('position').value;
-            const resume = document.getElementById('resume').value;
-            const portfolio = document.getElementById('portfolio').value;
-            
-            if (!name || !email || !phone || !postalCode || !address || !position || !resume || !portfolio) {
-                alert('必須項目をすべて入力してください。');
-                e.preventDefault();
-                return;
-            }
+    // メール送信関数
+function sendEmail(e) {
+    e.preventDefault();
+    
+    // 必須項目のバリデーション
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const postalCode = document.getElementById('postal_code').value.trim();
+    const address = document.getElementById('address_line1').value.trim();
+    const position = document.getElementById('position').value;
+    const resume = document.getElementById('resume').value;
+    const portfolio = document.getElementById('portfolio').value;
+    
+    if (!name || !email || !phone || !postalCode || !address || !position || !resume || !portfolio) {
+        alert('必須項目をすべて入力してください。');
+        return;
+    }
             
             // 電話番号のバリデーション（日本の電話番号形式）
             const phonePattern = /^(0[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{9,10}|0[0-9]{9,10})$/;
@@ -81,10 +85,37 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('postal_code').value = sanitizeInput(postalCode);
             document.getElementById('address_line1').value = sanitizeInput(address);
             
-            // フォームが正常に送信される場合、thanks.htmlにリダイレクト
-            setTimeout(function() {
-                window.location.href = 'thanks.html';
-            }, 100);
-        });
+            // メール送信用のテンプレートパラメータ
+            const templateParams = {
+                to_email: 'ho@universalpine.com',
+                from_name: name,
+                from_email: email,
+                subject: '採用応募: ' + position,
+                message: `
+                    名前: ${name}\n
+                    メールアドレス: ${email}\n
+                    電話番号: ${phone}\n
+                    郵便番号: ${postalCode}\n
+                    住所: ${address}\n
+                    希望ポジション: ${position}\n
+                    履歴書: ${resume}\n
+                    ポートフォリオ: ${portfolio}\n
+                `
+            };
+            
+            // EmailJSを使用してメール送信
+            emailjs.send('default_service', 'template_id', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // 送信成功時、thanks.htmlにリダイレクト
+                    window.location.href = 'thanks.html';
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('送信に失敗しました。後ほど再度お試しください。');
+                });
+        }
+
+    if (applyForm) {
+        // 既存のsubmitイベントリスナーは不要になったため削除
     }
 });
