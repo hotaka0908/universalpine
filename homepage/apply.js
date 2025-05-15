@@ -7,6 +7,7 @@ const schema = z.object({
   phone: z.string().min(1, "電話番号は必須です"),
   postal_code: z.string().min(1, "郵便番号は必須です"),
   address_line1: z.string().min(1, "住所は必須です"),
+  address_line2: z.string().optional(),
   position: z.string().min(1, "応募職種は必須です"),
   resume_url: z.string().url("履歴書URLの形式が正しくありません"),
   portfolio_url: z.string().url("職務経歴書URLの形式が正しくありません"),
@@ -88,6 +89,13 @@ document.getElementById("apply-form").addEventListener("submit", async (e) => {
     return;
   }
   
+  // 送信データの準備
+  const submissionData = {
+    ...validationResult.data,
+    // address_line2が空の場合はundefinedにして、APIで処理しやすくする
+    address_line2: validationResult.data.address_line2 || undefined
+  };
+  
   // ローディング表示
   const submitButton = document.getElementById('submit-button');
   submitButton.disabled = true;
@@ -101,7 +109,7 @@ document.getElementById("apply-form").addEventListener("submit", async (e) => {
         "Content-Type": "application/json",
         "X-CSRF-Token": sanitizedData.csrf_token
       },
-      body: JSON.stringify(validationResult.data)
+      body: JSON.stringify(submissionData)
     });
     
     if (response.ok) {
@@ -110,11 +118,21 @@ document.getElementById("apply-form").addEventListener("submit", async (e) => {
     } else {
       // エラーレスポンスの処理
       const errorData = await response.json();
-      throw new Error(errorData.message || '送信に失敗しました');
+      let errorMessage = '送信に失敗しました。後ほど再度お試しください。';
+      
+      if (errorData.error === 'invalid') {
+        errorMessage = '入力内容に問題があります。入力内容を確認してください。';
+      } else if (errorData.error === 'email_error') {
+        errorMessage = 'メール送信に失敗しました。後ほど再度お試しください。';
+      } else if (errorData.message) {
+        errorMessage = errorData.message;
+      }
+      
+      throw new Error(errorMessage);
     }
   } catch (error) {
     console.error('送信エラー:', error);
-    alert('送信に失敗しました。後ほど再度お試しください。');
+    alert(error.message || '送信に失敗しました。後ほど再度お試しください。');
     submitButton.disabled = false;
     submitButton.innerText = '応募する';
   }
