@@ -1,148 +1,112 @@
-// Vercel Serverless Function for handling form submissions
-import { z } from 'zod';
 import nodemailer from 'nodemailer';
+import { z } from 'zod';
 
 // バリデーションスキーマの定義
 const schema = z.object({
-  name: z.string().min(1, "お名前は必須です"),
-  email: z.string().email("有効なメールアドレスを入力してください"),
-  phone: z.string().min(1, "電話番号は必須です"),
-  postal_code: z.string().min(1, "郵便番号は必須です"),
-  address_line1: z.string().min(1, "住所は必須です"),
-  position: z.string().min(1, "応募職種は必須です"),
-  resume_url: z.string().url("履歴書URLの形式が正しくありません"),
-  portfolio_url: z.string().url("職務経歴書URLの形式が正しくありません"),
+  name: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  postal_code: z.string(),
+  address_line1: z.string(),
+  address_line2: z.string().optional(),
+  position: z.string(),
+  resume_url: z.string().url(),
+  portfolio_url: z.string().url(),
   message: z.string().optional(),
-  csrf_token: z.string(),
-  hp: z.string().max(0, "ボットによる送信と判断されました").optional() // ハニーポット
+  hp: z.string().optional()
 });
 
-// 入力値のサニタイズ関数
-function sanitizeInput(input) {
-  if (typeof input !== 'string') return input;
-  return input.replace(/[<>&"']/g, function(match) {
-    switch (match) {
-      case '<': return '&lt;';
-      case '>': return '&gt;';
-      case '&': return '&amp;';
-      case '"': return '&quot;';
-      case "'": return '&#x27;';
-      default: return match;
-    }
-  });
+// 職種名の日本語マッピング
+const positionNames = {
+  'electronics-engineer': 'エレクトロニクスエンジニア',
+  'ai-engineer': 'AIエンジニア',
+  'mechanical-engineer': 'メカニカルエンジニア',
+  'embedded-engineer': '組み込みエンジニア',
+  'mobile-app-engineer': 'モバイルアプリエンジニア',
+  'open-entry': 'オープンエントリー',
+  'part-time': 'アルバイト'
+};
+
+// 機密情報をマスクする関数
+function maskSensitiveInfo(text) {
+  if (!text) return '';
+  if (text.length <= 4) return '*'.repeat(text.length);
+  return text.substring(0, 2) + '*'.repeat(text.length - 4) + text.substring(text.length - 2);
 }
 
-// フォームデータをサニタイズする関数
-function sanitizeFormData(data) {
-  const sanitized = {};
-  for (const [key, value] of Object.entries(data)) {
-    sanitized[key] = sanitizeInput(value);
-  }
-  return sanitized;
-}
-
-// メール送信関数
-async function sendEmail(data) {
-  // nodemailerのトランスポーターを設定
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  });
-
-  // 職種名を日本語に変換
-  const positionMap = {
-    'electronics-engineer': 'エレクトロニクスエンジニア',
-    'ai-engineer': 'AIエンジニア',
-    'mechanical-engineer': 'メカニカルエンジニア',
-    'embedded-engineer': '組み込みエンジニア',
-    'mobile-app-engineer': 'モバイルアプリエンジニア',
-    'open-entry': 'オープンエントリー',
-    'part-time': 'アルバイト'
-  };
-
-  // メールの内容を作成
-  const mailOptions = {
-    from: process.env.MAIL_FROM,
-    to: 'ho@universalpine.com',
-    subject: `採用応募: ${positionMap[data.position] || data.position}`,
-    text: `
-      Universal Pine 採用担当者様
-
-      以下の内容で応募がありました。
-
-      名前: ${data.name}
-
-      メールアドレス: ${data.email}
-
-      電話番号: ${data.phone}
-
-      郵便番号: ${data.postal_code}
-
-      住所: ${data.address_line1}
-      ${data.address_line2 ? data.address_line2 + '\n' : ''}
-      希望ポジション: ${positionMap[data.position] || data.position}
-
-      履歴書URL: ${data.resume_url}
-
-      職務経歴書URL: ${data.portfolio_url}
-
-      メッセージ: ${data.message || '記入なし'}
-
-      送信日時: ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}
-    `,
-    replyTo: data.email
-  };
-
-  // メール送信
-  return await transporter.sendMail(mailOptions);
-}
-
-// APIハンドラー
 export default async function handler(req, res) {
-  // POSTリクエスト以外は許可しない
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const parsed = schema.safeParse(req.body);
+  if (!parsed.success || parsed.data.hp) return res.status(400).json({ error: 'invalid' });
+  const d = parsed.data;
+
+  // 住所を結合
+  const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
+
+  // 安全なメール本文を作成（機密情報をマスク）
+  const emailBody = `
+【応募情報】
+
+氏名: ${d.name}
+メールアドレス: ${d.email}
+電話番号: ${maskSensitiveInfo(d.phone)}
+郵便番号: ${maskSensitiveInfo(d.postal_code)}
+住所: ${maskSensitiveInfo(fullAddress)}
+
+応募職種: ${positionNames[d.position] || d.position}
+
+履歴書URL: ${d.resume_url}
+職務経歴書URL: ${d.portfolio_url}
+
+【メッセージ】
+${d.message || '特になし'}
+
+-----
+※電話番号、郵便番号、住所はセキュリティのためマスクされています。
+※詳細情報は管理システムでご確認ください。
+  `;
+
+  // 管理システム用の完全なデータ（本番環境では安全な保存先に保存する）
+  const fullData = {
+    name: d.name,
+    email: d.email,
+    phone: d.phone,
+    postal_code: d.postal_code,
+    address: fullAddress,
+    position: d.position,
+    position_name: positionNames[d.position] || d.position,
+    resume_url: d.resume_url,
+    portfolio_url: d.portfolio_url,
+    message: d.message || '',
+    application_date: new Date().toISOString()
+  };
+
+  // メール送信用のトランスポーターを作成
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_APP_PASSWORD }
+  });
 
   try {
-    // リクエストボディのサニタイズ
-    const sanitizedData = sanitizeFormData(req.body);
-
-    // ハニーポットチェック
-    if (sanitizedData.hp && sanitizedData.hp.length > 0) {
-      // ボット対策: 成功を装って200を返す
-      return res.status(200).json({ message: 'Form submitted successfully' });
-    }
-
-    // バリデーション
-    const validationResult = schema.safeParse(sanitizedData);
-
-    if (!validationResult.success) {
-      const errors = validationResult.error.errors;
-      return res.status(400).json({ 
-        message: 'Validation failed', 
-        errors: errors.map(err => err.message)
-      });
-    }
-
-    // CSRFトークン検証 (実際の実装ではセッションと照合する)
-    // 注: このサンプルでは簡易的な実装
-    if (!sanitizedData.csrf_token) {
-      return res.status(403).json({ message: 'CSRF token missing' });
-    }
-
     // メール送信
-    await sendEmail(validationResult.data);
+    await transporter.sendMail({
+      from: `"応募フォーム" <${process.env.MAIL_USER}>`,
+      to: process.env.TO_EMAIL,
+      subject: `【応募】${d.name} さん - ${positionNames[d.position] || d.position}`,
+      text: emailBody,
+      attachments: [
+        {
+          filename: 'application_data.json',
+          content: JSON.stringify(fullData, null, 2),
+          contentType: 'application/json'
+        }
+      ]
+    });
 
-    // 成功レスポンス
-    return res.status(200).json({ message: 'Form submitted successfully' });
+    res.status(200).json({ ok: true });
   } catch (error) {
-    console.error('Form submission error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.error('Email sending error:', error);
+    res.status(500).json({ error: 'email_error', message: 'メール送信に失敗しました' });
   }
 }
