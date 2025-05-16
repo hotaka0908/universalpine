@@ -25,9 +25,9 @@
   "author": "Universal Pine",
   "license": "UNLICENSED",
   "private": true,
-  "type": "module",
   "dependencies": {
     "nodemailer": "^6.10.1",
+    "resend": "^4.5.1",
     "zod": "^3.24.4"
   },
   "devDependencies": {
