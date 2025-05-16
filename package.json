@@ -26,6 +26,8 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@vercel/node": "^3.0.11",
+    "@vercel/remix-builder": "^2.0.13",
     "nodemailer": "^6.10.1",
     "resend": "^4.5.1",
     "zod": "^3.24.4"
