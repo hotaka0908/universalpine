@@ -4,6 +4,7 @@
   "description": "Universal Pine company website",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "audit": "npm audit",
     "audit:fix": "npm audit fix"
@@ -17,17 +18,17 @@
     "company",
     "ai"
   ],
-  "author": "Universal Pine",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.2"
-  },
   "devDependencies": {
-    "eslint": "^9.26.0",
+    "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^17.18.0",
-    "eslint-plugin-promise": "^7.2.1"
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "vercel": "^32.5.0"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.3",
+    "resend": "^4.5.1",
+    "zod": "^3.24.4"
   }
 }
