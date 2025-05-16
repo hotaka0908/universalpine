@@ -4,3 +4,8 @@
 # Environment variables
 *.env
 .vercel
+
+# Ignore build artefacts
+node_modules/
+.next/
+dist/
