@@ -272,17 +272,24 @@
             });
             
             // モバイル表示時のドロップダウンメニュー
-            if (window.innerWidth <= 768) {
-                dropdowns.forEach(dropdown => {
-                    const link = dropdown.querySelector('a');
-                    link.addEventListener('click', function(e) {
-                        if (window.innerWidth <= 768) {
-                            e.preventDefault();
-                            dropdown.classList.toggle('active');
-                        }
-                    });
+            dropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('a');
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        
+                        // 他のドロップダウンを閉じる
+                        dropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                        
+                        // クリックしたドロップダウンを開閉
+                        dropdown.classList.toggle('active');
+                    }
                 });
-            }
+            });
             
             // 画面サイズ変更時の処理
             window.addEventListener('resize', function() {
