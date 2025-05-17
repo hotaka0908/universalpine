@@ -36,6 +36,10 @@
                     <span class="logo-text">Universal Pine</span>
                 </a>
             </div>
+            
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
 
             <nav>
                 <ul>
@@ -283,6 +287,48 @@
                     });
                 });
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav');
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            // ハンバーガーメニューの開閉
+            menuToggle.addEventListener('click', function() {
+                nav.classList.toggle('active');
+            });
+            
+            // 画面外をクリックしたらメニューを閉じる
+            document.addEventListener('click', function(event) {
+                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                }
+            });
+            
+            // モバイル表示時のドロップダウンメニュー
+            if (window.innerWidth <= 768) {
+                dropdowns.forEach(dropdown => {
+                    const link = dropdown.querySelector('a');
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768) {
+                            e.preventDefault();
+                            dropdown.classList.toggle('active');
+                        }
+                    });
+                });
+            }
+            
+            // 画面サイズ変更時の処理
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    nav.classList.remove('active');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
         });
     </script>
 </body>

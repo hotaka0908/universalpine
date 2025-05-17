@@ -1004,6 +1004,20 @@ footer {
     text-align: center;
 }
 
+/* Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: auto;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.menu-toggle i {
+    color: var(--primary-color);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .mission-first, .mission-second, .team-first, .team-second {
@@ -1018,18 +1032,78 @@ footer {
     .section-heading {
         text-align: center;
     }
+    
     header .container {
-        flex-direction: column;
+        flex-direction: row;
         padding: calc(var(--spacing-unit) * 1);
+        position: relative;
     }
     
     .logo {
-        margin-bottom: calc(var(--spacing-unit) * 1);
+        margin-bottom: 0;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: white;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        padding: 4rem 1rem 1rem;
+        overflow-y: auto;
+    }
+    
+    nav.active {
+        right: 0;
     }
     
     nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    nav ul li {
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+    
+    nav ul li a {
+        display: block;
+        padding: 0.5rem 0;
+    }
+    
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        background-color: #f9f9f9;
+        width: 100%;
+        padding: 0.5rem 0 0.5rem 1rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+        display: block;
+    }
+    
+    .dropdown.active .dropdown-content {
+        max-height: 200px;
     }
     
     #hero h1 {
