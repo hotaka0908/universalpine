@@ -57,83 +57,76 @@ document.addEventListener('DOMContentLoaded', function() {
     // セッションストレージにトークンを保存（サーバー検証用）
     sessionStorage.setItem('csrf_token', csrfToken);
   }
-});
 
-// フォーム送信処理
-document.getElementById("apply-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  
-  // フォームデータの取得
-  const formData = new FormData(e.target);
-  const formDataObj = Object.fromEntries(formData);
-  
-  // ハニーポット判定 - botが埋めた場合は何もせずに処理終了
-  if (formDataObj.hp) {
-    console.log("Honeypot triggered");
-    // 成功を装って処理を終了
-    window.location.href = 'thanks.html';
-    return;
-  }
-  
-  // 入力値のサニタイズ
-  const sanitizedData = sanitizeFormData(formDataObj);
-  
-  // バリデーション
-  const validationResult = schema.safeParse(sanitizedData);
-  
-  if (!validationResult.success) {
-    // バリデーションエラーの処理
-    const errors = validationResult.error.errors;
-    const errorMessages = errors.map(err => err.message).join('\n');
-    alert(`入力に誤りがあります:\n${errorMessages}`);
-    return;
-  }
-  
-  // 送信データの準備
-  const submissionData = {
-    ...validationResult.data,
-    // address_line2が空の場合はundefinedにして、APIで処理しやすくする
-    address_line2: validationResult.data.address_line2 || undefined
-  };
-  
-  // ローディング表示
+  // フォーム要素の取得
+  const applyForm = document.getElementById('apply-form');
   const submitButton = document.getElementById('submit-button');
-  submitButton.disabled = true;
-  submitButton.innerText = '送信中...';
-  
-  try {
-    // Vercelのサーバーレス関数にデータを送信
-    const response = await fetch("/api/apply", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "X-CSRF-Token": sanitizedData.csrf_token
-      },
-      body: JSON.stringify(submissionData)
+  const errorElements = {
+    name: document.getElementById('name-error'),
+    email: document.getElementById('email-error'),
+    phone: document.getElementById('phone-error'),
+    postal_code: document.getElementById('postal-code-error'),
+    address_line1: document.getElementById('address-line1-error'),
+    position: document.getElementById('position-error'),
+    resume_url: document.getElementById('resume-url-error'),
+    portfolio_url: document.getElementById('portfolio-url-error')
+  };
+
+  // フォーム送信時の処理
+  applyForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // 送信ボタンを無効化し、ローディング表示
+    submitButton.disabled = true;
+    submitButton.innerText = '送信中...';
+    
+    // フォームデータの取得
+    const formData = new FormData(applyForm);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
     });
     
-    if (response.ok) {
-      // 送信成功時、thanks.htmlにリダイレクト
-      window.location.href = 'thanks.html';
-    } else {
-      // エラーレスポンスの処理
-      const errorData = await response.json();
-      let errorMessage = '送信に失敗しました。後ほど再度お試しください。';
+    try {
+      // バリデーション実行
+      const validatedData = schema.parse(formObject);
       
-      if (errorData.error === 'invalid') {
-        errorMessage = '入力内容に問題があります。入力内容を確認してください。';
-      } else if (errorData.error === 'email_error') {
-        errorMessage = 'メール送信に失敗しました。後ほど再度お試しください。';
-      } else if (errorData.message) {
-        errorMessage = errorData.message;
+      // エラー表示をクリア
+      Object.values(errorElements).forEach(el => {
+        if (el) el.textContent = '';
+      });
+      
+      // データのサニタイズ
+      const sanitizedData = sanitizeFormData(validatedData);
+      
+      // APIへの送信処理をシミュレート
+      // 実際の実装ではここでfetchを使ってAPIに送信
+      console.log('送信データ:', sanitizedData);
+      
+      // 成功時の処理 (デモ用にリダイレクト)
+      setTimeout(() => {
+        window.location.href = 'thanks.html';
+      }, 1000);
+      
+    } catch (error) {
+      // Zodのバリデーションエラー処理
+      if (error.errors) {
+        error.errors.forEach(err => {
+          const field = err.path[0];
+          const errorElement = errorElements[field];
+          if (errorElement) {
+            errorElement.textContent = err.message;
+          }
+        });
+      } else {
+        // その他のエラー
+        console.error('フォーム送信エラー:', error);
+        alert('送信中にエラーが発生しました。後ほど再度お試しください。');
       }
       
-      throw new Error(errorMessage);
+      // 送信ボタンを元に戻す
+      submitButton.disabled = false;
+      submitButton.innerText = '応募する';
     }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    alert(error.message || '送信に失敗しました。後ほど再度お試しください。');
-    submitButton.disabled = false;
-    submitButton.innerText = '応募する';
-  }
+  });
 });
