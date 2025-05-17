@@ -1,4 +1,5 @@
-import { z } from "https://cdn.skypack.dev/zod@3.22.2";
+// zod パッケージをローカルから読み込む
+import { z } from "../node_modules/zod/lib/index.mjs";
 
 // バリデーションスキーマの定義
 const schema = z.object({

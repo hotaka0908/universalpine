@@ -1,15 +1,12 @@
 {
-  "type": "module",
   "name": "universalpine",
   "version": "1.0.0",
   "description": "Universal Pine company website",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve homepage",
     "dev": "serve homepage",
-    "build": "echo \"Static site, no build required\" && exit 0",
-    "deploy": "vercel deploy --prod"
+    "build": "echo \"Static site, no build required\" && exit 0"
   },
   "repository": {
     "type": "git",
@@ -24,8 +21,6 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "nodemailer": "^6.10.1",
-    "resend": "^4.5.1",
     "zod": "^3.24.4"
   },
   "devDependencies": {
