@@ -2,33 +2,32 @@
   "name": "universalpine",
   "version": "1.0.0",
   "description": "Universal Pine company website",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:fix": "eslint . --fix",
+    "start": "serve homepage",
+    "dev": "serve -l 3000 homepage",
+    "build": "echo \"Static site, no build required\" && exit 0",
     "audit": "npm audit",
     "audit:fix": "npm audit fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hotaka0908/universalpine.git"
   },
   "keywords": [
     "website",
     "company",
     "ai"
   ],
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "vercel": "^32.5.0"
-  },
+  "author": "Universal Pine",
+  "license": "UNLICENSED",
+  "private": true,
   "dependencies": {
-    "nodemailer": "^7.0.3",
-    "resend": "^4.5.1",
-    "zod": "^3.24.4"
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "serve": "^14.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotaka0908/universalpine.git"
   }
 }
