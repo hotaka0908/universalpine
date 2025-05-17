@@ -7,7 +7,9 @@
     "lint:fix": "eslint . --fix",
     "start": "serve homepage",
     "dev": "serve -l 3000 homepage",
-    "build": "echo \"Static site, no build required\" && exit 0"
+    "build": "echo \"Static site, no build required\" && exit 0",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix"
   },
   "keywords": [
     "website",
@@ -23,5 +25,9 @@
   "devDependencies": {
     "eslint": "^9.0.0",
     "serve": "^14.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotaka0908/universalpine.git"
   }
 }

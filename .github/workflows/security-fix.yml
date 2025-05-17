@@ -8,9 +8,6 @@ on:
 jobs:
   security-fix:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +20,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run security audit fix
         run: npm audit fix
@@ -38,8 +35,6 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit-message: 'fix: npm audit automatic fix'
           title: '🔒 セキュリティ修正: npm audit fix の自動適用'
           body: |

@@ -2,63 +2,44 @@ name: Security Audit
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
     paths:
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/security-audit.yml"
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/security-audit.yml'
   pull_request:
-    branches: [main, develop]
+    branches: [ main, develop ]
     paths:
-      - "package.json"
-      - "package-lock.json"
+      - 'package.json'
+      - 'package-lock.json'
   schedule:
-    - cron: "0 0 * * 0"   # 毎週日曜 0:00 (UTC)
+    - cron: '0 0 * * 0' # 毎週日曜日の午前0時に実行
 
 jobs:
   security-audit:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-
     steps:
-      # 1. リポジトリ取得
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1             # 履歴は直近だけで十分
 
-      # 2. Node.js セットアップ（LTS 最新）
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20           # ← 18 → 20 に更新
-          cache: npm
+          node-version: '18'
+          cache: 'npm'
 
-      # 3. lockfile 準拠インストール
       - name: Install dependencies
         run: npm ci
 
-      # 4. 本番依存だけを監査（High 以上で fail）
-      - name: Run production security audit
-        id: audit
-        run: npm audit --production --audit-level=high
-        continue-on-error: true      # ← 失敗しても後続ステップを動かす
+      - name: Run security audit
+        run: npm audit --audit-level=high
 
-      # 5. JSON レポート生成（常に実行）
       - name: Generate audit report
         if: always()
-        run: npm audit --production --json > npm-audit-report.json
+        run: npm audit --json > npm-audit-report.json
 
-      # 6. レポートをアーティファクトとして保存
       - name: Upload audit report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-audit-report
           path: npm-audit-report.json
-
-      # 7. 最終的にジョブを失敗させるか判定
-      - name: Fail if high vulnerabilities remain
-        if: steps.audit.outcome == 'failure'
-        run: exit 1

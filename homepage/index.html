@@ -1,315 +1,274 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Pine - 人とAIを繋げる</title>
-    <base href="/">
     <!-- セキュリティヘッダー - XSS対策 -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'"
-    />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://www.clarity.ms; frame-src 'none'">
     <!-- クリックジャッキング対策 -->
-    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <!-- その他のセキュリティヘッダー -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta
-      http-equiv="Referrer-Policy"
-      content="strict-origin-when-cross-origin"
-    />
-    <meta
-      http-equiv="Permissions-Policy"
-      content="geolocation=(), microphone=(), camera=()"
-    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     <link rel="canonical" href="https://universalpine.com/" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="responsive.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "rd86xw1i3g");
+    </script>
+</head>
+<body>
     <header>
-      <div class="container">
-        <div class="logo">
-          <a href="index.html" class="logo-link">
-            <div class="logo-image"></div>
-            <span class="logo-text">Universal Pine</span>
-          </a>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <div class="logo-image"></div>
+                    <span class="logo-text">Universal Pine</span>
+                </a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                            <a href="about.html#founders">創業者紹介</a>
+                            <a href="about.html#history">沿革</a>
+                            <a href="about.html#about">会社概要</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div class="menu-toggle">
-          <i class="fas fa-bars"></i>
-        </div>
-        <nav>
-          <ul>
-            <li class="dropdown">
-              <a href="news.html">ニュース</a>
-              <div class="dropdown-content">
-                <a href="news.html#announcements">お知らせ</a>
-                <a href="news.html#press">プレスリリース</a>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="product.html">製品</a>
-              <div class="dropdown-content">
-                <a href="product.html">AIネックレス</a>
-              </div>
-            </li>
-            <li>
-              <a href="recruit.html">採用</a>
-            </li>
-            <li class="dropdown">
-              <a href="about.html">会社情報</a>
-              <div class="dropdown-content">
-                <a href="about.html#philosophy">理念</a>
-                <a href="about.html#message">代表メッセージ</a>
-                <a href="about.html#founders">創業者紹介</a>
-                <a href="about.html#history">沿革</a>
-                <a href="about.html#about">会社概要</a>
-              </div>
-            </li>
-            <li>
-              <a href="contact.html">お問い合わせ</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
     </header>
-
+    
     <div class="mobile-nav">
-      <ul>
-        <li class="dropdown">
-          <a href="news.html">ニュース</a>
-          <div class="dropdown-content">
-            <a href="news.html#announcements">お知らせ</a>
-            <a href="news.html#press">プレスリリース</a>
-          </div>
-        </li>
-        <li class="dropdown">
-          <a href="product.html">製品</a>
-          <div class="dropdown-content">
-            <a href="product.html">AIネックレス</a>
-          </div>
-        </li>
-        <li>
-          <a href="recruit.html">採用</a>
-        </li>
-        <li class="dropdown">
-          <a href="about.html">会社情報</a>
-          <div class="dropdown-content">
-            <a href="about.html#philosophy">理念</a>
-            <a href="about.html#message">代表メッセージ</a>
-            <a href="about.html#founders">創業者紹介</a>
-            <a href="about.html#history">沿革</a>
-            <a href="about.html#about">会社概要</a>
-          </div>
-        </li>
-        <li>
-          <a href="contact.html">お問い合わせ</a>
-        </li>
-      </ul>
+        <ul>
+            <li class="dropdown">
+                <a href="news.html">ニュース</a>
+                <div class="dropdown-content">
+                    <a href="news.html#announcements">お知らせ</a>
+                    <a href="news.html#press">プレスリリース</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="product.html">製品</a>
+                <div class="dropdown-content">
+                    <a href="product.html">AIネックレス</a>
+                </div>
+            </li>
+            <li>
+                <a href="recruit.html">採用</a>
+            </li>
+            <li class="dropdown">
+                <a href="about.html">会社情報</a>
+                <div class="dropdown-content">
+                    <a href="about.html#philosophy">理念</a>
+                    <a href="about.html#message">代表メッセージ</a>
+                    <a href="about.html#founders">創業者紹介</a>
+                    <a href="about.html#history">沿革</a>
+                    <a href="about.html#about">会社概要</a>
+                </div>
+            </li>
+            <li>
+                <a href="contact.html">お問い合わせ</a>
+            </li>
+        </ul>
     </div>
 
     <section id="hero">
-      <div class="container">
-        <h1>AIと共に生きる</h1>
-      </div>
+        <div class="container">
+        </div>
     </section>
 
     <section id="news">
-      <div class="container">
-        <p class="philosophy-label text-center">NEWS</p>
-        <h2>ニュース</h2>
-        <div class="news-list">
-          <div class="news-entry">
-            <a href="news/info/20250503.html" class="news-link">
-              <span class="news-date">2025.05.03</span>
-              <span class="news-category info">お知らせ</span>
-              <span class="news-title">ホームページ公開について</span>
-              <span class="news-arrow"
-                ><i class="fas fa-chevron-right"></i
-              ></span>
-            </a>
-          </div>
+        <div class="container">
+            <h2>ニュース</h2>
+            <div class="news-list">
+                <div class="news-entry">
+                    <a href="news/info/20250503.html" class="news-link">
+                        <span class="news-date">2025.05.03</span>
+                        <span class="news-category info">お知らせ</span>
+                        <span class="news-title">ホームページ公開について</span>
+                        <span class="news-arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                </div>
 
-          <div class="news-entry">
-            <a href="news/info/20250226.html" class="news-link">
-              <span class="news-date">2025.02.26</span>
-              <span class="news-category info">お知らせ</span>
-              <span class="news-title">会社設立のお知らせ</span>
-              <span class="news-arrow"
-                ><i class="fas fa-chevron-right"></i
-              ></span>
-            </a>
-          </div>
-          <div class="news-entry">
-            <a href="news/info/20250226-office.html" class="news-link">
-              <span class="news-date">2025.02.26</span>
-              <span class="news-category info">お知らせ</span>
-              <span class="news-title">新オフィス開設のお知らせ</span>
-              <span class="news-arrow"
-                ><i class="fas fa-chevron-right"></i
-              ></span>
-            </a>
-          </div>
+                <div class="news-entry">
+                    <a href="news/info/20250226.html" class="news-link">
+                        <span class="news-date">2025.02.26</span>
+                        <span class="news-category info">お知らせ</span>
+                        <span class="news-title">会社設立のお知らせ</span>
+                        <span class="news-arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                </div>
+                <div class="news-entry">
+                    <a href="news/info/20250226-office.html" class="news-link">
+                        <span class="news-date">2025.02.26</span>
+                        <span class="news-category info">お知らせ</span>
+                        <span class="news-title">新オフィス開設のお知らせ</span>
+                        <span class="news-arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <section id="philosophy">
-      <div class="container">
-        <p class="philosophy-label text-center">MISSION</p>
-        <h2 class="section-heading">
-          <span class="mission-first">人々の生活を</span
-          ><span class="mission-second">より良くする</span>
-        </h2>
-        <div class="accordion-container">
-          <button class="accordion-button" title="ミッションについての詳細を表示"></button>
-          <div class="accordion-content">
-            <p>「どうすれば人々の生活をもっと良くできるか？」</p>
-            <p>これを考えれば良い。</p>
-            <p>思いついたらそれをやろう。それを作ろう。</p>
-            <p>それを届ければ人々の生活はより良くなる。</p>
-            <p>ただそれだけ。</p>
-            <p>それだけを考えれば、良いものは自然と生まれる。</p>
-            <p>逆に人々の生活を良くすることを考えなければ</p>
-            <p>一瞬でも後回しにするならば</p>
-            <p>良いものは何も生まれない。</p>
-            <p>我々は「どうすれば人々の生活をもっと良くできるか？」</p>
-            <p>この一点だけを考え</p>
-            <p>お客様のために</p>
-            <p>最高の製品を作り届けます。</p>
-          </div>
+        <div class="container">
+            <p class="philosophy-label text-center">MISSION</p>
+            <h2 class="section-heading"><span class="mission-first">人々の生活を</span><span class="mission-second">より良くする</span></h2>
+            <div class="accordion-container">
+                <button class="accordion-button" title="ミッション詳細を表示"></button>
+                <div class="accordion-content">
+                    <p>「どうすれば人々の生活をもっと良くできるか？」</p>
+                    <p>これを考えれば良い。</p>
+                    <p>思いついたらそれをやろう。それを作ろう。</p>
+                    <p>それを届ければ人々の生活はより良くなる。</p>
+                    <p>ただそれだけ。</p>
+                    <p>それだけを考えれば、良いものは自然と生まれる。</p>
+                    <p>逆に人々の生活を良くすることを考えなければ</p>
+                    <p>一瞬でも後回しにするならば</p>
+                    <p>良いものは何も生まれない。</p>
+                    <p>我々は「どうすれば人々の生活をもっと良くできるか？」</p>
+                    <p>この一点だけを考え</p>
+                    <p>お客様のために</p>
+                    <p>最高の製品を作り届けます。</p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <section id="products">
-      <div class="container">
-        <p class="section-label">PRODUCT</p>
-        <h2 class="product-heading">声ですべてを動かす</h2>
-
-        <div class="product-grid">
-          <div class="product-item">
-            <img
-              src="images/original.png"
-              alt="いつでも手軽に"
-              class="product-image"
-            />
-            <p class="product-caption">AIネックレス</p>
-          </div>
-          <div class="product-item">
-            <img
-              src="images/add.nomal.png"
-              alt="いつでも手軽に"
-              class="product-image"
-            />
-            <p class="product-caption">いつでも一緒に</p>
-          </div>
-          <div class="product-item">
-            <img
-              src="images/hello.png"
-              alt="いつでも手軽に"
-              class="product-image"
-            />
-            <p class="product-caption">多様な機能で</p>
-          </div>
-          <div class="product-item">
-            <img
-              src="images/add.red.png"
-              alt="いつでも手軽に"
-              class="product-image"
-            />
-            <p class="product-caption">想像を現実に</p>
-          </div>
+        <div class="container">
+            <p class="section-label">PRODUCT</p>
+            <h2 class="product-heading">声ですべてを動かす</h2>
+            
+            <div class="product-grid">
+                <div class="product-item">
+                    <img src="images/original.png" alt="いつでも手軽に" class="product-image">
+                    <p class="product-caption">AIネックレス</p>
+                </div>
+                <div class="product-item">
+                    <img src="images/add.nomal.png" alt="いつでも手軽に" class="product-image">
+                    <p class="product-caption">いつでも一緒に</p>
+                </div>
+                <div class="product-item">
+                    <img src="images/hello.png" alt="いつでも手軽に" class="product-image">
+                    <p class="product-caption">多様な機能で</p>
+                </div>
+                <div class="product-item">
+                    <img src="images/add.red.png" alt="いつでも手軽に" class="product-image">
+                    <p class="product-caption">想像を現実に</p>
+                </div>
+            </div>
+            
+            <div class="product-cta">
+                <a href="product.html" class="btn btn-primary">more</a>
+            </div>
         </div>
-
-        <div class="product-cta">
-          <a href="product.html" class="btn btn-primary">more</a>
-        </div>
-      </div>
     </section>
 
     <section id="careers" class="careers-simple">
-      <div class="container">
-        <div class="careers-content">
-          <p class="recruit-label text-center">CAREERS</p>
-          <h2 class="section-heading">
-            <span class="team-first">最高の製品を、</span
-            ><span class="team-second">最高のチームで</span>
-          </h2>
-          <h3 class="recruit-heading">
-            AIで世界は変わると信じる仲間を募集してます。
-          </h3>
-          <div class="product-cta">
-            <a href="recruit.html" class="btn btn-primary">View Careers</a>
-          </div>
+        <div class="container">
+            <div class="careers-content">
+                <p class="recruit-label text-center">CAREERS</p>
+                <h2 class="section-heading"><span class="team-first">最高の製品を、</span><span class="team-second">最高のチームで</span></h2>
+                <h3 class="text-center subtitle-text">AIで世界は変わると信じる仲間を募集してます。</h3>
+                <div class="product-cta">
+                    <a href="recruit.html" class="btn btn-primary">View Careers</a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <section id="contact" class="contact-simple">
-      <div class="container">
-        <div class="contact-content">
-          <p class="contact-label text-center">CONTACT</p>
-          <h2 class="section-heading">お問い合わせ</h2>
-          <div class="product-cta">
-            <a href="contact.html" class="btn btn-primary">More</a>
-          </div>
+        <div class="container">
+            <div class="contact-content">
+                <p class="contact-label text-center">CONTACT</p>
+                <h2 class="section-heading">お問い合わせ</h2>
+                <div class="product-cta">
+                    <a href="contact.html" class="btn btn-primary">More</a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">
-            <h2>Universal Pine</h2>
-          </div>
-
-          <div class="footer-nav">
-            <ul>
-              <li><a href="#news">ニュース</a></li>
-              <li><a href="about.html">会社情報</a></li>
-              <li><a href="#careers">採用情報</a></li>
-              <li><a href="#contact">お問い合わせ</a></li>
-            </ul>
-          </div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Universal Pine</h2>
+                </div>
+                
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="#news">ニュース</a></li>
+                        <li><a href="about.html">会社情報</a></li>
+                        <li><a href="#careers">採用情報</a></li>
+                        <li><a href="#contact">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Universal Pine. All Rights Reserved.</p>
+            </div>
         </div>
-
-        <div class="copyright">
-          <p>&copy; 2025 Universal Pine. All Rights Reserved.</p>
-        </div>
-      </div>
     </footer>
 
     <script src="script.js"></script>
     <script src="responsive.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const accordionButtons = document.querySelectorAll(".accordion-button");
-
-        accordionButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            this.classList.toggle("active");
-            const content = this.nextElementSibling;
-
-            if (content.style.maxHeight) {
-              content.style.maxHeight = null;
-            } else {
-              content.style.maxHeight = content.scrollHeight + "px";
-            }
-          });
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
         });
-      });
     </script>
-  </body>
+</body>
 </html>

@@ -3,7 +3,7 @@
     --accent-color: #555555;
     --footer-color: #333333;
     --text-color: #333333;
-    --light-bg: #F5F5F5;
+    --light-bg: #F3F5F6;
     --bg-color: #FFFFFF;
     --spacing-unit: 1rem;
 }
@@ -80,7 +80,11 @@ header .container {
 }
 
 .logo-image {
-    display: none;
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    margin-right: 10px;
 }
 
 .logo-text {
@@ -370,7 +374,7 @@ nav a:hover {
 
 /* Careers Section */
 .careers-simple {
-    background-image: url('images/recruit.jpg');
+    background-image: url('images/recruit.image.png');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -423,11 +427,10 @@ nav a:hover {
 }
 
 .contact-label {
-    font-size: 15px;
-    font-family: 'Inter';
-    color: #fff;
-    margin-bottom: 25px;
-    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    font-weight: 500;
 }
 
 .contact-simple h2 {
@@ -459,11 +462,10 @@ nav a:hover {
 }
 
 .recruit-label {
-    font-size: 15px;
-    font-family: 'Inter';
-    color: #fff;
-    margin-bottom: 25px;
-    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    font-weight: 500;
 }
 
 .careers-simple h2 {
@@ -563,7 +565,7 @@ nav a:hover {
 }
 
 .accordion-content p {
-    padding: calc(var(--spacing-unit) * 0.15) 0;
+    padding: calc(var(--spacing-unit) * 0.3) 0;
     color: var(--text-color);
     line-height: 1.6;
 }
@@ -858,26 +860,15 @@ nav a:hover {
     }
 }
 
-/* Philosophy Label */
-.philosophy-label {
-    font-size: 15px;
-    font-family: 'Inter';
-    color: #333333;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    text-align: center;
-    font-weight: 600;
-}
-
 /* Section Label */
 .section-label {
-    font-size: 15px;
-    font-family: 'Inter';
-    color: #333333;
-    margin-bottom: 25px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: #666;
     text-align: center;
-    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 /* Contact Section */
@@ -891,8 +882,17 @@ nav a:hover {
     margin: 0 auto;
     background-color: #fff;
     padding: calc(var(--spacing-unit) * 2);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.subtitle-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
 }
 
 .form-group {
@@ -963,65 +963,49 @@ nav a:hover {
 }
 
 /* Footer */
-.footer {
+footer {
     background-color: var(--footer-color);
     color: white;
-    padding: 3rem 0;
-    margin-top: 4rem;
+    padding: calc(var(--spacing-unit) * 3) 0;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
 }
 
 .footer-content {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2rem;
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
-.footer-logo {
-    width: 150px;
-    margin-bottom: 1rem;
+.footer-logo h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    text-align: center;
 }
 
-.footer-info {
-    flex: 1;
-    min-width: 250px;
-}
-
-.footer-links {
+.footer-nav ul {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    list-style: none;
+    gap: calc(var(--spacing-unit) * 2);
 }
 
-.footer-links a {
+.footer-nav a {
     color: white;
     text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.footer-links a:hover {
-    text-decoration: underline;
+.footer-nav a:hover {
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.footer-copyright {
-    margin-top: 2rem;
+.copyright {
     text-align: center;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: calc(var(--spacing-unit) * 2);
 }
-
-/* インラインスタイルの代替 - 中央揃えラベル */
-.text-center {
-    text-align: center;
-}
-
-/* リクルートページの特別なスタイル */
-.recruit-heading {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-}
-
 /* Mission Text Styling */
 .mission-first, .mission-second, .team-first, .team-second {
     display: inline;
