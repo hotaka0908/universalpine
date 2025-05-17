@@ -963,49 +963,65 @@ nav a:hover {
 }
 
 /* Footer */
-footer {
+.footer {
     background-color: var(--footer-color);
     color: white;
-    padding: calc(var(--spacing-unit) * 3) 0;
-    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    padding: 3rem 0;
+    margin-top: 4rem;
 }
 
 .footer-content {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: calc(var(--spacing-unit) * 2);
+    gap: 2rem;
 }
 
-.footer-logo h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0;
-    text-align: center;
+.footer-logo {
+    width: 150px;
+    margin-bottom: 1rem;
 }
 
-.footer-nav ul {
+.footer-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-links {
     display: flex;
-    list-style: none;
-    gap: calc(var(--spacing-unit) * 2);
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.footer-nav a {
+.footer-links a {
     color: white;
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
-.footer-nav a:hover {
-    color: rgba(255, 255, 255, 0.8);
+.footer-links a:hover {
+    text-decoration: underline;
 }
 
-.copyright {
+.footer-copyright {
+    margin-top: 2rem;
     text-align: center;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: calc(var(--spacing-unit) * 2);
+    color: rgba(255, 255, 255, 0.7);
 }
+
+/* インラインスタイルの代替 - 中央揃えラベル */
+.text-center {
+    text-align: center;
+}
+
+/* リクルートページの特別なスタイル */
+.recruit-heading {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+}
+
 /* Mission Text Styling */
 .mission-first, .mission-second, .team-first, .team-second {
     display: inline;
