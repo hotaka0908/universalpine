@@ -4,8 +4,9 @@
   "description": "Universal Pine company website",
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "start": "serve homepage",
-    "dev": "serve homepage",
+    "dev": "serve -l 3000 homepage",
     "build": "echo \"Static site, no build required\" && exit 0"
   },
   "keywords": [
@@ -17,7 +18,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "zod": "^3.24.4"
+    "zod": "3.24.4"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
