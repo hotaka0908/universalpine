@@ -60,7 +60,7 @@
             <h2 class="section-title">応募フォーム</h2>
             <!-- 説明文を削除 -->
             
-            <form id="apply-form" class="apply-form" action="mailto:ho@universalpine.com" method="post" enctype="text/plain" autocomplete="on">
+            <form id="apply-form" class="apply-form" method="post" enctype="multipart/form-data" autocomplete="on">
                 <!-- CSRF Protection Token -->
                 <input type="hidden" name="csrf_token" id="csrf_token" value="">
                 <div class="form-group">
@@ -125,6 +125,7 @@
                 </div>
                 
                 <button type="submit" class="submit-button">応募する</button>
+                <div id="form-status" class="form-status"></div>
             </form>
         </div>
     </section>
@@ -152,6 +153,101 @@
         </div>
     </footer>
 
-    <script src="apply.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('apply-form');
+            const formStatus = document.getElementById('form-status');
+            
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // 送信ボタンを無効化
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.textContent = '送信中...';
+                
+                // フォームデータの準備
+                const formData = new FormData(form);
+                
+                try {
+                    // ファイルの処理
+                    const resumeFile = document.getElementById('resume').files[0];
+                    const portfolioFile = document.getElementById('portfolio').files[0];
+                    
+                    // FormDataオブジェクトからJSONに変換するためのオブジェクトを作成
+                    const formDataObj = {};
+                    formData.forEach((value, key) => {
+                        // ファイル以外のフィールドを追加
+                        if (key !== 'resume' && key !== 'portfolio') {
+                            formDataObj[key] = value;
+                        }
+                    });
+                    
+                    // ファイルをBase64エンコードして追加（実際の実装ではファイルサイズに注意）
+                    if (resumeFile) {
+                        const resumeBase64 = await fileToBase64(resumeFile);
+                        formDataObj.resume = {
+                            name: resumeFile.name,
+                            type: resumeFile.type,
+                            data: resumeBase64
+                        };
+                    }
+                    
+                    if (portfolioFile) {
+                        const portfolioBase64 = await fileToBase64(portfolioFile);
+                        formDataObj.portfolio = {
+                            name: portfolioFile.name,
+                            type: portfolioFile.type,
+                            data: portfolioBase64
+                        };
+                    }
+                    
+                    // APIエンドポイントにデータを送信
+                    const response = await fetch('/api/submit-application', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formDataObj)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        // 成功時の処理
+                        formStatus.textContent = '応募が正常に送信されました。ありがとうございます！';
+                        formStatus.className = 'form-status success';
+                        form.reset();
+                    } else {
+                        // エラー時の処理
+                        formStatus.textContent = `エラー: ${result.error || '応募の送信中に問題が発生しました。'}`;
+                        formStatus.className = 'form-status error';
+                    }
+                } catch (error) {
+                    console.error('応募フォーム送信エラー:', error);
+                    formStatus.textContent = 'エラー: 応募の送信中に問題が発生しました。後でもう一度お試しください。';
+                    formStatus.className = 'form-status error';
+                } finally {
+                    // 送信ボタンを再有効化
+                    submitButton.disabled = false;
+                    submitButton.textContent = '応募する';
+                }
+            });
+            
+            // ファイルをBase64に変換する関数
+            function fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        // data:image/jpeg;base64, などのプレフィックスを削除
+                        const base64 = reader.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.onerror = error => reject(error);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
