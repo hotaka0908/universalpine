@@ -8,10 +8,6 @@
     "dev": "serve homepage",
     "build": "echo \"Static site, no build required\" && exit 0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hotaka0908/universalpine.git"
-  },
   "keywords": [
     "website",
     "company",
@@ -26,9 +22,5 @@
   "devDependencies": {
     "eslint": "^9.0.0",
     "serve": "^14.2.1"
-  },
-  "bugs": {
-    "url": "https://github.com/hotaka0908/universalpine/issues"
-  },
-  "homepage": "https://github.com/hotaka0908/universalpine#readme"
+  }
 }
