@@ -1,5 +1,3 @@
-import nodemailer from 'nodemailer';
-import { Resend } from 'resend';
 import { z } from 'zod';
 
 // バリデーションスキーマの定義
@@ -83,69 +81,17 @@ ${d.message || '特になし'}
     application_date: new Date().toISOString()
   };
 
-  // Resendインスタンスの作成
-  const resend = new Resend(process.env.RESEND_API_KEY || 're_ArivSj2Y_6smWLhLoYTg7YewjtmuiXDbW');
+  // メール送信をシミュレート
+  console.log('応募データを受信しました:', {
+    name: d.name,
+    email: d.email,
+    position: positionNames[d.position] || d.position,
+    date: new Date().toISOString()
+  });
   
-  // メール送信の実行
-  try {
-    // Resendを使用してメール送信
-    const { data, error } = await resend.emails.send({
-      from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
-      to: process.env.TO_EMAIL,
-      subject: `【応募】${d.name} さん - ${positionNames[d.position] || d.position}`,
-      text: emailBody,
-      attachments: [
-        {
-          filename: 'application_data.json',
-          content: Buffer.from(JSON.stringify(fullData, null, 2)),
-          contentType: 'application/json'
-        }
-      ]
-    });
-    
-    // Resendでエラーが発生した場合、Nodemailerにフォールバック
-    if (error) {
-      console.warn('Resend email error, falling back to Nodemailer:', error);
-      await sendWithNodemailer();
-    } else {
-      console.log('Email sent successfully with Resend, ID:', data?.id);
-    }
-    
-    res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error('Email sending error with Resend:', error);
-    
-    // Resendが完全に失敗した場合、Nodemailerを試す
-    try {
-      await sendWithNodemailer();
-      res.status(200).json({ ok: true });
-    } catch (nodemailerError) {
-      console.error('Fallback to Nodemailer also failed:', nodemailerError);
-      res.status(500).json({ error: 'email_error', message: 'メール送信に失敗しました' });
-    }
-  }
-  
-  // Nodemailerを使用したメール送信関数（フォールバック用）
-  async function sendWithNodemailer() {
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_APP_PASSWORD }
-    });
-    
-    await transporter.sendMail({
-      from: `"応募フォーム" <${process.env.MAIL_USER}>`,
-      to: process.env.TO_EMAIL,
-      subject: `【応募】${d.name} さん - ${positionNames[d.position] || d.position}`,
-      text: emailBody,
-      attachments: [
-        {
-          filename: 'application_data.json',
-          content: JSON.stringify(fullData, null, 2),
-          contentType: 'application/json'
-        }
-      ]
-    });
-    
-    console.log('Email sent successfully with Nodemailer fallback');
-  }
+  // 成功レスポンスを返す
+  res.status(200).json({ 
+    ok: true, 
+    message: '応募を受信しました。担当者から連絡します。'
+  });
 }

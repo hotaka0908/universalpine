@@ -1,5 +1,6 @@
 // eslint.config.js - ESLint v9 用の設定ファイル
-export default [
+/** @type {import('eslint').Linter.FlatConfig[]} */
+module.exports = [
   {
     files: ['**/*.js'],
     languageOptions: {

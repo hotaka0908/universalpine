@@ -1,21 +1,12 @@
 {
-  "type": "module",
   "name": "universalpine",
   "version": "1.0.0",
   "description": "Universal Pine company website",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "audit": "npm audit",
-    "audit:fix": "npm audit fix",
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "deploy": "vercel deploy --prod"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hotaka0908/universalpine.git"
+    "start": "serve homepage",
+    "dev": "serve homepage",
+    "build": "echo \"Static site, no build required\" && exit 0"
   },
   "keywords": [
     "website",
@@ -26,16 +17,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "nodemailer": "^6.10.1",
-    "resend": "^4.5.1",
     "zod": "^3.24.4"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
-    "vercel": "^32.5.0"
-  },
-  "bugs": {
-    "url": "https://github.com/hotaka0908/universalpine/issues"
-  },
-  "homepage": "https://github.com/hotaka0908/universalpine#readme"
+    "serve": "^14.2.1"
+  }
 }
