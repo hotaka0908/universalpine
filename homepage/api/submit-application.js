@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
 // Resend APIキーを環境変数から取得
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.resend_key);
 
 export default async function handler(req, res) {
   // POSTリクエスト以外は許可しない
