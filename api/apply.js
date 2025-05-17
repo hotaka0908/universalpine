@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import { z } from 'zod';
 
 // バリデーションスキーマの定義
@@ -82,31 +81,17 @@ ${d.message || '特になし'}
     application_date: new Date().toISOString()
   };
 
-  // メール送信用のトランスポーターを作成
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_APP_PASSWORD }
+  // メール送信をシミュレート
+  console.log('応募データを受信しました:', {
+    name: d.name,
+    email: d.email,
+    position: positionNames[d.position] || d.position,
+    date: new Date().toISOString()
   });
-
-  try {
-    // メール送信
-    await transporter.sendMail({
-      from: `"応募フォーム" <${process.env.MAIL_USER}>`,
-      to: process.env.TO_EMAIL,
-      subject: `【応募】${d.name} さん - ${positionNames[d.position] || d.position}`,
-      text: emailBody,
-      attachments: [
-        {
-          filename: 'application_data.json',
-          content: JSON.stringify(fullData, null, 2),
-          contentType: 'application/json'
-        }
-      ]
-    });
-
-    res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error('Email sending error:', error);
-    res.status(500).json({ error: 'email_error', message: 'メール送信に失敗しました' });
-  }
+  
+  // 成功レスポンスを返す
+  res.status(200).json({ 
+    ok: true, 
+    message: '応募を受信しました。担当者から連絡します。'
+  });
 }

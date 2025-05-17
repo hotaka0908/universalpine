@@ -1,139 +1,90 @@
-import { z } from "https://cdn.skypack.dev/zod@3.22.2";
+document.addEventListener('DOMContentLoaded', function () {
+  const applyForm = document.getElementById('apply-form')
 
-// バリデーションスキーマの定義
-const schema = z.object({
-  name: z.string().min(1, "お名前は必須です"),
-  email: z.string().email("有効なメールアドレスを入力してください"),
-  phone: z.string().min(1, "電話番号は必須です"),
-  postal_code: z.string().min(1, "郵便番号は必須です"),
-  address_line1: z.string().min(1, "住所は必須です"),
-  address_line2: z.string().optional(),
-  position: z.string().min(1, "応募職種は必須です"),
-  resume_url: z.string().url("履歴書URLの形式が正しくありません"),
-  portfolio_url: z.string().url("職務経歴書URLの形式が正しくありません"),
-  message: z.string().optional(),
-  hp: z.string().max(0, "ボットによる送信と判断されました").optional() // ハニーポット
-});
-
-// CSRF トークン生成関数
-function generateCSRFToken() {
-  const token = Math.random().toString(36).substring(2, 15) + 
-              Math.random().toString(36).substring(2, 15) + 
-              Date.now().toString(36);
-  return token;
-}
-
-// 入力値のサニタイズ関数
-function sanitizeInput(input) {
-  if (typeof input !== 'string') return input;
-  return input.replace(/[<>&"']/g, function(match) {
-    switch (match) {
-      case '<': return '&lt;';
-      case '>': return '&gt;';
-      case '&': return '&amp;';
-      case '"': return '&quot;';
-      case "'": return '&#x27;';
-      default: return match;
-    }
-  });
-}
-
-// フォームデータをサニタイズする関数
-function sanitizeFormData(data) {
-  const sanitized = {};
-  for (const [key, value] of Object.entries(data)) {
-    sanitized[key] = sanitizeInput(value);
+  // CSRF トークン生成と設定
+  function generateCSRFToken () {
+    const token = Math.random().toString(36).substring(2, 15) +
+                     Math.random().toString(36).substring(2, 15) +
+                     Date.now().toString(36)
+    return token
   }
-  return sanitized;
-}
 
-// DOMコンテンツ読み込み完了時の処理
-document.addEventListener('DOMContentLoaded', function() {
-  // CSRFトークンの設定
-  const csrfToken = generateCSRFToken();
-  const csrfTokenInput = document.getElementById('csrf_token');
-  if (csrfTokenInput) {
-    csrfTokenInput.value = csrfToken;
-    // セッションストレージにトークンを保存（サーバー検証用）
-    sessionStorage.setItem('csrf_token', csrfToken);
-  }
-});
+  // CSRFトークンをフォームに設定
+  const csrfToken = generateCSRFToken()
+  document.getElementById('csrf_token').value = csrfToken
 
-// フォーム送信処理
-document.getElementById("apply-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  
-  // フォームデータの取得
-  const formData = new FormData(e.target);
-  const formDataObj = Object.fromEntries(formData);
-  
-  // ハニーポット判定 - botが埋めた場合は何もせずに処理終了
-  if (formDataObj.hp) {
-    console.log("Honeypot triggered");
-    // 成功を装って処理を終了
-    window.location.href = 'thanks.html';
-    return;
-  }
-  
+  // セッションストレージにトークンを保存（サーバー検証用）
+  sessionStorage.setItem('csrf_token', csrfToken)
+
   // 入力値のサニタイズ
-  const sanitizedData = sanitizeFormData(formDataObj);
-  
-  // バリデーション
-  const validationResult = schema.safeParse(sanitizedData);
-  
-  if (!validationResult.success) {
-    // バリデーションエラーの処理
-    const errors = validationResult.error.errors;
-    const errorMessages = errors.map(err => err.message).join('\n');
-    alert(`入力に誤りがあります:\n${errorMessages}`);
-    return;
-  }
-  
-  // 送信データの準備
-  const submissionData = {
-    ...validationResult.data,
-    // address_line2が空の場合はundefinedにして、APIで処理しやすくする
-    address_line2: validationResult.data.address_line2 || undefined
-  };
-  
-  // ローディング表示
-  const submitButton = document.getElementById('submit-button');
-  submitButton.disabled = true;
-  submitButton.innerText = '送信中...';
-  
-  try {
-    // Vercelのサーバーレス関数にデータを送信
-    const response = await fetch("/api/apply", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "X-CSRF-Token": sanitizedData.csrf_token
-      },
-      body: JSON.stringify(submissionData)
-    });
-    
-    if (response.ok) {
-      // 送信成功時、thanks.htmlにリダイレクト
-      window.location.href = 'thanks.html';
-    } else {
-      // エラーレスポンスの処理
-      const errorData = await response.json();
-      let errorMessage = '送信に失敗しました。後ほど再度お試しください。';
-      
-      if (errorData.error === 'invalid') {
-        errorMessage = '入力内容に問題があります。入力内容を確認してください。';
-      } else if (errorData.error === 'email_error') {
-        errorMessage = 'メール送信に失敗しました。後ほど再度お試しください。';
-      } else if (errorData.message) {
-        errorMessage = errorData.message;
+  function sanitizeInput (input) {
+    return input.replace(/[<>&"']/g, function (match) {
+      switch (match) {
+        case '<': return '&lt;'
+        case '>': return '&gt;'
+        case '&': return '&amp;'
+        case '"': return '&quot;'
+        case "'": return '&#x27;'
+        default: return match
       }
-      
-      throw new Error(errorMessage);
-    }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    alert(error.message || '送信に失敗しました。後ほど再度お試しください。');
-    submitButton.disabled = false;
-    submitButton.innerText = '応募する';
+    })
   }
-});
+
+  if (applyForm) {
+    applyForm.addEventListener('submit', function (e) {
+      // フォームのネイティブバリデーションを活用するため、条件付きでpreventDefault()を使用
+
+      // 必須項目のバリデーション
+      const name = document.getElementById('name').value.trim()
+      const email = document.getElementById('email').value.trim()
+      const phone = document.getElementById('phone').value.trim()
+      const postalCode = document.getElementById('postal_code').value.trim()
+      const address = document.getElementById('address_line1').value.trim()
+      const position = document.getElementById('position').value
+      const resume = document.getElementById('resume').value
+      const portfolio = document.getElementById('portfolio').value
+
+      if (!name || !email || !phone || !postalCode || !address || !position || !resume || !portfolio) {
+        alert('必須項目をすべて入力してください。')
+        e.preventDefault()
+        return
+      }
+
+      // 電話番号のバリデーション（日本の電話番号形式）
+      const phonePattern = /^(0[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{1,4}-[0-9]{1,4}-[0-9]{3,4}|\+81[0-9]{9,10}|0[0-9]{9,10})$/
+      if (!phonePattern.test(phone)) {
+        alert('電話番号の形式が正しくありません。例: 03-1234-5678 または 090-1234-5678')
+        e.preventDefault()
+        return
+      }
+
+      // メールアドレスの追加検証
+      const emailPattern = /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+      if (!emailPattern.test(email)) {
+        alert('メールアドレスの形式が正しくありません。')
+        e.preventDefault()
+        return
+      }
+
+      // 郵便番号の検証（日本の郵便番号形式）
+      const postalCodePattern = /^\d{3}-?\d{4}$/
+      if (!postalCodePattern.test(postalCode)) {
+        alert('郵便番号の形式が正しくありません。例: 123-4567')
+        e.preventDefault()
+        return
+      }
+
+      // 入力値のサニタイズ
+      document.getElementById('name').value = sanitizeInput(name)
+      document.getElementById('email').value = sanitizeInput(email)
+      document.getElementById('phone').value = sanitizeInput(phone)
+      document.getElementById('postal_code').value = sanitizeInput(postalCode)
+      document.getElementById('address_line1').value = sanitizeInput(address)
+
+      // フォームが正常に送信される場合、thanks.htmlにリダイレクト
+      setTimeout(function () {
+        window.location.href = 'thanks.html'
+      }, 100)
+    })
+  }
+})

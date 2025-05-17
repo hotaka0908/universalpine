@@ -1,5 +1,33 @@
 /* News Page Specific Styles */
 
+/* Hero Banner Section */
+.hero-banner {
+    background-color: #F3F5F6;
+    color: var(--text-color);
+    padding: 0;
+    text-align: center;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.hero-banner h1 {
+    font-size: 64px;
+    font-weight: 700;
+    margin: 0;
+}
+
 /* News Section */
 .news-section {
     background-color: #FAFAFA;
