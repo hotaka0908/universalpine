@@ -1,5 +1,27 @@
 /* About Page Specific Styles */
 
+/* Philosophy Section */
+#philosophy {
+    background-image: url('images/sky.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.philosophy-heading {
+    text-align: center;
+}
+
+.philosophy-content p {
+    text-align: center;
+}
+
+/* CEO Signature */
+.ceo-signature {
+    width: 80px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
 /* Hero Banner Section */
 .hero-banner {
     background-color: #F3F5F6;

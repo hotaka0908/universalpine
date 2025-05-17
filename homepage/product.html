@@ -114,7 +114,7 @@
         <div class="hero-content">
             <h1 class="hero-title">スマホの次へ</h1>
             <div class="hero-video">
-                <video src="images/wave.mp4" autoplay loop muted playsinline width="360" height="auto"></video>
+                <video id="hero-video" src="images/wave.mp4" autoplay loop muted playsinline width="360" height="auto"></video>
             </div>
             <h2 class="hero-subtitle">AIネックレス</h2>
             <p class="hero-lead">未来は声で操作する</p>
@@ -220,7 +220,7 @@
                         <h3>量産体制構築</h3>
                         <p>製造パートナーとの契約完了。2026年4月発売に向けての量産体制を構築。</p>
                         <div class="progress-bar">
-                            <div class="progress" style="width: 10%"></div>
+                            <div class="progress progress-10"></div>
                             <span class="progress-text">開発進捗: 10%</span>
                         </div>
                     </div>
@@ -262,5 +262,31 @@
 
     <script src="script.js"></script>
     <script src="responsive.js"></script>
+    <script>
+        // Firefox compatibility fix for video playback
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('hero-video');
+            
+            // Check if it's Firefox
+            const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+            
+            if (isFirefox && video) {
+                // Set video properties for Firefox
+                video.style.objectFit = 'contain';
+                video.style.maxWidth = '100%';
+                video.style.height = 'auto';
+                
+                // Ensure video plays inline in Firefox
+                video.setAttribute('controls', false);
+                
+                // Force play if autoplay doesn't work
+                video.addEventListener('canplay', function() {
+                    video.play().catch(function(error) {
+                        console.log('Firefox autoplay error:', error);
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
