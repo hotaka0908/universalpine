@@ -882,8 +882,17 @@ nav a:hover {
     margin: 0 auto;
     background-color: #fff;
     padding: calc(var(--spacing-unit) * 2);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.subtitle-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
 }
 
 .form-group {
