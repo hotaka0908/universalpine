@@ -3,9 +3,32 @@
 
 # Environment variables
 *.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
 .vercel
 
-# Ignore build artefacts
+# Dependencies
 node_modules/
 .next/
 dist/
+
+# Build outputs
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
