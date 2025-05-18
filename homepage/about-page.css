@@ -20,6 +20,11 @@
     width: 80px;
     vertical-align: middle;
     margin-left: 10px;
+    text-align: right;
+}
+
+.ceo-signature p {
+    text-align: right;
 }
 
 .signature-image {
