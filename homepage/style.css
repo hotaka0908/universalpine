@@ -316,12 +316,18 @@ nav a:hover {
   padding: calc(var(--spacing-unit) * 8) 0;
 }
 
-.product-heading,
 .section-heading {
   font-size: 48px;
   font-weight: 700;
   text-align: center;
   margin-bottom: calc(var(--spacing-unit) * 0.5);
+}
+
+.product-heading {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
 .product-grid {
