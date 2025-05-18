@@ -16,20 +16,22 @@
 }
 
 /* CEO Signature */
-.ceo-signature {
+.signature-image {
     width: 80px;
     vertical-align: middle;
     margin-left: 10px;
+}
+
+.ceo-signature-container {
+    margin-top: calc(var(--spacing-unit) * 2);
+    font-weight: 500;
+    font-style: italic;
     text-align: right;
 }
 
-.ceo-signature p {
+.ceo-signature-container p {
     text-align: right;
-}
-
-.signature-image {
-    vertical-align: middle;
-    margin-left: 5px;
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
 }
 
 /* Hero Banner Section */
@@ -191,11 +193,7 @@
     line-height: 1.8;
 }
 
-.ceo-signature {
-    margin-top: calc(var(--spacing-unit) * 2);
-    font-weight: 500;
-    font-style: italic;
-}
+/* CEO signature styles moved to unified section above */
 
 /* Founders Styling */
 .founders-container {
