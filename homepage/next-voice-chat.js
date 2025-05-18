@@ -3,7 +3,7 @@
 // APIサーバーのURL設定 - ローカル開発環境と本番環境の両方で動作するように設定
 // 現在のホスト名に基づいてAPIエンドポイントを判断
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const API_BASE_URL = isLocalhost ? 'http://localhost:3003' : 'https://universalpine-voice-chat.windsurf.build';
+const API_BASE_URL = isLocalhost ? 'http://localhost:3004' : 'https://universalpine-voice-chat.windsurf.build';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Voice Chat Widget initialized');
