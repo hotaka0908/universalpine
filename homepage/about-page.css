@@ -22,6 +22,11 @@
     margin-left: 10px;
 }
 
+.signature-image {
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
 /* Hero Banner Section */
 .hero-banner {
     background-color: #F3F5F6;
