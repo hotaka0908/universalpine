@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // 音声データをBlobに変換
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    console.log('音声Blobを作成しました', audioBlob.size + ' bytes');
+                    console.log('音声Blobを作成しました', `${audioBlob.size} bytes`);
                     
                     // FormDataの作成
                     const formData = new FormData();
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         return response.blob();
                     })
                     .then(audioBlob => {
-                        console.log('音声レスポンスを受信しました', audioBlob.size + ' bytes');
+                        console.log('音声レスポンスを受信しました', `${audioBlob.size} bytes`);
                         // 音声レスポンスを再生
                         const audioUrl = URL.createObjectURL(audioBlob);
                         const audio = new Audio(audioUrl);

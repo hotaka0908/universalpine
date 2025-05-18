@@ -2,7 +2,7 @@
 
 "use client"
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./VoiceChat.module.css";
 
 export default function VoiceChat() {
