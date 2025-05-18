@@ -586,7 +586,7 @@ nav a:hover {
 .accordion-content p {
   padding: calc(var(--spacing-unit) * 0.3) 0;
   color: var(--text-color);
-  line-height: 1.6;
+  line-height: 1;
 }
 
 /* Company Overview Section */
