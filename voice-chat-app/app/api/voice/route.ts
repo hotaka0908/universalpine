@@ -12,6 +12,20 @@ const openai = new OpenAI({
   apiKey: process.env.openai_key || 'sk-dummy-key' // 実際の環境変数から取得、存在しない場合はダミーキーを使用
 });
 
+// CORSヘッダーを設定する関数
+function setCorsHeaders(headers: Headers) {
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  headers.set('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+// OPTIONSリクエストに対応する関数
+export async function OPTIONS() {
+  const headers = new Headers();
+  setCorsHeaders(headers);
+  return new Response(null, { status: 204, headers });
+}
+
 export async function POST(req: NextRequest) {
   // 1) audio 受け取り
   const form = await req.formData();
@@ -45,7 +59,8 @@ export async function POST(req: NextRequest) {
 
   // speechResp は ReadableStream
   // OpenAI SDK v4 では speechResp は ReadableStream を返すので、そのまま Response に渡す
-  return new Response(speechResp.body, {
-    headers: { "Content-Type": "audio/wav" }
-  });
+  const headers = new Headers({ "Content-Type": "audio/wav" });
+  setCorsHeaders(headers);
+  
+  return new Response(speechResp.body, { headers });
 }
