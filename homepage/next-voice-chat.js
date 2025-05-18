@@ -1,7 +1,8 @@
 // OpenAI音声APIを使用した高度な音声チャット機能
 
-// APIサーバーのURL設定 - 相対パスを使用してデプロイ後も正しく動作するようにする
-const API_BASE_URL = '';
+// APIサーバーのURL設定 - Vercelにデプロイされたアプリケーションのエンドポイントを使用
+// 本番環境では実際のURLに置き換えてください
+const API_BASE_URL = 'https://universalpine-voice-chat.vercel.app';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得
