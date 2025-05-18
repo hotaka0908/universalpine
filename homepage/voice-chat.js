@@ -1,3 +1,8 @@
+// config.jsの読み込みを確認
+if (typeof window.config === 'undefined') {
+    console.warn('config.jsが読み込まれていません。APIキーが利用できない可能性があります。');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得
     const micButton = document.getElementById('mic-button');
@@ -61,30 +66,63 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
     
-    // AIの応答を生成する関数
+    // AIの応答を生成する関数 - OpenAI APIを使用
     async function generateAIResponse(userInput) {
-        // Universal Pineの製品やサービスに関連する応答
-        const responses = [
-            "Universal Pineの音声AIアシスタントへようこそ。どのようにお手伝いできますか？",
-            "当社のAIネックレスについて詳しく知りたい場合は、製品ページをご覧ください。",
-            "Universal Pineは最先端のAI技術で人々の生活をより良くすることを目指しています。",
-            "採用情報についてのご質問でしたら、詳細は採用ページをご確認ください。",
-            "お問い合わせフォームからメッセージをお送りいただければ、担当者からご連絡いたします。",
-            "AIネックレスは日常の大切な瞬間を自動的に記録し、プライバシーを守りながら思い出を残します。",
-            "当社の製品は最先端の技術と美しいデザインを兼ね備えています。",
-            "Universal Pineは2025年に設立された、AI技術を専門とする企業です。",
-            "ご質問ありがとうございます。もう少し詳しく教えていただけますか？",
-            "申し訳ありませんが、その情報は現在持ち合わせておりません。お問い合わせフォームからお問い合わせください。"
-        ];
-        
-        // 簡易デモ用にランダムな応答を返す
-        return new Promise(resolve => {
-            // 応答生成の遅延をシミュレート
-            setTimeout(() => {
-                const randomIndex = Math.floor(Math.random() * responses.length);
-                resolve(responses[randomIndex]);
-            }, 1000);
-        });
+        try {
+            // OpenAI APIキーの確認
+            if (!window.config || !window.config.apiKey) {
+                console.error('APIキーが設定されていません');
+                return 'すみません、現在AIサービスに接続できません。後ほどお試しください。';
+            }
+            
+            const apiKey = window.config.apiKey;
+            statusText.textContent = 'OpenAI APIに接続中...';
+            
+            // APIリクエストの設定
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'あなたはUniversal Pineという会社のAIアシスタントです。日本語で簡潔に応答してください。会社はAI技術を専門とし、AIネックレスという製品を開発しています。AIネックレスは日常の大切な瞬間を自動的に記録し、プライバシーを守りながら思い出を残す製品です。'
+                        },
+                        {
+                            role: 'user',
+                            content: userInput
+                        }
+                    ],
+                    max_tokens: 150,
+                    temperature: 0.7
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+            
+        } catch (error) {
+            console.error('OpenAI API error:', error);
+            
+            // エラー時のフォールバック応答
+            const fallbackResponses = [
+                "申し訳ありません、現在サーバーに接続できません。後ほどお試しください。",
+                "一時的な通信エラーが発生しました。しばらくしてからもう一度お試しください。",
+                "ネットワーク接続に問題が発生しました。接続を確認してお試しください。",
+                "AIサービスが一時的に利用できません。後ほどお試しください。"
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * fallbackResponses.length);
+            return fallbackResponses[randomIndex];
+        }
     }
     
     // テキストを音声で読み上げる関数
