@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #9DD941;
+  --accent-color: #7FB82D;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 243, 245, 246;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: var(--font-noto-sans-jp), var(--font-inter), sans-serif;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold md:text-4xl;
+  }
+  h2 {
+    @apply text-2xl font-semibold md:text-3xl;
+  }
+  h3 {
+    @apply text-xl font-medium md:text-2xl;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#9DD941] text-white px-4 py-2 rounded-md hover:bg-[#7FB82D] transition-colors;
+  }
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors;
+  }
+}

@@ -1,5 +1,8 @@
 // OpenAI音声APIを使用した高度な音声チャット機能
 
+// APIサーバーのURL設定
+const API_BASE_URL = 'http://localhost:8000';
+
 document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得
     const micButton = document.getElementById('mic-button');
@@ -12,15 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let mediaRecorder;
     let audioChunks = [];
     
-    // APIキーの取得
+    // APIキーの取得 (サーバー側で環境変数から取得するのでクライアント側では不要)
     const apiKey = typeof window.config !== 'undefined' ? window.config.apiKey : '';
     
-    if (!apiKey) {
-        console.warn('APIキーが設定されていません。音声チャット機能は動作しません。');
-        statusText.textContent = 'APIキーが必要です';
+    // APIサーバーの生存確認
+    fetch(`${API_BASE_URL}/api/chat`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: 'ping' })
+    }).catch(error => {
+        console.warn('APIサーバーに接続できません。サーバーが起動しているか確認してください。');
+        statusText.textContent = 'APIサーバーに接続できません';
         micButton.disabled = true;
-        return;
-    }
+    });
     
     // マイクボタンのクリックイベント
     micButton.addEventListener('mousedown', startRecording);
@@ -68,17 +77,79 @@ document.addEventListener('DOMContentLoaded', () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                 audioChunks = [];
                 
-                // ユーザーの発言をチャット履歴に追加（仮のテキスト）
+                // ユーザーの発言をチャット履歴に追加
                 addMessage('音声を処理中...', true);
                 
                 // FormDataの作成
                 const formData = new FormData();
                 formData.append('file', audioBlob, 'voice.webm');
-                formData.append('apiKey', apiKey);
                 
-                // サーバーサイドの処理が実装されるまでのモック応答
-                setTimeout(async () => {
-                    // 実際のAPIが実装されるまでのフォールバック
+                try {
+                    // 音声をテキストに変換 (Whisper API)
+                    const transcribeResponse = await fetch(`${API_BASE_URL}/api/transcribe`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!transcribeResponse.ok) {
+                        throw new Error(`Transcription error: ${transcribeResponse.status}`);
+                    }
+                    
+                    const transcribeData = await transcribeResponse.json();
+                    const userText = transcribeData.text;
+                    
+                    // ユーザーの発言を更新
+                    updateUserMessage(userText);
+                    
+                    // チャット応答を取得 (Chat API)
+                    const chatResponse = await fetch(`${API_BASE_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: userText })
+                    });
+                    
+                    if (!chatResponse.ok) {
+                        throw new Error(`Chat error: ${chatResponse.status}`);
+                    }
+                    
+                    const chatData = await chatResponse.json();
+                    const assistantText = chatData.text;
+                    
+                    // アシスタントの応答を表示
+                    addMessage(assistantText, false);
+                    
+                    // 音声合成 (TTS API)
+                    const speechResponse = await fetch(`${API_BASE_URL}/api/speech`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: assistantText })
+                    });
+                    
+                    if (!speechResponse.ok) {
+                        throw new Error(`Speech error: ${speechResponse.status}`);
+                    }
+                    
+                    // 音声を再生
+                    const audioBlob = await speechResponse.blob();
+                    const url = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(url);
+                    audio.play();
+                    
+                    // 音声再生終了時の処理
+                    audio.onended = () => {
+                        micButton.classList.remove('processing');
+                        statusText.classList.remove('processing');
+                        statusText.textContent = 'お話しませんか？';
+                    };
+                    
+                } catch (apiError) {
+                    console.error('APIエラー:', apiError);
+                    
+                    // APIエラー時のフォールバック処理
                     const fallbackResponses = [
                         "こんにちは、Universal Pineのアシスタントです。何かお手伝いできることはありますか？",
                         "AIネックレスは日常の大切な瞬間を自動的に記録する製品です。詳細を知りたいですか？",
@@ -90,46 +161,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     const aiResponse = fallbackResponses[randomIndex];
                     
                     // チャット履歴を更新
-                    updateUserMessage(aiResponse);
+                    updateUserMessage('音声認識完了');
                     addMessage(aiResponse, false);
                     
-                    // 音声合成（実際のAPIが実装されるまでのWeb Speech API使用）
+                    // 音声合成（Web Speech API使用）
                     speakText(aiResponse);
                     
                     // 状態をリセット
                     micButton.classList.remove('processing');
                     statusText.classList.remove('processing');
                     statusText.textContent = 'お話しませんか？';
-                }, 2000);
-                
-                /* 実際のAPIが実装された場合のコード
-                // サーバーにリクエスト送信
-                const response = await fetch('/api/voice', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
                 }
-                
-                // 音声応答を取得
-                const assistantAudio = await response.blob();
-                
-                // 音声を再生
-                const url = URL.createObjectURL(assistantAudio);
-                const audio = new Audio(url);
-                audio.play();
-                
-                // チャット履歴を更新
-                updateUserMessage('音声認識完了');
-                addMessage('(音声再生中...)', false);
-                
-                // 状態をリセット
-                micButton.classList.remove('processing');
-                statusText.classList.remove('processing');
-                statusText.textContent = 'お話しませんか？';
-                */
                 
             } catch (error) {
                 console.error('音声処理エラー:', error);
@@ -204,10 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
         sendButton.className = 'send-button';
         sendButton.textContent = '送信';
         
+        const cancelButton = document.createElement('button');
+        cancelButton.className = 'cancel-button';
+        cancelButton.textContent = '音声モードに戻る';
+        
         const textInputContainer = document.createElement('div');
         textInputContainer.className = 'text-input-container';
         textInputContainer.appendChild(textInput);
         textInputContainer.appendChild(sendButton);
+        textInputContainer.appendChild(cancelButton);
         
         // 既存のコントロールを一時的に非表示
         const controls = document.querySelector('.controls');
@@ -231,9 +278,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusText.textContent = 'お答えを考えています...';
                 statusText.classList.add('processing');
                 
-                // サーバーサイドの処理が実装されるまでのモック応答
-                setTimeout(async () => {
-                    // 実際のAPIが実装されるまでのフォールバック
+                try {
+                    // チャット応答を取得 (Chat API)
+                    const chatResponse = await fetch(`${API_BASE_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: userInput })
+                    });
+                    
+                    if (!chatResponse.ok) {
+                        throw new Error(`Chat error: ${chatResponse.status}`);
+                    }
+                    
+                    const chatData = await chatResponse.json();
+                    const assistantText = chatData.text;
+                    
+                    // アシスタントの応答を表示
+                    addMessage(assistantText, false);
+                    
+                    // 音声合成 (TTS API)
+                    const speechResponse = await fetch(`${API_BASE_URL}/api/speech`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: assistantText })
+                    });
+                    
+                    if (!speechResponse.ok) {
+                        throw new Error(`Speech error: ${speechResponse.status}`);
+                    }
+                    
+                    // 音声を再生
+                    const audioBlob = await speechResponse.blob();
+                    const url = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(url);
+                    audio.play();
+                    
+                    // 音声再生終了時の処理
+                    audio.onended = () => {
+                        statusText.classList.remove('processing');
+                        statusText.textContent = 'お話しませんか？';
+                    };
+                    
+                } catch (error) {
+                    console.error('APIエラー:', error);
+                    
+                    // APIエラー時のフォールバック処理
                     const fallbackResponses = [
                         "こんにちは、Universal Pineのアシスタントです。何かお手伝いできることはありますか？",
                         "AIネックレスは日常の大切な瞬間を自動的に記録する製品です。詳細を知りたいですか？",
@@ -247,18 +340,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     // チャット履歴を更新
                     addMessage(aiResponse, false);
                     
-                    // 音声合成（実際のAPIが実装されるまでのWeb Speech API使用）
+                    // 音声合成（Web Speech API使用）
                     speakText(aiResponse);
                     
                     // 状態をリセット
                     statusText.classList.remove('processing');
                     statusText.textContent = 'お話しませんか？';
-                    
-                    // テキスト入力コンテナを削除し、元のコントロールを表示
-                    voiceChatContainer.removeChild(textInputContainer);
-                    controls.style.display = 'flex';
-                }, 2000);
+                }
+                
+                // テキスト入力コンテナを削除し、元のコントロールを表示
+                voiceChatContainer.removeChild(textInputContainer);
+                controls.style.display = 'flex';
             }
+        });
+        
+        // キャンセルボタンのクリックイベント
+        cancelButton.addEventListener('click', () => {
+            voiceChatContainer.removeChild(textInputContainer);
+            controls.style.display = 'flex';
         });
         
         // Enterキーでも送信
