@@ -1,8 +1,9 @@
 // OpenAI音声APIを使用した高度な音声チャット機能
 
-// APIサーバーのURL設定 - Vercelにデプロイされたアプリケーションのエンドポイントを使用
-// 本番環境では実際のURLに置き換えてください
-const API_BASE_URL = 'https://universalpine-voice-chat.vercel.app';
+// APIサーバーのURL設定 - ローカル開発環境と本番環境の両方で動作するように設定
+// 現在のホスト名に基づいてAPIエンドポイントを判断
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE_URL = isLocalhost ? 'http://localhost:3001' : 'https://universalpine-voice-chat.vercel.app';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得
