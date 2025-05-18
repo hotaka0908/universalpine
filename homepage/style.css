@@ -271,6 +271,17 @@ nav a:hover {
     padding: 140px 0;
 }
 
+.philosophy-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
 .philosophy-heading {
     font-size: 48px;
     font-weight: 700;
@@ -420,10 +431,12 @@ nav a:hover {
 }
 
 .contact-label {
+    font-family: 'Inter', sans-serif;
     font-size: 1rem;
     letter-spacing: 0.1em;
     margin-bottom: calc(var(--spacing-unit) * 1);
-    font-weight: 500;
+    font-weight: 600;
+    color: #333333;
 }
 
 .contact-simple h2 {
@@ -455,10 +468,12 @@ nav a:hover {
 }
 
 .recruit-label {
+    font-family: 'Inter', sans-serif;
     font-size: 1rem;
     letter-spacing: 0.1em;
     margin-bottom: calc(var(--spacing-unit) * 1);
-    font-weight: 500;
+    font-weight: 600;
+    color: #333333;
 }
 
 .careers-simple h2 {
@@ -855,11 +870,12 @@ nav a:hover {
 
 /* Section Label */
 .section-label {
-    font-size: 12px;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #666;
+    color: #333333;
     text-align: center;
     margin-bottom: 8px;
 }
