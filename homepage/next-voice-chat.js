@@ -6,188 +6,180 @@ const isLocalhost = window.location.hostname === 'localhost' || window.location.
 const API_BASE_URL = isLocalhost ? 'http://localhost:3002' : 'https://universalpine-voice-chat.windsurf.build';
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Voice Chat Widget initialized');
+    
     // 要素の取得
     const micButton = document.getElementById('mic-button');
     const statusText = document.getElementById('status-text');
     const chatHistory = document.getElementById('chat-history');
     const clearButton = document.getElementById('clear-button');
     const textModeButton = document.getElementById('text-mode-button');
+    const voiceChatContainer = document.getElementById('voice-chat-widget');
+    
+    if (!micButton || !statusText || !chatHistory || !clearButton || !textModeButton || !voiceChatContainer) {
+        console.error('必要なDOM要素が見つかりません。');
+        return;
+    }
     
     // 録音関連の変数
-    let mediaRecorder;
+    let mediaRecorder = null;
     let audioChunks = [];
-    
-    // APIキーの取得 (サーバー側で環境変数から取得するのでクライアント側では不要)
-    const apiKey = typeof window.config !== 'undefined' ? window.config.apiKey : '';
+    let isRecording = false;
     
     // APIサーバーの生存確認
+    console.log(`APIサーバーに接続しています: ${API_BASE_URL}/api/chat`);
     fetch(`${API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ text: 'ping' })
-    }).catch(error => {
-        console.warn('APIサーバーに接続できません。サーバーが起動しているか確認してください。');
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log('APIサーバーに接続できました');
+        statusText.textContent = 'お話しませんか？';
+        return response.json();
+    })
+    .catch(error => {
+        console.warn('APIサーバーに接続できません。エラー: ', error);
         statusText.textContent = 'APIサーバーに接続できません';
         micButton.disabled = true;
     });
     
     // マイクボタンのクリックイベント
-    micButton.addEventListener('mousedown', startRecording);
-    micButton.addEventListener('mouseup', stopRecording);
-    micButton.addEventListener('touchstart', startRecording);
-    micButton.addEventListener('touchend', stopRecording);
+    micButton.addEventListener('click', () => {
+        console.log('マイクボタンがクリックされました');
+        
+        if (isRecording) {
+            stopRecording();
+            return;
+        }
+        
+        startRecording();
+    });
     
-    // 録音開始
-    async function startRecording() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-            
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) {
-                    audioChunks.push(event.data);
-                }
-            };
-            
-            mediaRecorder.start();
-            micButton.classList.add('listening');
-            statusText.textContent = 'お話しください...';
-            statusText.classList.add('listening');
-            
-        } catch (error) {
-            console.error('マイクへのアクセスエラー:', error);
-            statusText.textContent = 'マイクへのアクセスが許可されていません';
+    // 録音開始関数
+    function startRecording() {
+        console.log('録音開始関数が呼び出されました');
+        
+        // マイクへのアクセスを要求
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                console.log('マイクの権限が許可されました');
+                statusText.textContent = '録音中...';
+                micButton.classList.add('recording');
+                isRecording = true;
+                
+                // MediaRecorderの初期化
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                // データが利用可能になったときのイベント
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        console.log('音声データが利用可能になりました');
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                // 録音終了時のイベント
+                mediaRecorder.onstop = () => {
+                    console.log('録音が終了しました');
+                    isRecording = false;
+                    
+                    // 音声データをBlobに変換
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    console.log('音声Blobを作成しました', audioBlob.size + ' bytes');
+                    
+                    // FormDataの作成
+                    const formData = new FormData();
+                    formData.append('file', audioBlob, 'recording.webm');
+                    
+                    // ユーザーの発言を表示
+                    addMessageToChat('user', '音声を処理中...');
+                    
+                    // APIリクエストの送信
+                    console.log(`APIリクエストを送信します: ${API_BASE_URL}/api/voice`);
+                    fetch(`${API_BASE_URL}/api/voice`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        console.log('APIレスポンスを受信しました', response.status);
+                        if (!response.ok) {
+                            throw new Error(`APIリクエストが失敗しました: ${response.status}`);
+                        }
+                        return response.blob();
+                    })
+                    .then(audioBlob => {
+                        console.log('音声レスポンスを受信しました', audioBlob.size + ' bytes');
+                        // 音声レスポンスを再生
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        const audio = new Audio(audioUrl);
+                        audio.play();
+                        
+                        // テキストレスポンスを取得
+                        return fetch(`${API_BASE_URL}/api/chat`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ text: '最新の応答をテキストで取得' })
+                        });
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('テキストレスポンスを受信しました', data);
+                        // レスポンスを表示
+                        addMessageToChat('assistant', data.text);
+                        statusText.textContent = 'お話しませんか？';
+                    })
+                    .catch(error => {
+                        console.error('エラーが発生しました:', error);
+                        statusText.textContent = 'エラーが発生しました';
+                        addMessageToChat('system', `エラー: ${error.message}`);
+                    });
+                    
+                    // ストリームの停止
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                // 録音開始
+                console.log('録音を開始します');
+                mediaRecorder.start();
+                
+                // 10秒後に自動停止するタイマーを設定
+                setTimeout(() => {
+                    if (mediaRecorder && mediaRecorder.state === 'recording') {
+                        console.log('10秒経過したため録音を自動停止します');
+                        stopRecording();
+                    }
+                }, 10000);
+            })
+            .catch(error => {
+                console.error('マイクへのアクセスが拒否されました:', error);
+                statusText.textContent = 'マイクへのアクセスが必要です';
+                addMessageToChat('system', 'マイクへのアクセスを許可してください');
+            });
+    }
+    
+    // 録音停止関数
+    function stopRecording() {
+        console.log('録音停止関数が呼び出されました');
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            statusText.textContent = '処理中...';
+            micButton.classList.remove('recording');
+            mediaRecorder.stop();
         }
     }
     
-    // 録音停止と処理
-    async function stopRecording() {
-        if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
-        
-        mediaRecorder.stop();
-        micButton.classList.remove('listening');
-        statusText.classList.remove('listening');
-        micButton.classList.add('processing');
-        statusText.textContent = 'お答えを考えています...';
-        statusText.classList.add('processing');
-        
-        mediaRecorder.onstop = async () => {
-            try {
-                // 録音データをBlobに変換
-                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                audioChunks = [];
-                
-                // ユーザーの発言をチャット履歴に追加
-                addMessage('音声を処理中...', true);
-                
-                // FormDataの作成
-                const formData = new FormData();
-                formData.append('file', audioBlob, 'voice.webm');
-                
-                try {
-                    // 音声をテキストに変換 (Whisper API)
-                    const transcribeResponse = await fetch(`${API_BASE_URL}/api/transcribe`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    if (!transcribeResponse.ok) {
-                        throw new Error(`Transcription error: ${transcribeResponse.status}`);
-                    }
-                    
-                    const transcribeData = await transcribeResponse.json();
-                    const userText = transcribeData.text;
-                    
-                    // ユーザーの発言を更新
-                    updateUserMessage(userText);
-                    
-                    // チャット応答を取得 (Chat API)
-                    const chatResponse = await fetch(`${API_BASE_URL}/api/chat`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ text: userText })
-                    });
-                    
-                    if (!chatResponse.ok) {
-                        throw new Error(`Chat error: ${chatResponse.status}`);
-                    }
-                    
-                    const chatData = await chatResponse.json();
-                    const assistantText = chatData.text;
-                    
-                    // アシスタントの応答を表示
-                    addMessage(assistantText, false);
-                    
-                    // 音声合成 (TTS API)
-                    const speechResponse = await fetch(`${API_BASE_URL}/api/speech`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ text: assistantText })
-                    });
-                    
-                    if (!speechResponse.ok) {
-                        throw new Error(`Speech error: ${speechResponse.status}`);
-                    }
-                    
-                    // 音声を再生
-                    const audioBlob = await speechResponse.blob();
-                    const url = URL.createObjectURL(audioBlob);
-                    const audio = new Audio(url);
-                    audio.play();
-                    
-                    // 音声再生終了時の処理
-                    audio.onended = () => {
-                        micButton.classList.remove('processing');
-                        statusText.classList.remove('processing');
-                        statusText.textContent = 'お話しませんか？';
-                    };
-                    
-                } catch (apiError) {
-                    console.error('APIエラー:', apiError);
-                    
-                    // APIエラー時のフォールバック処理
-                    const fallbackResponses = [
-                        "こんにちは、Universal Pineのアシスタントです。何かお手伝いできることはありますか？",
-                        "AIネックレスは日常の大切な瞬間を自動的に記録する製品です。詳細を知りたいですか？",
-                        "お問い合わせありがとうございます。具体的な内容をお聞かせいただけますか？",
-                        "Universal Pineは最先端のAI技術を活用した製品開発を行っています。"
-                    ];
-                    
-                    const randomIndex = Math.floor(Math.random() * fallbackResponses.length);
-                    const aiResponse = fallbackResponses[randomIndex];
-                    
-                    // チャット履歴を更新
-                    updateUserMessage('音声認識完了');
-                    addMessage(aiResponse, false);
-                    
-                    // 音声合成（Web Speech API使用）
-                    speakText(aiResponse);
-                    
-                    // 状態をリセット
-                    micButton.classList.remove('processing');
-                    statusText.classList.remove('processing');
-                    statusText.textContent = 'お話しませんか？';
-                }
-                
-            } catch (error) {
-                console.error('音声処理エラー:', error);
-                statusText.textContent = 'エラーが発生しました。もう一度お試しください。';
-                micButton.classList.remove('processing');
-                statusText.classList.remove('processing');
-            }
-        };
-    }
-    
-    // チャット履歴にメッセージを追加
-    function addMessage(text, isUser) {
+    // チャット履歴にメッセージを追加する関数
+    function addMessageToChat(role, text) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = isUser ? 'user-message' : 'ai-message';
+        messageDiv.className = role === 'user' ? 'user-message' : (role === 'assistant' ? 'ai-message' : 'system-message');
         
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
@@ -198,72 +190,51 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
     
-    // ユーザーメッセージを更新（音声認識結果が出た場合）
-    function updateUserMessage(text) {
-        const lastMessage = chatHistory.lastElementChild;
-        if (lastMessage && lastMessage.classList.contains('user-message')) {
-            const messageContent = lastMessage.querySelector('.message-content');
-            if (messageContent) {
-                messageContent.textContent = text;
-            }
-        }
-    }
-    
-    // テキストを音声で読み上げる関数（Web Speech API使用）
-    function speakText(text) {
-        if ('speechSynthesis' in window) {
-            const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            
-            // 日本語の音声を優先的に選択
-            const voices = synth.getVoices();
-            for (let voice of voices) {
-                if (voice.lang === 'ja-JP') {
-                    utterance.voice = voice;
-                    break;
-                }
-            }
-            
-            utterance.lang = 'ja-JP';
-            utterance.rate = 1.0;
-            utterance.pitch = 1.0;
-            
-            synth.speak(utterance);
-        }
-    }
-    
     // 履歴クリアボタンのイベント
     clearButton.addEventListener('click', () => {
+        console.log('履歴クリアボタンがクリックされました');
         chatHistory.innerHTML = '';
     });
     
     // テキスト入力モードボタンのイベント
     textModeButton.addEventListener('click', () => {
+        console.log('テキスト入力モードボタンがクリックされました');
+        
+        // マイクボタンとステータステキストを非表示にする
+        const controls = document.querySelector('.controls');
+        controls.style.display = 'none';
+        
+        // テキスト入力コンテナを作成
+        const textInputContainer = document.createElement('div');
+        textInputContainer.className = 'text-input-container';
+        
+        // テキスト入力フィールドを作成
         const textInput = document.createElement('input');
         textInput.type = 'text';
         textInput.className = 'text-input';
         textInput.placeholder = 'メッセージを入力...';
         
+        // 送信ボタンを作成
         const sendButton = document.createElement('button');
         sendButton.className = 'send-button';
         sendButton.textContent = '送信';
         
+        // キャンセルボタンを作成
         const cancelButton = document.createElement('button');
         cancelButton.className = 'cancel-button';
-        cancelButton.textContent = '音声モードに戻る';
+        cancelButton.textContent = 'キャンセル';
         
-        const textInputContainer = document.createElement('div');
-        textInputContainer.className = 'text-input-container';
+        // ボタンコンテナを作成
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+        buttonContainer.appendChild(sendButton);
+        buttonContainer.appendChild(cancelButton);
+        
+        // テキスト入力コンテナに要素を追加
         textInputContainer.appendChild(textInput);
-        textInputContainer.appendChild(sendButton);
-        textInputContainer.appendChild(cancelButton);
+        textInputContainer.appendChild(buttonContainer);
         
-        // 既存のコントロールを一時的に非表示
-        const controls = document.querySelector('.controls');
-        controls.style.display = 'none';
-        
-        // テキスト入力コンテナを追加
-        const voiceChatContainer = document.getElementById('voice-chat-widget');
+        // チャットウィジェットにテキスト入力コンテナを追加
         voiceChatContainer.appendChild(textInputContainer);
         
         // テキスト入力にフォーカス
@@ -272,13 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // 送信ボタンのクリックイベント
         sendButton.addEventListener('click', async () => {
             const userInput = textInput.value.trim();
+            
             if (userInput) {
-                addMessage(userInput, true);
+                addMessageToChat('user', userInput);
                 textInput.value = '';
                 
                 // 処理中の表示
                 statusText.textContent = 'お答えを考えています...';
-                statusText.classList.add('processing');
                 
                 try {
                     // チャット応答を取得 (Chat API)
@@ -298,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const assistantText = chatData.text;
                     
                     // アシスタントの応答を表示
-                    addMessage(assistantText, false);
+                    addMessageToChat('assistant', assistantText);
                     
                     // 音声合成 (TTS API)
                     const speechResponse = await fetch(`${API_BASE_URL}/api/speech`, {
@@ -321,33 +292,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // 音声再生終了時の処理
                     audio.onended = () => {
-                        statusText.classList.remove('processing');
                         statusText.textContent = 'お話しませんか？';
                     };
                     
                 } catch (error) {
                     console.error('APIエラー:', error);
-                    
-                    // APIエラー時のフォールバック処理
-                    const fallbackResponses = [
-                        "こんにちは、Universal Pineのアシスタントです。何かお手伝いできることはありますか？",
-                        "AIネックレスは日常の大切な瞬間を自動的に記録する製品です。詳細を知りたいですか？",
-                        "お問い合わせありがとうございます。具体的な内容をお聞かせいただけますか？",
-                        "Universal Pineは最先端のAI技術を活用した製品開発を行っています。"
-                    ];
-                    
-                    const randomIndex = Math.floor(Math.random() * fallbackResponses.length);
-                    const aiResponse = fallbackResponses[randomIndex];
-                    
-                    // チャット履歴を更新
-                    addMessage(aiResponse, false);
-                    
-                    // 音声合成（Web Speech API使用）
-                    speakText(aiResponse);
-                    
-                    // 状態をリセット
-                    statusText.classList.remove('processing');
-                    statusText.textContent = 'お話しませんか？';
+                    statusText.textContent = 'エラーが発生しました';
+                    addMessageToChat('system', `エラー: ${error.message}`);
                 }
                 
                 // テキスト入力コンテナを削除し、元のコントロールを表示
