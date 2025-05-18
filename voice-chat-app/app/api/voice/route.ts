@@ -2,7 +2,15 @@ import { OpenAI } from "openai";
 import { NextRequest } from "next/server";
 import { Readable } from "stream";
 
-const openai = new OpenAI({ apiKey: 'openai_key' });
+// process.env.OPENAI_API_KEYが存在しない場合はエラーメッセージを表示
+// 本番環境では.env.localファイルにOPENAI_API_KEYを設定する必要があります
+if (!process.env.OPENAI_API_KEY) {
+  console.error('警告: OPENAI_API_KEYが設定されていません。.env.localファイルに設定してください。');
+}
+
+const openai = new OpenAI({ 
+  apiKey: process.env.OPENAI_API_KEY || 'sk-dummy-key' // 実際の環境変数から取得、存在しない場合はダミーキーを使用
+});
 
 export async function POST(req: NextRequest) {
   // 1) audio 受け取り
