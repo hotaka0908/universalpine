@@ -1208,11 +1208,12 @@ button[type="submit"]:disabled {
     width: 100%;
     max-width: 500px;
     background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 25px;
     margin: 30px auto;
     transition: all 0.3s ease;
+    border: 1px solid rgba(157, 217, 65, 0.2);
 }
 
 /* ヒーローセクションの音声チャット */
@@ -1290,51 +1291,84 @@ button[type="submit"]:disabled {
 
 /* マイクボタン */
 .mic-button {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    background-color: #f2f2f2;
+    background-color: var(--primary-color);
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(157, 217, 65, 0.3);
     margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
 }
 
 .mic-button:hover {
-    background-color: #e6e6e6;
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(157, 217, 65, 0.4);
 }
 
 .mic-button:active {
     transform: scale(0.95);
 }
 
+.mic-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
+}
+
+.mic-button:hover::before {
+    transform: scale(1.5);
+}
+
 .mic-button.listening {
-    background-color: #ff3b30;
+    background-color: #34C759;
     animation: pulse 1.5s infinite;
 }
 
 .mic-button.processing {
-    background-color: var(--primary-color);
-    animation: rotate 2s infinite linear;
+    background-color: #007AFF;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.mic-button.processing::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-top-color: white;
+    animation: spin 1s infinite linear;
+    box-sizing: border-box;
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.6);
     }
     70% {
-        box-shadow: 0 0 0 15px rgba(255, 59, 48, 0);
+        box-shadow: 0 0 0 15px rgba(52, 199, 89, 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
     }
 }
 
-@keyframes rotate {
+@keyframes spin {
     from {
         transform: rotate(0deg);
     }
@@ -1345,10 +1379,12 @@ button[type="submit"]:disabled {
 
 /* マイクアイコン */
 .mic-icon {
-    width: 24px;
-    height: 24px;
-    fill: #666;
-    transition: fill 0.3s ease;
+    width: 28px;
+    height: 28px;
+    fill: white;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
 
 .mic-button.listening .mic-icon,
@@ -1358,11 +1394,28 @@ button[type="submit"]:disabled {
 
 /* ステータステキスト */
 .status-text {
-    font-size: 14px;
-    color: #666;
+    font-size: 16px;
+    color: #333;
     margin-bottom: 15px;
     text-align: center;
-    min-height: 20px;
+    min-height: 24px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.status-text.listening {
+    color: #34C759;
+    animation: fadeInOut 1.5s infinite;
+}
+
+.status-text.processing {
+    color: #007AFF;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
 /* 設定パネル */

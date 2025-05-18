@@ -146,9 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 音声認識の開始
     function startListening() {
-        recognition.start();
         micButton.classList.add('listening');
-        statusText.textContent = '聞いています...';
+        statusText.textContent = 'お話しください...';
+        statusText.classList.add('listening');
+        recognition.start();
     }
     
     // 音声認識の結果処理
@@ -157,20 +158,23 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(transcript, true);
         
         micButton.classList.remove('listening');
+        statusText.classList.remove('listening');
         micButton.classList.add('processing');
-        statusText.textContent = '考え中...';
+        statusText.textContent = 'お答えを考えています...';
+        statusText.classList.add('processing');
         
         // AIの応答を生成
         const aiResponse = await generateAIResponse(transcript);
         
-        statusText.textContent = '応答中...';
+        statusText.textContent = 'お答えします...';
         addMessage(aiResponse, false);
         
         // 応答を音声で読み上げる
         await speakText(aiResponse);
         
         micButton.classList.remove('processing');
-        statusText.textContent = '話しかけてください';
+        statusText.classList.remove('processing');
+        statusText.textContent = 'お話しませんか？';
     };
     
     // 音声認識のエラー処理
@@ -178,15 +182,28 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('音声認識エラー:', event.error);
         micButton.classList.remove('listening');
         micButton.classList.remove('processing');
-        statusText.textContent = 'エラーが発生しました。再試行してください。';
+        statusText.classList.remove('listening');
+        statusText.classList.remove('processing');
+        
+        // エラーメッセージをより親しみやすく表示
+        if (event.error === 'no-speech') {
+            statusText.textContent = '声が聞こえませんでした。もう一度お試しください。';
+        } else if (event.error === 'audio-capture') {
+            statusText.textContent = 'マイクにアクセスできません。設定を確認してください。';
+        } else if (event.error === 'not-allowed') {
+            statusText.textContent = 'マイクの使用が許可されていません。許可を与えてください。';
+        } else {
+            statusText.textContent = 'ごめんなさい、うまく聞き取れませんでした。';
+        }
     };
     
     // 音声認識の終了処理
     recognition.onend = () => {
         if (!micButton.classList.contains('processing')) {
             micButton.classList.remove('listening');
-            if (statusText.textContent === '聞いています...') {
-                statusText.textContent = '話しかけてください';
+            statusText.classList.remove('listening');
+            if (statusText.textContent === 'お話しください...') {
+                statusText.textContent = 'お話しませんか？';
             }
         }
     };
