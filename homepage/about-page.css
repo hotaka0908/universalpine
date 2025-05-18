@@ -19,7 +19,8 @@
 .signature-image {
     width: 80px;
     vertical-align: middle;
-    margin-left: 10px;
+    margin-left: 5px;
+    display: inline-block;
 }
 
 .ceo-signature-container {
