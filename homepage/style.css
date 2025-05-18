@@ -378,7 +378,7 @@ nav a:hover {
 
 /* Careers Section */
 .careers-simple {
-    background-image: url('images/recruit.image.png');
+    background-image: url('images/recruit.jpg');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -436,7 +436,7 @@ nav a:hover {
     letter-spacing: 0.1em;
     margin-bottom: calc(var(--spacing-unit) * 1);
     font-weight: 600;
-    color: #333333;
+    color: #fff;
 }
 
 .contact-simple h2 {
@@ -473,7 +473,7 @@ nav a:hover {
     letter-spacing: 0.1em;
     margin-bottom: calc(var(--spacing-unit) * 1);
     font-weight: 600;
-    color: #333333;
+    color: #fff;
 }
 
 .careers-simple h2 {
