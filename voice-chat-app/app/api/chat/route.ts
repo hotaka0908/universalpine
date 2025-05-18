@@ -1,14 +1,14 @@
 import { OpenAI } from "openai";
 import { NextRequest } from "next/server";
 
-// process.env.OPENAI_API_KEYが存在しない場合はエラーメッセージを表示
-// 本番環境では.env.localファイルにOPENAI_API_KEYを設定する必要があります
-if (!process.env.OPENAI_API_KEY) {
-  console.error('警告: OPENAI_API_KEYが設定されていません。.env.localファイルに設定してください。');
+// process.env.openai_keyが存在しない場合はエラーメッセージを表示
+// 本番環境では.env.localファイルにopenai_keyを設定する必要があります
+if (!process.env.openai_key) {
+  console.error('警告: openai_keyが設定されていません。.env.localファイルに設定してください。');
 }
 
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || 'sk-dummy-key' // 実際の環境変数から取得、存在しない場合はダミーキーを使用
+  apiKey: process.env.openai_key || 'sk-dummy-key' // 実際の環境変数から取得、存在しない場合はダミーキーを使用
 });
 
 export async function POST(req: NextRequest) {
