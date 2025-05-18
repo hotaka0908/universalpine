@@ -1,7 +1,7 @@
 import { OpenAI } from "openai";
 import { NextRequest } from "next/server";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+const openai = new OpenAI({ apiKey: 'openai_key' });
 
 export async function POST(req: NextRequest) {
   // リクエストからテキストを取得

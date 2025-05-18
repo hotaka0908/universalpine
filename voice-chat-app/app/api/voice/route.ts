@@ -2,7 +2,7 @@ import { OpenAI } from "openai";
 import { NextRequest } from "next/server";
 import { Readable } from "stream";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+const openai = new OpenAI({ apiKey: 'openai_key' });
 
 export async function POST(req: NextRequest) {
   // 1) audio 受け取り
@@ -31,12 +31,13 @@ export async function POST(req: NextRequest) {
   const speechResp = await openai.audio.speech.create({
     model: "tts-1-hd",                // or gpt-4o-tts
     voice: "alloy",                   // "alloy","nova" など
-    input: assistantText,
-    format: "wav"                     // mp3/wav/opus
+    input: assistantText
+    // formatプロパティは最新のOpenAI SDKではサポートされていない可能性があります
   });
 
   // speechResp は ReadableStream
-  return new Response(speechResp as unknown as Readable, {
+  // OpenAI SDK v4 では speechResp は ReadableStream を返すので、そのまま Response に渡す
+  return new Response(speechResp.body, {
     headers: { "Content-Type": "audio/wav" }
   });
 }
