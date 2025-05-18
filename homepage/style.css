@@ -1200,3 +1200,226 @@ button[type="submit"]:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
+
+/* 音声チャットウィジェット */
+.voice-chat-container {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    transform-origin: bottom right;
+}
+
+.voice-chat-hidden {
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.voice-chat-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.voice-chat-toggle:hover {
+    transform: scale(1.1);
+}
+
+.voice-chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.voice-chat-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 会話履歴エリア */
+.chat-history {
+    height: 250px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #f5f5f5;
+}
+
+/* メッセージスタイル */
+.message {
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+.user-message {
+    background-color: var(--primary-color);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.ai-message {
+    background-color: #e5e5ea;
+    color: var(--text-color);
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+/* コントロールエリア */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* マイクボタン */
+.mic-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.mic-button:hover {
+    background-color: #e6e6e6;
+}
+
+.mic-button:active {
+    transform: scale(0.95);
+}
+
+.mic-button.listening {
+    background-color: #ff3b30;
+    animation: pulse 1.5s infinite;
+}
+
+.mic-button.processing {
+    background-color: var(--primary-color);
+    animation: rotate 2s infinite linear;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 59, 48, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* マイクアイコン */
+.mic-icon {
+    width: 24px;
+    height: 24px;
+    fill: #666;
+    transition: fill 0.3s ease;
+}
+
+.mic-button.listening .mic-icon,
+.mic-button.processing .mic-icon {
+    fill: white;
+}
+
+/* ステータステキスト */
+.status-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: center;
+    min-height: 20px;
+}
+
+/* 設定パネル */
+.settings-panel {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.settings-button:hover {
+    text-decoration: underline;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 600px) {
+    .voice-chat-container {
+        width: calc(100% - 40px);
+        bottom: 80px;
+    }
+    
+    .chat-history {
+        height: 200px;
+    }
+    
+    .mic-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .mic-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
