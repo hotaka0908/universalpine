@@ -1,7 +1,7 @@
 // OpenAI音声APIを使用した高度な音声チャット機能
 
 // APIサーバーのURL設定
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:3001';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得

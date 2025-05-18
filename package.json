@@ -30,8 +30,10 @@
     "zod": "3.24.4"
   },
   "devDependencies": {
+    "@types/react": "19.1.4",
     "eslint": "^9.0.0",
-    "serve": "^14.2.1"
+    "serve": "^14.2.1",
+    "typescript": "5.8.3"
   },
   "repository": {
     "type": "git",
