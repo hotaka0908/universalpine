@@ -27,13 +27,9 @@ export async function POST(request: NextRequest) {
     const tempFilePath = join(tmpdir(), `audio-${Date.now()}.webm`);
     await writeFile(tempFilePath, buffer);
     
-    // 音声認識APIを使用してテキストに変換
+    // 一時ファイルパスからReadableStreamを作成
     const transcription = await openai.audio.transcriptions.create({
-      file: {
-        data: buffer,
-        name: 'audio.webm',
-        type: 'audio/webm',
-      },
+      file: buffer,
       model: 'whisper-1',
       language: 'ja',
     });

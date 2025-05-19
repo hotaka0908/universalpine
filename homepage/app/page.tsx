@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { Metadata } from 'next';
+import styles from './page.module.css';
 
 // メタデータの設定
 export const metadata: Metadata = {
@@ -11,14 +12,11 @@ export const metadata: Metadata = {
 export default function Home() {
   // 既存のHTMLコンテンツをiframeで表示
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div className={styles.container}>
       <iframe 
         src="/static/index.html" 
-        style={{ 
-          border: 'none', 
-          height: '100%', 
-          width: '100%' 
-        }}
+        className={styles.frame}
+        title="Universal Pine Homepage"
       />
     </div>
   );
