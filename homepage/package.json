@@ -2,15 +2,24 @@
   "name": "universalpine-website",
   "version": "1.0.0",
   "description": "Universal Pine Website with Voice Chat",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "build": "echo \"Static site with Express API\""
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "formidable": "^3.5.4",
-    "openai": "^4.100.0"
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "openai": "^4.100.0",
+    "formidable": "^3.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "typescript": "^5.2.2"
   }
 }
