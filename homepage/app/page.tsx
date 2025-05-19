@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <iframe 
-        src="/static/index.html" 
+        src="/index.html" 
         className={styles.frame}
         title="Universal Pine Homepage"
       />

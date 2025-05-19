@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音声チャット機能テスト - Universal Pine</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'none'; media-devices 'self'">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(self), camera=()">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .test-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .test-instructions {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .test-instructions ol {
+            padding-left: 1.5rem;
+        }
+        
+        .test-instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .test-button {
+            padding: 0.75rem 1.5rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .test-button:hover {
+            background-color: #555;
+        }
+        
+        .back-button {
+            background-color: #666;
+        }
+        
+        /* 音声チャットウィジェット用のスタイル */
+        .voice-chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            z-index: 1000;
+        }
+        
+        .voice-chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .voice-chat-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .chat-history {
+            height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 12px;
+            background-color: #f5f5f5;
+        }
+        
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: #333;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai-message {
+            background-color: #e5e5ea;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .mic-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f2f2f2;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        .mic-button:hover {
+            background-color: #e6e6e6;
+        }
+        
+        .mic-button:active {
+            transform: scale(0.95);
+        }
+        
+        .mic-button.listening {
+            background-color: #ff3b30;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .mic-button.processing {
+            background-color: #333;
+            animation: rotate 2s infinite linear;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 59, 48, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .mic-icon {
+            width: 24px;
+            height: 24px;
+            fill: #666;
+        }
+        
+        .mic-button.listening .mic-icon,
+        .mic-button.processing .mic-icon {
+            fill: white;
+        }
+        
+        .status-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 20px;
+        }
+        
+        .settings-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .settings-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .settings-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>音声チャット機能テスト</h1>
+    
+    <div class="test-container">
+        <div class="test-instructions">
+            <h2>テスト手順</h2>
+            <ol>
+                <li>右下のマイクボタンをクリックして音声チャットウィジェットを開きます。</li>
+                <li>ウィジェット内のマイクボタンをクリックして、マイクへのアクセス許可を与えます。</li>
+                <li>「こんにちは」などと話しかけてみてください。</li>
+                <li>AIアシスタントからの応答が表示され、音声で読み上げられます。</li>
+                <li>テキスト入力ボタンをクリックすると、キーボードからメッセージを入力することもできます。</li>
+                <li>履歴クリアボタンで会話履歴をリセットできます。</li>
+            </ol>
+            <p><strong>注意:</strong> ブラウザがマイクへのアクセスを許可していることを確認してください。許可されていない場合は、アドレスバーの左側のアイコンをクリックして許可設定を変更できます。</p>
+        </div>
+        
+        <div class="test-buttons">
+            <a href="index.html" class="test-button back-button">トップページに戻る</a>
+        </div>
+    </div>
+    
+    <!-- 音声チャットウィジェット -->
+    <div class="voice-chat-container" id="voice-chat-widget">
+        <div class="voice-chat-header">
+            <div class="voice-chat-title">AIアシスタント</div>
+        </div>
+        <div class="chat-history" id="chat-history"></div>
+        <div class="controls">
+            <button class="mic-button" id="mic-button" title="音声入力を開始" aria-label="音声入力を開始">
+                <svg class="mic-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+            </button>
+            <div class="status-text" id="status-text">話しかけてください</div>
+            <div class="settings-panel">
+                <button class="settings-button" id="clear-button" title="会話履歴をクリア" aria-label="会話履歴をクリア">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M19 6H5L6 20H18L19 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M10 10V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M14 10V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 6L9 4H15L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    履歴クリア
+                </button>
+                <button class="settings-button" id="text-mode-button" title="テキストで入力" aria-label="テキストで入力">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    テキスト入力
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 要素の取得
+            const micButton = document.getElementById('mic-button');
+            const statusText = document.getElementById('status-text');
+            const chatHistory = document.getElementById('chat-history');
+            const clearButton = document.getElementById('clear-button');
+            const textModeButton = document.getElementById('text-mode-button');
+            
+            // Web Speech API のサポートチェック
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const SpeechSynthesis = window.speechSynthesis;
+            
+            if (!SpeechRecognition) {
+                statusText.textContent = 'お使いのブラウザは音声認識をサポートしていません';
+                micButton.disabled = true;
+                return;
+            }
+            
+            // 音声認識の設定
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            // 音声合成の設定
+            const synth = window.speechSynthesis;
+            let voices = [];
+            
+            // 音声の取得（非同期）
+            function loadVoices() {
+                voices = synth.getVoices();
+            }
+            
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = loadVoices;
+            }
+            
+            loadVoices();
+            
+            // 日本語の音声を優先的に選択
+            function getJapaneseVoice() {
+                // 日本語の音声を探す
+                for (let voice of voices) {
+                    if (voice.lang === 'ja-JP') {
+                        return voice;
+                    }
+                }
+                // 日本語がなければデフォルトの音声を返す
+                return voices[0];
+            }
+            
+            // メッセージを追加する関数
+            function addMessage(text, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+                messageDiv.textContent = text;
+                chatHistory.appendChild(messageDiv);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+            
+            // AIの応答を生成する関数
+            async function generateAIResponse(userInput) {
+                // Universal Pineの製品やサービスに関連する応答
+                const responses = [
+                    "Universal Pineの音声AIアシスタントへようこそ。どのようにお手伝いできますか？",
+                    "当社のAIネックレスについて詳しく知りたい場合は、製品ページをご覧ください。",
+                    "Universal Pineは最先端のAI技術で人々の生活をより良くすることを目指しています。",
+                    "採用情報についてのご質問でしたら、詳細は採用ページをご確認ください。",
+                    "お問い合わせフォームからメッセージをお送りいただければ、担当者からご連絡いたします。",
+                    "AIネックレスは日常の大切な瞬間を自動的に記録し、プライバシーを守りながら思い出を残します。",
+                    "当社の製品は最先端の技術と美しいデザインを兼ね備えています。",
+                    "Universal Pineは2025年に設立された、AI技術を専門とする企業です。",
+                    "ご質問ありがとうございます。もう少し詳しく教えていただけますか？",
+                    "申し訳ありませんが、その情報は現在持ち合わせておりません。お問い合わせフォームからお問い合わせください。"
+                ];
+                
+                // 簡易デモ用にランダムな応答を返す
+                return new Promise(resolve => {
+                    // 応答生成の遅延をシミュレート
+                    setTimeout(() => {
+                        const randomIndex = Math.floor(Math.random() * responses.length);
+                        resolve(responses[randomIndex]);
+                    }, 1000);
+                });
+            }
+            
+            // テキストを音声で読み上げる関数
+            function speakText(text) {
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.voice = getJapaneseVoice();
+                utterance.pitch = 1;
+                utterance.rate = 1;
+                utterance.volume = 1;
+                
+                synth.speak(utterance);
+                
+                return new Promise(resolve => {
+                    utterance.onend = resolve;
+                });
+            }
+            
+            // 音声認識の開始
+            function startListening() {
+                recognition.start();
+                micButton.classList.add('listening');
+                statusText.textContent = '聞いています...';
+            }
+            
+            // 音声認識の結果処理
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+                addMessage(transcript, true);
+                
+                micButton.classList.remove('listening');
+                micButton.classList.add('processing');
+                statusText.textContent = '考え中...';
+                
+                // AIの応答を生成
+                const aiResponse = await generateAIResponse(transcript);
+                
+                statusText.textContent = '応答中...';
+                addMessage(aiResponse, false);
+                
+                // 応答を音声で読み上げる
+                await speakText(aiResponse);
+                
+                micButton.classList.remove('processing');
+                statusText.textContent = '話しかけてください';
+            };
+            
+            // 音声認識のエラー処理
+            recognition.onerror = (event) => {
+                console.error('音声認識エラー:', event.error);
+                micButton.classList.remove('listening');
+                micButton.classList.remove('processing');
+                statusText.textContent = 'エラーが発生しました。再試行してください。';
+            };
+            
+            // 音声認識の終了処理
+            recognition.onend = () => {
+                if (!micButton.classList.contains('processing')) {
+                    micButton.classList.remove('listening');
+                    if (statusText.textContent === '聞いています...') {
+                        statusText.textContent = '話しかけてください';
+                    }
+                }
+            };
+            
+            // マイクボタンのクリックイベント
+            micButton.addEventListener('click', () => {
+                if (synth.speaking) {
+                    synth.cancel();
+                    micButton.classList.remove('processing');
+                    statusText.textContent = '話しかけてください';
+                    return;
+                }
+                
+                if (micButton.classList.contains('listening')) {
+                    recognition.stop();
+                } else {
+                    startListening();
+                }
+            });
+            
+            // 履歴クリアボタンのクリックイベント
+            clearButton.addEventListener('click', () => {
+                chatHistory.innerHTML = '';
+            });
+            
+            // テキスト入力モードボタンのクリックイベント
+            textModeButton.addEventListener('click', async () => {
+                const userInput = prompt('メッセージを入力してください:');
+                if (userInput && userInput.trim()) {
+                    addMessage(userInput, true);
+                    
+                    micButton.classList.add('processing');
+                    statusText.textContent = '考え中...';
+                    
+                    // AIの応答を生成
+                    const aiResponse = await generateAIResponse(userInput);
+                    
+                    statusText.textContent = '応答中...';
+                    addMessage(aiResponse, false);
+                    
+                    // 応答を音声で読み上げる
+                    await speakText(aiResponse);
+                    
+                    micButton.classList.remove('processing');
+                    statusText.textContent = '話しかけてください';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

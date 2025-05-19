@@ -1,0 +1,21 @@
+/* Recruit Page Specific Styles */
+
+/* Vision Box */
+.vision-box h3 {
+    text-align: center;
+    color: #333333;
+}
+
+/* Job Cards */
+.job-header.open-entry {
+    background-color: #12B76A;
+}
+
+.job-header.part-time {
+    background-color: #12B76A;
+}
+
+/* Benefits Section */
+.recruit-section.benefits {
+    background-color: #f9f9f9;
+}

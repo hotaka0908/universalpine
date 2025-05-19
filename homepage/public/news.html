@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ニュース - Universal Pine</title>
+    <!-- セキュリティヘッダー - XSS対策 -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://www.clarity.ms; frame-src 'none'">
+    <!-- クリックジャッキング対策 -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <!-- その他のセキュリティヘッダー -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <link rel="canonical" href="https://universalpine.com/news.html" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="news-page.css">
+    <script src="news-filter.js" defer></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "rd86xw1i3g");
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">Universal Pine</span>
+                </a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="#announcements">お知らせ</a>
+                            <a href="#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                            <a href="about.html#founders">創業者紹介</a>
+                            <a href="about.html#history">沿革</a>
+                            <a href="about.html#about">会社概要</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="mobile-nav">
+        <ul>
+            <li class="dropdown">
+                <a href="news.html">ニュース</a>
+                <div class="dropdown-content">
+                    <a href="#announcements">お知らせ</a>
+                    <a href="#press">プレスリリース</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="product.html">製品</a>
+                <div class="dropdown-content">
+                    <a href="product.html">AIネックレス</a>
+                </div>
+            </li>
+            <li>
+                <a href="recruit.html">採用</a>
+            </li>
+            <li class="dropdown">
+                <a href="about.html">会社情報</a>
+                <div class="dropdown-content">
+                    <a href="about.html#philosophy">理念</a>
+                    <a href="about.html#message">代表メッセージ</a>
+                    <a href="about.html#founders">創業者紹介</a>
+                    <a href="about.html#history">沿革</a>
+                    <a href="about.html#about">会社概要</a>
+                </div>
+            </li>
+            <li>
+                <a href="contact.html">お問い合わせ</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="news-container">
+            <div class="news-header">
+                <h2 class="news-title">ニュース</h2>
+                <p class="news-subtitle">NEWS</p>
+            </div>
+            
+            <div class="news-content-wrapper">
+                <div class="news-filter">
+                    <button class="filter-tab active" data-filter="all">すべて</button>
+                    <button class="filter-tab" data-filter="press">プレスリリース</button>
+                    <button class="filter-tab" data-filter="announcement">お知らせ</button>
+                    <button class="filter-tab" data-filter="other">その他</button>
+                </div>
+                
+                <div class="news-list">
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.5.3</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="news/info/20250503.html">ホームページ公開について <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.2.26</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="news/info/20250226-office.html">新オフィス開設のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item" data-category="announcement">
+                        <div class="news-date">2025.2.26</div>
+                        <div class="news-category">お知らせ</div>
+                        <div class="news-item-title">
+                            <a href="news/info/20250226.html">会社設立のお知らせ <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Universal Pine</h2>
+                </div>
+                
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="news.html">ニュース</a></li>
+                        <li><a href="about.html">会社情報</a></li>
+                        <li><a href="index.html#careers">採用情報</a></li>
+                        <li><a href="contact.html">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Universal Pine. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="responsive.js"></script>
+</body>
+</html>
