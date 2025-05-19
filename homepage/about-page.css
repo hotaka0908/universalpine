@@ -35,6 +35,10 @@
     margin-bottom: calc(var(--spacing-unit) * 0.5);
 }
 
+.ceo-signature-container p:nth-child(2) {
+    text-indent: 0;
+}
+
 /* Hero Banner Section */
 .hero-banner {
     background-color: #F3F5F6;
