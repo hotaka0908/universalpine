@@ -12,8 +12,8 @@ const openai = new OpenAI({
 export async function POST(request: NextRequest) {
   try {
     // マルチパートフォームデータを処理
-    const formData = await request.formData();
-    const audioFile = formData.get('audio') as File;
+    const requestFormData = await request.formData();
+    const audioFile = requestFormData.get('audio') as File;
     
     if (!audioFile) {
       return NextResponse.json({ error: 'Audio file is required' }, { status: 400 });
