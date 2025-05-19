@@ -27,9 +27,15 @@ export async function POST(request: NextRequest) {
     const tempFilePath = join(tmpdir(), `audio-${Date.now()}.webm`);
     await writeFile(tempFilePath, buffer);
     
-    // 一時ファイルパスからReadableStreamを作成
+    // 一時ファイルから音声認識を実行
+    const formData = new FormData();
+    formData.append('file', new Blob([buffer], { type: 'audio/webm' }), 'audio.webm');
+    formData.append('model', 'whisper-1');
+    formData.append('language', 'ja');
+    
+    // OpenAI APIにリクエストを送信
     const transcription = await openai.audio.transcriptions.create({
-      file: buffer,
+      file: new File([buffer], 'audio.webm', { type: 'audio/webm' }),
       model: 'whisper-1',
       language: 'ja',
     });
