@@ -2,6 +2,7 @@
 
 // APIサーバーのURL設定 - 同一オリジンのAPIを使用
 // 同一オリジンのAPIエンドポイントを使用することでCSPとCORSの問題を解決
+// Expressサーバーが同じポートで動作するため、相対パスで指定
 const API_BASE_URL = '';
 
 document.addEventListener('DOMContentLoaded', () => {
