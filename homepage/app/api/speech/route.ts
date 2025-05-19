@@ -35,3 +35,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Internal server error', message: (error as Error).message }, { status: 500 });
   }
 }
+
+// Next.js 14以降の新しい設定宣言方法
+export const dynamic = 'force-dynamic';

@@ -42,8 +42,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// Next.js 14以降の新しい設定宣言方法
+// リクエスト本文をパースしないように設定
+export const dynamic = 'force-dynamic';
