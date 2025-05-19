@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    openai_key: process.env.openai_key,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
   // 静的ファイルの提供設定
   // 既存のHTMLファイルなどの静的ファイルを提供するための設定

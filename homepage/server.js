@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8000;
 
 // OpenAI APIu30afu30e9u30a4u30a2u30f3u30c8u306eu521du671fu5316
 const openai = new OpenAI({
-  apiKey: process.env.openai_key
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 // JSONu30dcu30c7u30a3u30d1u30fcu30b5u30fcu306eu8a2du5b9a

@@ -53,14 +53,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Audio file is required' });
     }
 
-    // u30d5u30a1u30a4u30ebu30c7u30fcu30bfu3092u30d0u30c3u30d5u30a1u306bu5909u63db
+    // u30d5u30a1u30a4u30ebu30c7u30dcu30bfu3092u30d0u30c3u30d5u30a1u306bu5909u63db
     const fileWriteStreamHandler = files.audio.toJSON().filepath;
     const chunks = form.options.fileWriteStreamHandler().chunks;
     const buffer = Buffer.concat(chunks);
 
     // OpenAI APIu30afu30e9u30a4u30a2u30f3u30c8u306eu521du671fu5316
     const openai = new OpenAI({
-      apiKey: process.env.openai_key
+      apiKey: process.env.OPENAI_API_KEY
     });
 
     // u97f3u58f0u8a8du8b58APIu3092u4f7fu7528u3057u3066u30c6u30adu30b9u30c8u306bu5909u63db

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     // OpenAI APIクライアントの初期化
     const openai = new OpenAI({
-      apiKey: process.env.openai_key
+      apiKey: process.env.OPENAI_API_KEY
     });
 
     // ChatGPT APIを使用して応答を生成
