@@ -122,6 +122,15 @@
         .job-header h3 {
             margin: 0;
             font-size: 1.3rem;
+            color: white;
+        }
+        
+        /* Electronics Engineerテキストのスタイル */
+        .job-header h3 .en-title {
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
         }
         
         .job-body {
@@ -131,6 +140,17 @@
         .job-body p {
             margin-bottom: 15px;
             line-height: 1.6;
+        }
+        
+        /* 求める経験・スキルのスタイル */
+        .skill-label {
+            background-color: #bfbfbf;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 2.5px;
         }
         
         .job-body ul {
@@ -393,11 +413,11 @@
             <div class="job-list">
                 <div class="job-card">
                     <div class="job-header">
-                        <h3>Electronics Engineer<br>電気/電子設計エンジニア</h3>
+                        <h3><span class="en-title">Electronics Engineer</span>電気/電子設計エンジニア</h3>
                     </div>
                     <div class="job-body">
                         <p>多層PCBを設計し、量産までリードしていただきます。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>アナログ/デジタル回路設計の実務経験</li>
                             <li>センサー/BELインターフェースの設計経験</li>
@@ -411,11 +431,11 @@
 
                 <div class="job-card">
                     <div class="job-header">
-                        <h3>Mechanical Design Engineer<br>機構設計エンジニア</h3>
+                        <h3><span class="en-title">Mechanical Design Engineer</span>機構設計エンジニア</h3>
                     </div>
                     <div class="job-body">
                         <p>筐体/機構設計から量産まで担当していただきます。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>3D CADを使用した筐体設計の経験</li>
                             <li>小型デバイスの設計経験</li>
@@ -429,11 +449,11 @@
 
                 <div class="job-card">
                     <div class="job-header">
-                        <h3>AI Engineer<br>AIエンジニア</h3>
+                        <h3><span class="en-title">AI Engineer</span>AIエンジニア</h3>
                     </div>
                     <div class="job-body">
                         <p>音声/マルチモーダルモデルなどを軽量化し、エッジからクラウドまで最適化していただきます。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>機械学習・深層学習の実務経験</li>
                             <li>Python、TensorFlow、PyTorchなどの開発経験</li>
@@ -447,11 +467,11 @@
 
                 <div class="job-card">
                     <div class="job-header">
-                        <h3>Embedded Software Engineer<br>組み込みエンジニア</h3>
+                        <h3><span class="en-title">Embedded Software Engineer</span>組み込みエンジニア</h3>
                     </div>
                     <div class="job-body">
                         <p>SoC/MCUの起動からOTA更新基盤まで担当していただきます。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>C/C++、Rustなどによる組み込みソフトウェア開発経験</li>
                             <li>リアルタイムOSの知識</li>
@@ -465,11 +485,11 @@
 
                 <div class="job-card">
                     <div class="job-header">
-                        <h3>Mobile Application Engineer<br>モバイルアプリエンジニア</h3>
+                        <h3><span class="en-title">Mobile Application Engineer</span>モバイルアプリエンジニア</h3>
                     </div>
                     <div class="job-body">
                         <p>iOS/Androidアプリの開発を担当していただきます。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>Swift/Kotlinによるアプリ開発経験</li>
                             <li>BLE通信を使用したアプリ実装経験</li>
@@ -483,11 +503,11 @@
 
                 <div class="job-card">
                     <div class="job-header open-entry">
-                        <h3>Open Application<br>オープンエントリー</h3>
+                        <h3><span class="en-title">Open Application</span>オープンエントリー</h3>
                     </div>
                     <div class="job-body">
                         <p>募集のない職種で当社のビジョンに共感いただける方はご応募ください。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>AI技術やハードウェア開発への強い関心</li>
                             <li>自ら考え、行動できる主体性</li>
@@ -501,11 +521,11 @@
 
                 <div class="job-card">
                     <div class="job-header open-entry">
-                        <h3>Part-Time Position<br>アルバイト</h3>
+                        <h3><span class="en-title">Part-Time Position</span>アルバイト</h3>
                     </div>
                     <div class="job-body">
                         <p>学生の方や副業をお考えの方も歓迎します。柔軟な働き方に対応します。</p>
-                        <p><strong>求める経験・スキル：</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>新しい技術への好奇心</li>
                             <li>AIが好きな人</li>
