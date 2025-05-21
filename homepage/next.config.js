@@ -15,17 +15,64 @@ const nextConfig = {
     externalResolver: true,
   },
   // 静的ファイルの提供設定
-  // 既存のHTMLファイルなどの静的ファイルを提供するための設定
+  // HTMLファイルがルートディレクトリに移動されたため、それらを提供するための設定
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600', // 1時間のキャッシュ
+          },
+        ],
+      },
+    ];
+  },
+  // ルートディレクトリのHTMLファイルを提供するための設定
   async rewrites() {
     return [
-      // Next.jsのページコンポーネントを優先するため、ルートパスのリダイレクトを削除
-      // {
-      //   source: '/',
-      //   destination: '/index.html',
-      // },
+      // index.jsxを優先するため、ルートパスはリダイレクトしない
+      // その他のHTMLファイルへのアクセスを可能にする
       {
-        source: '/:path*',
-        destination: '/:path*',
+        source: '/about',
+        destination: '/about.html',
+      },
+      {
+        source: '/apply',
+        destination: '/apply.html',
+      },
+      {
+        source: '/contact',
+        destination: '/contact.html',
+      },
+      {
+        source: '/news',
+        destination: '/news.html',
+      },
+      {
+        source: '/product',
+        destination: '/product.html',
+      },
+      {
+        source: '/project',
+        destination: '/project.html',
+      },
+      {
+        source: '/recruit',
+        destination: '/recruit.html',
+      },
+      {
+        source: '/thanks',
+        destination: '/thanks.html',
+      },
+      {
+        source: '/voice-chat-test',
+        destination: '/voice-chat-test.html',
+      },
+      {
+        source: '/voice-chat-redirect',
+        destination: '/voice-chat-redirect.html',
       },
     ];
   },
