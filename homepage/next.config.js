@@ -5,27 +5,10 @@ const nextConfig = {
     // 正しい環境変数名を参照する
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
-  // API Routesの設定 - Next.js 14では別の方法で設定する必要があるかもしれません
   // 静的ファイルの提供設定
-  // HTMLファイルがルートディレクトリに移動されたため、それらを提供するための設定
-  // キャッシュ設定
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600', // 1時間のキャッシュ
-          },
-        ],
-      },
-    ];
-  },
-  // ルートディレクトリのHTMLファイルを提供するための設定
   async rewrites() {
     return [
-      // ルートパスの設定 - pages/index.jsxを優先するか、index.htmlを表示するかを選択
+      // ルートパスの設定 - ルートディレクトリの index.html を表示する
       {
         source: '/',
         destination: '/index.html',
@@ -70,11 +53,6 @@ const nextConfig = {
       {
         source: '/voice-chat-redirect',
         destination: '/voice-chat-redirect.html',
-      },
-      // 静的ファイルのリダイレクトを追加
-      {
-        source: '/:path*',
-        destination: '/:path*',
       },
     ];
   },
