@@ -2,7 +2,7 @@
 
 // APIサーバーのURL設定 - 同一オリジンのAPIを使用
 // 同一オリジンのAPIエンドポイントを使用することでCSPとCORSの問題を解決
-// Next.js App RouterのAPIルートを使用するため、ルートからの相対パスで指定
+// Next.js Pages RouterのAPIルートを使用するため、ルートからの相対パスで指定
 const API_BASE_URL = '';
 
 // ブラウザのURLからAPIのベースURLを自動検出

@@ -2,17 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  },
-  // TypeScriptのエラーをビルド時に警告として扱う
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // ESLintのエラーをビルド時に警告として扱う
-  eslint: {
-    ignoreDuringBuilds: true,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY, // 正しい環境変数名を参照
   },
   // 静的ファイルの提供設定
+  // 既存のHTMLファイルなどの静的ファイルを提供するための設定
   async rewrites() {
     return [
       {
