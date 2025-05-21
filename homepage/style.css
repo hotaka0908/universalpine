@@ -31,6 +31,16 @@ h3 {
   color: #333333;
 }
 
+/* 特定のクラスを持つ要素に対する具体的なスタイル */
+.recruit-label.text-center {
+  color: #333333 !important;
+}
+
+.text-center.subtitle-text {
+  color: #333333 !important;
+  font-size: 1.1rem !important;
+}
+
 .container {
   width: 100%;
   max-width: 900px;
@@ -55,6 +65,11 @@ h2 {
   font-size: 2rem;
   margin-bottom: calc(var(--spacing-unit) * 1);
   text-align: center;
+}
+
+/* 特定のクラスを持つh2要素に対する具体的なスタイル */
+h2.section-heading {
+  margin-bottom: calc(var(--spacing-unit) * 1) !important;
 }
 
 .lead {
