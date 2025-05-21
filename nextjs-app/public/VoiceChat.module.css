@@ -1,0 +1,338 @@
+/* VoiceChat.module.css */
+
+.voiceChatContainer {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin: 30px auto;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(157, 217, 65, 0.2);
+}
+
+.voiceChatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.voiceChatTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.chatHistory {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Firefox用のスクロールバースタイル */
+@supports (scrollbar-width: thin) {
+  .chatHistory {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(157, 217, 65, 0.5) transparent;
+  }
+}
+
+.chatHistory::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatHistory::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatHistory::-webkit-scrollbar-thumb {
+  background-color: rgba(157, 217, 65, 0.5);
+  border-radius: 10px;
+}
+
+.userMessage,
+.aiMessage {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  animation: fadeIn 0.3s ease;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background-color: #9DD941;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.aiMessage {
+  align-self: flex-start;
+  background-color: #f1f1f1;
+  color: #333;
+  border-bottom-left-radius: 5px;
+}
+
+.messageContent {
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.micButton {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: var(--primary-color, #9DD941);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(157, 217, 65, 0.3);
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.micButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.5s ease-out;
+}
+
+.micButton:hover::before {
+  transform: scale(1.5);
+}
+
+.micButton:hover {
+  background-color: var(--accent-color, #7FB82D);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(157, 217, 65, 0.4);
+}
+
+.micButton:active {
+  transform: scale(0.95);
+}
+
+.micButton.listening {
+  background-color: #34C759;
+  animation: pulse 1.5s infinite;
+}
+
+.micButton.processing {
+  background-color: #007AFF;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.micButton.processing::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-top-color: white;
+  animation: spin 1s infinite linear;
+  box-sizing: border-box;
+}
+
+.micButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.micIcon {
+  width: 28px;
+  height: 28px;
+  fill: white;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.statusText {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+  min-height: 24px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.statusText.listening {
+  color: #34C759;
+  animation: fadeInOut 1.5s infinite;
+}
+
+.statusText.processing {
+  color: #007AFF;
+}
+
+.settingsPanel {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #f5f5f5;
+  color: #666;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settingsButton:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.textInputForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.textInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.textInput:focus {
+  border-color: var(--primary-color, #9DD941);
+  box-shadow: 0 0 0 2px rgba(157, 217, 65, 0.2);
+}
+
+.sendButton {
+  padding: 12px 20px;
+  background-color: var(--primary-color, #9DD941);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: var(--accent-color, #7FB82D);
+  transform: translateY(-2px);
+}
+
+.sendButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cancelButton {
+  padding: 12px 20px;
+  background-color: #f1f1f1;
+  color: #666;
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(52, 199, 89, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .voiceChatContainer {
+    max-width: 90%;
+    padding: 15px;
+  }
+  
+  .micButton {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .micIcon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .textInputForm {
+    flex-direction: column;
+  }
+  
+  .sendButton,
+  .cancelButton {
+    width: 100%;
+  }
+}

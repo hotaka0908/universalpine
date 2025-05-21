@@ -1,0 +1,12 @@
+/* ページコンテナのスタイル */
+.container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* iframeのスタイル */
+.frame {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
