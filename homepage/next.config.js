@@ -5,17 +5,10 @@ const nextConfig = {
     // 正しい環境変数名を参照する
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
-  // API Routesの設定
-  api: {
-    // API Routesのレスポンスサイズ制限を増やす
-    bodyParser: {
-      sizeLimit: '4mb', // 音声データなどの大きなファイルを扱うため
-    },
-    // CORS設定
-    externalResolver: true,
-  },
+  // API Routesの設定 - Next.js 14では別の方法で設定する必要があるかもしれません
   // 静的ファイルの提供設定
   // HTMLファイルがルートディレクトリに移動されたため、それらを提供するための設定
+  // キャッシュ設定
   async headers() {
     return [
       {
@@ -32,7 +25,11 @@ const nextConfig = {
   // ルートディレクトリのHTMLファイルを提供するための設定
   async rewrites() {
     return [
-      // index.jsxを優先するため、ルートパスはリダイレクトしない
+      // ルートパスの設定 - pages/index.jsxを優先するか、index.htmlを表示するかを選択
+      {
+        source: '/',
+        destination: '/index.html',
+      },
       // その他のHTMLファイルへのアクセスを可能にする
       {
         source: '/about',
@@ -73,6 +70,11 @@ const nextConfig = {
       {
         source: '/voice-chat-redirect',
         destination: '/voice-chat-redirect.html',
+      },
+      // 静的ファイルのリダイレクトを追加
+      {
+        source: '/:path*',
+        destination: '/:path*',
       },
     ];
   },
