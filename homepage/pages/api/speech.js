@@ -1,8 +1,8 @@
 import { Configuration, OpenAIApi } from 'openai';
 
-// OpenAI APIキーの設定（Vercelの環境変数から取得）
+// OpenAI APIキーの設定（環境変数から取得）
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, // 正しい環境変数名を参照
 });
 const openai = new OpenAIApi(configuration);
 

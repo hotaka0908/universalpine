@@ -12,9 +12,16 @@ const getApiBaseUrl = () => {
     const host = window.location.host;
     // 開発環境（localhost）の場合
     if (host.includes('localhost')) {
-        return 'http://localhost:3000';
+        // 現在のポート番号を取得（例：localhost:3002 → 3002）
+        const port = window.location.port || '3000';
+        return `http://localhost:${port}`;
     }
-    // その他の環境（本番環境など）の場合は空文字を返す（同一オリジンのAPIを使用）
+    // 本番環境（universalpine.com）の場合
+    if (host.includes('universalpine.com')) {
+        // 本番環境では同一オリジンのAPIを使用するため、プロトコルとホスト名を含めた完全なURLを返す
+        return `https://${host}`;
+    }
+    // その他の環境の場合は空文字を返す（同一オリジンのAPIを使用）
     return '';
 };
 
