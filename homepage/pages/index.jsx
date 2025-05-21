@@ -229,67 +229,40 @@ export default function HomePage() {
     const newMessage = { role, text };
     setMessages(prevMessages => [...prevMessages, newMessage]);
     
-    if (chatHistoryRef.current) {
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${role}`;
-      
-      const iconDiv = document.createElement('div');
-      iconDiv.className = 'message-icon';
-      iconDiv.textContent = role === 'user' ? '👤' : role === 'assistant' ? '🤖' : 'ℹ️';
-      
-      const textDiv = document.createElement('div');
-      textDiv.className = 'message-text';
-      textDiv.textContent = text;
-      
-      messageDiv.appendChild(iconDiv);
-      messageDiv.appendChild(textDiv);
-      chatHistoryRef.current.appendChild(messageDiv);
-      
-      // 最新のメッセージが見えるようにスクロール
+    // 最新のメッセージが見えるようにスクロール（useEffectで処理）
+  };
+
+  // メッセージが追加されたらスクロールする
+  useEffect(() => {
+    if (chatHistoryRef.current && messages.length > 0) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
     }
-  };
+  }, [messages]);
 
   // APIのベースURLを取得する関数
   const getApiBaseUrl = () => {
     const host = window.location.host;
     if (host.includes('localhost')) {
-      return 'http://localhost:3001';
+      // 開発サーバーのポート番号を取得
+      const port = window.location.port || '3000';
+      return `http://localhost:${port}`;
     }
     return '';
   };
 
   useEffect(() => {
-    // u521du671fu5316u51e6u7406
+    // 初期化処理
     console.log('Voice Chat Widget initialized');
     
-    // DOMu5f15u6570u304cu30edu30fcu30c9u3055u308cu305fu306au3061u306fu30a4u30d9u30f3u30c8u30cfu30f3u30c9u30e9u3092u5b9fu88c5u3057u307eu3059
-    const micButton = document.getElementById('mic-button');
-    const clearButton = document.getElementById('clear-button');
-    const textModeButton = document.getElementById('text-mode-button');
+    // 初期ステータスを設定
+    setStatusText('お話しませんか？');
     
-    if (micButton) {
-      micButton.addEventListener('click', handleMicButtonClick);
-    }
-    
-    if (clearButton) {
-      clearButton.addEventListener('click', handleClearButtonClick);
-    }
-    
-    if (textModeButton) {
-      textModeButton.addEventListener('click', handleTextModeButtonClick);
-    }
-    
-    // u30afu30eau30f3u30a2u30c3u30d1u30a2u30f3u30d7u30edu30bbu30b7u30e7
+    // クリーンアップ処理
     return () => {
-      if (micButton) {
-        micButton.removeEventListener('click', handleMicButtonClick);
-      }
-      if (clearButton) {
-        clearButton.removeEventListener('click', handleClearButtonClick);
-      }
-      if (textModeButton) {
-        textModeButton.removeEventListener('click', handleTextModeButtonClick);
+      // ページアンロード時に録音を停止
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+        mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       }
     };
   }, []);
