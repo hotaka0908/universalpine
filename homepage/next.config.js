@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  env: {
-    // 正しい環境変数名を参照する
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  },
   // 静的ファイルの提供設定
   async rewrites() {
     return [
@@ -45,15 +41,7 @@ const nextConfig = {
       {
         source: '/thanks',
         destination: '/thanks.html',
-      },
-      {
-        source: '/voice-chat-test',
-        destination: '/voice-chat-test.html',
-      },
-      {
-        source: '/voice-chat-redirect',
-        destination: '/voice-chat-redirect.html',
-      },
+      }
     ];
   },
 };

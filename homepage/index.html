@@ -14,7 +14,6 @@
     <link rel="canonical" href="https://universalpine.com/" />
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/responsive.css">
-    <link rel="stylesheet" href="/hero-voice-chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,43 +112,10 @@
     <section id="hero">
         <div class="container">
             <h1>人とAIを繋げる</h1>
-            <p class="hero-subtitle">AIアシスタントにお話しかけてみましょう</p>
-            <div class="hero-voice-chat">
-                <div class="voice-chat-container" id="voice-chat-widget">
-                    <div class="voice-chat-header">
-                        <div class="voice-chat-title">AIアシスタント</div>
-                    </div>
-                    <div class="chat-history" id="chat-history"></div>
-                    <div class="controls">
-                        <button class="mic-button" id="mic-button" title="音声入力を開始" aria-label="音声入力を開始">
-                            <svg class="mic-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                            </svg>
-                        </button>
-                        <div class="status-text" id="status-text">お話しませんか？</div>
-                        <div class="settings-panel">
-                            <button class="settings-button" id="clear-button" title="会話履歴をクリア" aria-label="会話履歴をクリア">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                    <path d="M19 6H5L6 20H18L19 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M10 10V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M14 10V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M8 6L9 4H15L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                履歴クリア
-                            </button>
-                            <button class="settings-button" id="text-mode-button" title="テキストで入力" aria-label="テキストで入力">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                    <path d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                                テキスト入力
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <p class="hero-subtitle">最先端のAI技術で、人々の生活をより豊かに</p>
+            <div class="hero-buttons">
+                <a href="/product.html" class="btn btn-primary">製品を見る</a>
+                <a href="/contact.html" class="btn btn-secondary">お問い合わせ</a>
             </div>
         </div>
     </section>
@@ -293,8 +259,6 @@
     <script src="/config.js"></script>
     <script src="/script.js"></script>
     <script src="/responsive.js"></script>
-    <!-- OpenAI音声APIを使用した音声チャット機能 -->
-    <script src="/next-voice-chat.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const accordionButtons = document.querySelectorAll('.accordion-button');

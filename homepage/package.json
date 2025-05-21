@@ -1,7 +1,7 @@
 {
   "name": "universalpine-website",
   "version": "1.0.0",
-  "description": "Universal Pine Website with Voice Chat",
+  "description": "Universal Pine Corporate Website",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,9 +12,7 @@
     "preview": "serve -l 3000"
   },
   "dependencies": {
-    "formidable": "^3.5.4",
     "next": "^14.2.28",
-    "openai": "^4.100.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
