@@ -138,6 +138,21 @@
             background-color: #e1e7ff !important;
         }
         
+        /* オープンポジションの見出しスタイル */
+        .job-header h3.open-position {
+            color: #007b24;
+        }
+        
+        /* オープンポジションのヘッダー背景色 */
+        .open-position-header {
+            background-color: #d4fbd6 !important;
+        }
+        
+        /* オープンポジションのスキルラベル */
+        .skill-label.open-position-skill {
+            color: #007b24;
+        }
+        
         /* 職種見出しのアルファベット（英語タイトル）のスタイル */
         .job-header h3 .en-title {
             font-family: "Inter", sans-serif;
@@ -525,12 +540,12 @@
                 </div>
 
                 <div class="job-card">
-                    <div class="job-header open-entry">
-                        <h3><span class="en-title">Open Application</span>オープンエントリー</h3>
+                    <div class="job-header open-entry open-position-header">
+                        <h3 class="open-position"><span class="en-title">Open Application</span>オープンエントリー</h3>
                     </div>
                     <div class="job-body">
                         <p class="job-description">募集のない職種で当社のビジョンに共感いただける方はご応募ください。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
+                        <p><strong class="skill-label open-position-skill">求める経験・スキル</strong></p>
                         <ul>
                             <li>AI技術やハードウェア開発への強い関心</li>
                             <li>自ら考え、行動できる主体性</li>
@@ -543,12 +558,12 @@
                 </div>
 
                 <div class="job-card">
-                    <div class="job-header open-entry">
-                        <h3><span class="en-title">Part-Time Position</span>アルバイト</h3>
+                    <div class="job-header open-entry open-position-header">
+                        <h3 class="open-position"><span class="en-title">Part-Time Position</span>アルバイト</h3>
                     </div>
                     <div class="job-body">
                         <p class="job-description">学生の方や副業をお考えの方も歓迎します。柔軟な働き方に対応します。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
+                        <p><strong class="skill-label open-position-skill">求める経験・スキル</strong></p>
                         <ul>
                             <li>新しい技術への好奇心</li>
                             <li>AIが好きな人</li>
