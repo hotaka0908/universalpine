@@ -314,8 +314,15 @@
             // モバイルナビゲーションのドロップダウンメニュー
             mobileDropdowns.forEach(dropdown => {
                 const link = dropdown.querySelector('a');
+                
                 link.addEventListener('click', function(e) {
-                    e.preventDefault(); // モバイルナビでは常にリンク先への移動を防止
+                    // ドロップダウンが開いている状態で再度クリックされた場合は、リンク先に移動
+                    if (dropdown.classList.contains('active')) {
+                        return; // デフォルトの動作（リンク先への移動）を許可
+                    }
+                    
+                    // 初回クリック時はドロップダウンを開く
+                    e.preventDefault();
                     
                     // 他のドロップダウンを閉じる
                     mobileDropdowns.forEach(otherDropdown => {
@@ -324,8 +331,8 @@
                         }
                     });
                     
-                    // クリックしたドロップダウンを開閉
-                    dropdown.classList.toggle('active');
+                    // クリックしたドロップダウンを開く
+                    dropdown.classList.add('active');
                 });
                 
                 // ドロップダウン内のリンクはそのままリンク先に移動させる
