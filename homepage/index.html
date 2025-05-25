@@ -278,7 +278,8 @@
             const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
             
             // ハンバーガーメニューの開閉
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation(); // イベントの伝播を停止
                 nav.classList.toggle('active');
                 mobileNav.classList.toggle('active');
             });
@@ -288,6 +289,11 @@
                 if (!nav.contains(event.target) && !menuToggle.contains(event.target) && !mobileNav.contains(event.target) && nav.classList.contains('active')) {
                     nav.classList.remove('active');
                     mobileNav.classList.remove('active');
+                    
+                    // すべてのドロップダウンを閉じる
+                    mobileDropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
                 }
             });
             
@@ -316,6 +322,8 @@
                 const link = dropdown.querySelector('a');
                 
                 link.addEventListener('click', function(e) {
+                    e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
+                    
                     // ドロップダウンが開いている状態で再度クリックされた場合は、リンク先に移動
                     if (dropdown.classList.contains('active')) {
                         return; // デフォルトの動作（リンク先への移動）を許可
@@ -343,6 +351,11 @@
                         subEvent.stopPropagation();
                     });
                 });
+            });
+            
+            // モバイルナビゲーション自体のクリックイベントを阻止して閉じないようにする
+            mobileNav.addEventListener('click', function(e) {
+                e.stopPropagation(); // イベントの伝播を停止
             });
             
             // 画面サイズ変更時の処理
