@@ -274,20 +274,24 @@
             const menuToggle = document.querySelector('.menu-toggle');
             const nav = document.querySelector('nav');
             const dropdowns = document.querySelectorAll('.dropdown');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
             
             // ハンバーガーメニューの開閉
             menuToggle.addEventListener('click', function() {
                 nav.classList.toggle('active');
+                mobileNav.classList.toggle('active');
             });
             
             // 画面外をクリックしたらメニューを閉じる
             document.addEventListener('click', function(event) {
-                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && nav.classList.contains('active')) {
+                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && !mobileNav.contains(event.target) && nav.classList.contains('active')) {
                     nav.classList.remove('active');
+                    mobileNav.classList.remove('active');
                 }
             });
             
-            // モバイル表示時のドロップダウンメニュー
+            // メインナビゲーションのドロップダウンメニュー
             dropdowns.forEach(dropdown => {
                 const link = dropdown.querySelector('a');
                 link.addEventListener('click', function(e) {
@@ -307,11 +311,42 @@
                 });
             });
             
+            // モバイルナビゲーションのドロップダウンメニュー
+            mobileDropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('a');
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // モバイルナビでは常にリンク先への移動を防止
+                    
+                    // 他のドロップダウンを閉じる
+                    mobileDropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // クリックしたドロップダウンを開閉
+                    dropdown.classList.toggle('active');
+                });
+                
+                // ドロップダウン内のリンクはそのままリンク先に移動させる
+                const subLinks = dropdown.querySelectorAll('.dropdown-content a');
+                subLinks.forEach(subLink => {
+                    subLink.addEventListener('click', function(subEvent) {
+                        // イベントの伝播を停止して親要素のイベントが発火しないようにする
+                        subEvent.stopPropagation();
+                    });
+                });
+            });
+            
             // 画面サイズ変更時の処理
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 768) {
                     nav.classList.remove('active');
+                    mobileNav.classList.remove('active');
                     dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    mobileDropdowns.forEach(dropdown => {
                         dropdown.classList.remove('active');
                     });
                 }
