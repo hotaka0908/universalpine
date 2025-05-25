@@ -276,19 +276,22 @@
             const dropdowns = document.querySelectorAll('.dropdown');
             const mobileNav = document.querySelector('.mobile-nav');
             const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
+            let mobileNavActive = false;
             
             // ハンバーガーメニューの開閉
             menuToggle.addEventListener('click', function(e) {
                 e.stopPropagation(); // イベントの伝播を停止
                 nav.classList.toggle('active');
                 mobileNav.classList.toggle('active');
+                mobileNavActive = !mobileNavActive;
             });
             
             // 画面外をクリックしたらメニューを閉じる
             document.addEventListener('click', function(event) {
-                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && !mobileNav.contains(event.target) && nav.classList.contains('active')) {
+                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && !mobileNav.contains(event.target) && mobileNavActive) {
                     nav.classList.remove('active');
                     mobileNav.classList.remove('active');
+                    mobileNavActive = false;
                     
                     // すべてのドロップダウンを閉じる
                     mobileDropdowns.forEach(dropdown => {
@@ -363,6 +366,7 @@
                 if (window.innerWidth > 768) {
                     nav.classList.remove('active');
                     mobileNav.classList.remove('active');
+                    mobileNavActive = false;
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('active');
                     });

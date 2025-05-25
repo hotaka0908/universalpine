@@ -61,11 +61,15 @@ img {
 }
 
 .mobile-nav .dropdown-content {
-    display: block;
+    display: none;
     position: static;
     background-color: transparent;
     box-shadow: none;
     padding: 10px 0;
+}
+
+.mobile-nav .dropdown.active .dropdown-content {
+    display: block;
 }
 
 .mobile-nav .dropdown-content a {
