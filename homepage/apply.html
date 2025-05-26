@@ -128,6 +128,15 @@
                     <textarea id="message" name="message" rows="5" placeholder="※AIを80%活用し、300字程度でご入力ください。"></textarea>
                 </div>
                 
+                <div class="form-group checkbox-group">
+                    <div class="privacy-check-container">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">プライバシーポリシーに同意する <span class="required">*</span></label>
+                    </div>
+                    <div class="privacy-policy-link"><a href="privacy-policy.html">当社プライバシーポリシー</a></div>
+                    <div id="privacy-error" class="error-message"></div>
+                </div>
+                
                 <button type="submit" class="submit-button">応募する</button>
                 <div id="form-status" class="form-status"></div>
             </form>
@@ -161,9 +170,19 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('apply-form');
             const formStatus = document.getElementById('form-status');
+            const privacyError = document.getElementById('privacy-error');
             
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                
+                // プライバシーポリシーのチェック
+                const privacyChecked = document.getElementById('privacy').checked;
+                if (!privacyChecked) {
+                    privacyError.textContent = 'プライバシーポリシーに同意してください';
+                    return;
+                } else {
+                    privacyError.textContent = '';
+                }
                 
                 // 送信ボタンを無効化
                 const submitButton = form.querySelector('button[type="submit"]');
