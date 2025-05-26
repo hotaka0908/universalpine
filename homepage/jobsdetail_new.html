@@ -122,7 +122,7 @@
                     workHoursValue.textContent = '9時-22時(時間応相談)';
                 }
                 
-                // アルバイトの場合、求める経験・スキルセクションと福利厚生・待遇セクションを非表示にする処理を追加
+                // アルバイトの場合、求める経験・スキルセクションと福利厚生セクションを非表示にする処理を追加
                 // updateJobContent関数の実行後に行うためのタイマーを設定
                 setTimeout(function() {
                     // 求める経験・スキルセクションを非表示
@@ -132,7 +132,7 @@
                         if (heading && heading.textContent === '求める経験・スキル') {
                             section.style.display = 'none';
                         }
-                        if (heading && heading.textContent === '福利厚生・待遇') {
+                        if (heading && heading.textContent === '福利厚生') {
                             section.style.display = 'none';
                         }
                     });
@@ -186,7 +186,7 @@
                         <li>AIとハードウェアの融合による新しい価値創造に情熱を持てる方</li>
                     </ul>`,
                     'benefits': `<ul>
-                        <li>各種社会保険完備（健康保険、厚生年金、雇用保険、労災保険）</li>
+                        <li>各種社会保険完備</li>
                         <li>通勤手当（月額上限5万円）</li>
                         <li>住宅手当（条件あり、月額上限3万円）</li>
                         <li>リモートワーク環境整備手当</li>
@@ -241,7 +241,7 @@
                         <li>AIとハードウェアの融合による新しい価値創造に情熱を持てる方</li>
                     </ul>`,
                     'benefits': `<ul>
-                        <li>各種社会保険完備（健康保険、厚生年金、雇用保険、労災保険）</li>
+                        <li>各種社会保険完備</li>
                         <li>通勤手当（月額上限5万円）</li>
                         <li>住宅手当（条件あり、月額上限3万円）</li>
                         <li>リモートワーク環境整備手当</li>
@@ -860,13 +860,14 @@
                 </div>
                 
                 <div class="job-section">
-                    <h3>福利厚生・待遇</h3>
+                    <h3>福利厚生</h3>
                     <ul>
                         <li>社会保険完備</li>
                         <li>リモートワーク可能</li>
                         <li>フレックスタイム制</li>
                         <li>AIツール補助</li>
                         <li>有給休暇</li>
+                        <li>育児・介護休暇</li>
                         <li>副業OK</li>
                     </ul>
                 </div>
