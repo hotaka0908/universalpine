@@ -102,6 +102,27 @@
             document.querySelector('.job-title').textContent = jobInfo.ja;
             document.querySelector('.job-subtitle').textContent = jobInfo.en;
             
+            // アルバイトの場合、雇用情報を更新
+            if (jobType === 'parttime') {
+                // 雇用形態をアルバイトに変更
+                const employmentTypeValue = document.querySelector('.job-meta-item:nth-of-type(1) .job-meta-value');
+                if (employmentTypeValue) {
+                    employmentTypeValue.textContent = 'アルバイト（社員登用あり）';
+                }
+                
+                // 給与を時給に変更
+                const salaryValue = document.querySelector('.job-meta-item:nth-of-type(3) .job-meta-value');
+                if (salaryValue) {
+                    salaryValue.textContent = '時給1200円～';
+                }
+                
+                // 勤務時間を変更
+                const workHoursValue = document.querySelector('.job-meta-item:nth-of-type(4) .job-meta-value');
+                if (workHoursValue) {
+                    workHoursValue.textContent = '9時-22時(時間応相談)';
+                }
+            }
+            
             // 職種ごとの詳細情報を更新
             updateJobContent(jobType);
         }
