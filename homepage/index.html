@@ -337,6 +337,24 @@
                 });
             });
             
+            // ミッションセクションのアコーディオンボタンの処理
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            console.log('Found accordion buttons:', accordionButtons.length);
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Accordion button clicked');
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+            
             // 画面外をクリックしたらメニューを閉じる
             document.addEventListener('click', function(e) {
                 // クリックした要素がメニュー内の要素でない場合のみメニューを閉じる
