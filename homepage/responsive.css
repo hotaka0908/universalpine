@@ -60,22 +60,58 @@ img {
     color: #005DFF;
 }
 
-.mobile-nav .dropdown-content {
-    display: none;
-    position: static;
-    background-color: transparent;
-    box-shadow: none;
-    padding: 10px 0;
+/* アコーディオンメニューのスタイル */
+.mobile-nav .accordion-item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.mobile-nav .dropdown.active .dropdown-content {
-    display: block;
+.mobile-nav .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.mobile-nav .dropdown-content a {
-    font-size: 1rem;
-    padding: 8px;
+.mobile-nav .accordion-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.mobile-nav .accordion-item.active .accordion-icon {
+    transform: rotate(45deg);
+}
+
+.mobile-nav .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 15px;
+    list-style: none;
+}
+
+.mobile-nav .accordion-item.active .accordion-content {
+    max-height: 500px; /* 十分な高さを設定 */
+}
+
+.mobile-nav .accordion-content li {
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 2px solid #9DD941;
+}
+
+.mobile-nav .accordion-content a {
+    font-size: 0.95rem;
     color: #666;
+    display: block;
+    padding: 6px 0;
+}
+
+.mobile-nav .accordion-content a:hover {
+    color: #005DFF;
 }
 
 /* メディアクエリ - タブレット */
