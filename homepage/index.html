@@ -345,10 +345,18 @@
             // モバイルナビゲーションのドロップダウンメニュー
             mobileDropdowns.forEach(dropdown => {
                 const link = dropdown.querySelector('a');
+                let dropdownActive = false; // ドロップダウンの状態を追跡
                 
                 link.addEventListener('click', function(e) {
                     e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
-                    e.preventDefault(); // リンク先への移動を常に防止
+                    
+                    // ドロップダウンが既に開いている場合は、リンク先に移動する
+                    if (dropdown.classList.contains('active')) {
+                        return; // デフォルトの動作（リンク先への移動）を許可
+                    }
+                    
+                    // 初回クリック時はドロップダウンを開く
+                    e.preventDefault();
                     
                     // 他のドロップダウンを閉じる
                     mobileDropdowns.forEach(otherDropdown => {
@@ -357,8 +365,9 @@
                         }
                     });
                     
-                    // クリックしたドロップダウンを開閉
-                    dropdown.classList.toggle('active');
+                    // クリックしたドロップダウンを開く
+                    dropdown.classList.add('active');
+                    dropdownActive = true;
                 });
                 
                 // ドロップダウン内のリンクはそのままリンク先に移動させる
