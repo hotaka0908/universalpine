@@ -29,22 +29,29 @@ img {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
+    height: 100vh;
+    background-color: #fff;
     z-index: 999;
-    padding-top: 80px;
+    padding: 80px 20px 20px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* iOSのスクロールを滑らかに */
+}
+
+.mobile-nav.active {
+    display: block;
 }
 
 .mobile-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: calc(100vh - 100px); /* 画面高さからヘッダー分を引いた高さ */
+    overflow-y: auto;
 }
 
 .mobile-nav li {
     margin-bottom: 15px;
-    text-align: center;
+    position: relative; /* 子要素の配置の基準点 */
 }
 
 .mobile-nav a {
@@ -91,6 +98,8 @@ img {
 .mobile-nav .dropdown-content {
     display: none;
     padding: 5px 0 10px 15px;
+    max-height: 300px; /* 最大高さを設定 */
+    overflow-y: auto; /* 高さが最大値を超えた場合はスクロール可能に */
 }
 
 .mobile-nav .dropdown.active .dropdown-content {
@@ -105,10 +114,16 @@ img {
     margin-bottom: 5px;
     border-left: 2px solid #9DD941;
     padding-left: 10px;
+    word-break: break-word; /* 長いテキストがある場合に改行 */
 }
 
 .mobile-nav .dropdown-content a:hover {
     color: #005DFF;
+}
+
+/* 会社情報のドロップダウン用の調整 */
+.mobile-nav .dropdown:nth-child(3) .dropdown-content {
+    max-height: 250px; /* 会社情報のドロップダウンに特別な高さを設定 */
 }
 
 /* メディアクエリ - タブレット */
