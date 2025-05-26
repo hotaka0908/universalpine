@@ -356,10 +356,10 @@ nav a:hover {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1000px;
 }
 
 .product-item {
@@ -809,9 +809,20 @@ nav a:hover {
   line-height: 1.6;
 }
 
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .product-heading,
