@@ -319,24 +319,23 @@
                     console.log('Dropdown link clicked');
                     e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
                     
-                    // ドロップダウンが既に開いている場合は、リンク先に移動する
+                    // 必ずハンバーガーメニューが閉じないようにする
+                    e.preventDefault(); // リンクのデフォルト動作を常に防止
+                    
+                    // ドロップダウンの開閉状態を切り替える
                     if (dropdown.classList.contains('active')) {
-                        return; // デフォルトの動作（リンク先への移動）を許可
+                        dropdown.classList.remove('active');
+                    } else {
+                        // 他のドロップダウンを閉じる
+                        mobileDropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                        
+                        // クリックしたドロップダウンを開く
+                        dropdown.classList.add('active');
                     }
-                    
-                    // 初回クリック時はドロップダウンを開く
-                    e.preventDefault();
-                    
-                    // 他のドロップダウンを閉じる
-                    mobileDropdowns.forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
-                            otherDropdown.classList.remove('active');
-                        }
-                    });
-                    
-                    // クリックしたドロップダウンを開く
-                    dropdown.classList.add('active');
-                    dropdownActive = true;
                 });
                 
                 // ドロップダウン内のリンクはそのままリンク先に移動させる
@@ -347,7 +346,6 @@
                         // イベントの伝播を停止して親要素のイベントが発火しないようにする
                         subEvent.stopPropagation();
                         // サブメニューのリンクはそのままリンク先に移動させる（デフォルトの動作を許可）
-                        // ここでは特に何もしない（preventDefaultを呼び出さない）
                     });
                 });
             });

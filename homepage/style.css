@@ -172,7 +172,8 @@ nav a:hover {
   color: #333333;
 }
 
-.dropdown:hover .dropdown-content {
+/* ホバー時のドロップダウン表示を削除し、クリック時のみに表示されるようにしました */
+.dropdown.active .dropdown-content {
   display: block;
 }
 
