@@ -78,32 +78,32 @@
     
     <div class="mobile-nav">
         <ul>
-            <li class="accordion-item">
-                <a href="javascript:void(0)" class="accordion-header">ニュース <span class="accordion-icon">+</span></a>
-                <ul class="accordion-content">
-                    <li><a href="news.html#announcements">お知らせ</a></li>
-                    <li><a href="news.html#press">プレスリリース</a></li>
-                    <li><a href="news.html">すべてのニュース</a></li>
-                </ul>
+            <li class="dropdown">
+                <a href="news.html">ニュース</a>
+                <div class="dropdown-content">
+                    <a href="news.html#announcements">お知らせ</a>
+                    <a href="news.html#press">プレスリリース</a>
+                    <a href="news.html">すべてのニュース</a>
+                </div>
             </li>
-            <li class="accordion-item">
-                <a href="javascript:void(0)" class="accordion-header">製品 <span class="accordion-icon">+</span></a>
-                <ul class="accordion-content">
-                    <li><a href="product.html">AIネックレス</a></li>
-                </ul>
+            <li class="dropdown">
+                <a href="product.html">製品</a>
+                <div class="dropdown-content">
+                    <a href="product.html">AIネックレス</a>
+                </div>
             </li>
             <li>
                 <a href="recruit.html">採用</a>
             </li>
-            <li class="accordion-item">
-                <a href="javascript:void(0)" class="accordion-header">会社情報 <span class="accordion-icon">+</span></a>
-                <ul class="accordion-content">
-                    <li><a href="about.html#philosophy">理念</a></li>
-                    <li><a href="about.html#message">代表メッセージ</a></li>
-                    <li><a href="about.html#founders">創業者紹介</a></li>
-                    <li><a href="about.html#history">沿革</a></li>
-                    <li><a href="about.html#about">会社概要</a></li>
-                </ul>
+            <li class="dropdown">
+                <a href="about.html">会社情報</a>
+                <div class="dropdown-content">
+                    <a href="about.html#philosophy">理念</a>
+                    <a href="about.html#message">代表メッセージ</a>
+                    <a href="about.html#founders">創業者紹介</a>
+                    <a href="about.html#history">沿革</a>
+                    <a href="about.html#about">会社概要</a>
+                </div>
             </li>
             <li>
                 <a href="contact.html">お問い合わせ</a>
@@ -307,33 +307,48 @@
                 e.stopPropagation();
             });
             
-            // アコーディオンヘッダーのイベントリスナーを追加
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            console.log('Found accordion headers:', accordionHeaders.length);
+            // ドロップダウンメニューの処理
+            const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
+            console.log('Found mobile dropdowns:', mobileDropdowns.length);
             
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', function(e) {
-                    console.log('Accordion header clicked');
+            mobileDropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('a');
+                let dropdownActive = false; // ドロップダウンの状態を追跡
+                
+                link.addEventListener('click', function(e) {
+                    console.log('Dropdown link clicked');
+                    e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
+                    
+                    // ドロップダウンが既に開いている場合は、リンク先に移動する
+                    if (dropdown.classList.contains('active')) {
+                        return; // デフォルトの動作（リンク先への移動）を許可
+                    }
+                    
+                    // 初回クリック時はドロップダウンを開く
                     e.preventDefault();
-                    e.stopPropagation();
                     
-                    const item = this.parentElement;
-                    console.log('Accordion item:', item);
-                    const isActive = item.classList.contains('active');
-                    
-                    // 他のアコーディオンを閉じる
-                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
+                    // 他のドロップダウンを閉じる
+                    mobileDropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                            otherDropdown.classList.remove('active');
                         }
                     });
                     
-                    // クリックしたアコーディオンの開閉を切り替え
-                    if (isActive) {
-                        item.classList.remove('active');
-                    } else {
-                        item.classList.add('active');
-                    }
+                    // クリックしたドロップダウンを開く
+                    dropdown.classList.add('active');
+                    dropdownActive = true;
+                });
+                
+                // ドロップダウン内のリンクはそのままリンク先に移動させる
+                const subLinks = dropdown.querySelectorAll('.dropdown-content a');
+                subLinks.forEach(subLink => {
+                    subLink.addEventListener('click', function(subEvent) {
+                        console.log('Dropdown sublink clicked');
+                        // イベントの伝播を停止して親要素のイベントが発火しないようにする
+                        subEvent.stopPropagation();
+                        // サブメニューのリンクはそのままリンク先に移動させる（デフォルトの動作を許可）
+                        // ここでは特に何もしない（preventDefaultを呼び出さない）
+                    });
                 });
             });
             
