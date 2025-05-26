@@ -32,6 +32,298 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "rd86xw1i3g");
     </script>
+    
+    <script type="text/javascript">
+        // URLパラメータからjob情報を取得する関数
+        function getJobParameter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('job');
+        }
+        
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobType = getJobParameter();
+            updateJobDetails(jobType);
+        });
+        
+        // 職種に応じて詳細情報を更新する関数
+        function updateJobDetails(jobType) {
+            // デフォルトは電気/電子設計エンジニア
+            if (!jobType) jobType = 'electronics';
+            
+            const jobTitles = {
+                'electronics': {
+                    'ja': '電気/電子設計エンジニア',
+                    'en': 'Electronics Engineer',
+                    'description': '多層PCBを設計し、量産までリードしていただきます。'
+                },
+                'mechanical': {
+                    'ja': '機構設計エンジニア',
+                    'en': 'Mechanical Design Engineer',
+                    'description': '筐体/機構設計から量産まで担当していただきます。'
+                },
+                'ai': {
+                    'ja': 'AIエンジニア',
+                    'en': 'AI Engineer',
+                    'description': '音声/マルチモーダルモデルなどを軽量化し、エッジからクラウドまで最適化していただきます。'
+                },
+                'embedded': {
+                    'ja': '組み込みエンジニア',
+                    'en': 'Embedded Software Engineer',
+                    'description': 'SoC/MCUの起動からOTA更新基盤まで担当していただきます。'
+                },
+                'mobile': {
+                    'ja': 'モバイルアプリエンジニア',
+                    'en': 'Mobile Application Engineer',
+                    'description': 'iOS/Androidアプリの開発を担当していただきます。'
+                },
+                'open': {
+                    'ja': 'オープンエントリー',
+                    'en': 'Open Application',
+                    'description': '募集のない職種で当社のビジョンに共感いただける方はご応募ください。'
+                },
+                'other': {
+                    'ja': 'その他の職種',
+                    'en': 'Other Position',
+                    'description': '当社の様々な職種に応募いただけます。'
+                }
+            };
+            
+            // 職種情報を取得
+            const jobInfo = jobTitles[jobType] || jobTitles['electronics'];
+            
+            // タイトルと説明を更新
+            document.title = `${jobInfo.ja} - Universal Pine`;
+            document.querySelector('.job-title').textContent = jobInfo.ja;
+            document.querySelector('.job-subtitle').textContent = jobInfo.en;
+            
+            // 職種ごとの詳細情報を更新
+            updateJobContent(jobType);
+        }
+        
+        // 職種ごとの詳細コンテンツを更新する関数
+        function updateJobContent(jobType) {
+            const jobContents = {
+                'electronics': {
+                    'duties': `<p>当社のAIネックレス製品における電気・電子回路の設計から量産までを担当していただきます。多層PCBの設計、センサーインターフェースの実装、低消費電力設計などのハードウェア開発の幅広い業務に携わっていただきます。</p>
+                    <p>具体的には以下のような業務を担当していただきます：</p>
+                    <ul>
+                        <li>AIネックレス製品のハードウェア設計（回路設計、基板設計）</li>
+                        <li>各種センサー（マイク、加速度センサー等）のインターフェース設計</li>
+                        <li>BLE/Wi-Fiなどの無線通信モジュールの実装</li>
+                        <li>バッテリーマネジメント回路の設計と最適化</li>
+                        <li>量産に向けた設計最適化とDFM（Design for Manufacturing）</li>
+                        <li>試作品の評価・検証と改善</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>アナログ/デジタル回路設計の実務経験（3年以上）</li>
+                        <li>センサー/BLEインターフェースの設計経験</li>
+                        <li>多層PCBレイアウト設計経験</li>
+                        <li>回路シミュレーションツールの使用経験（SPICE等）</li>
+                        <li>CADツールの使用経験（Altium Designer、Eagle、KiCADなど）</li>
+                        <li>低消費電力設計の知識と経験</li>
+                        <li>量産を見据えた設計経験があれば尚可</li>
+                        <li>英語でのコミュニケーション能力（読み書きレベル）</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>新しい技術やアイデアに対して好奇心を持ち、常に学び続ける姿勢がある方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>ユーザー視点を持ち、製品の品質と使いやすさにこだわりを持てる方</li>
+                        <li>AIとハードウェアの融合による新しい価値創造に情熱を持てる方</li>
+                    </ul>`
+                },
+                'mechanical': {
+                    'duties': `<p>当社のAIネックレス製品における筐体・機構設計から量産までを担当していただきます。小型デバイスの設計、3D CADを使用した設計、製造性を考慮した設計などを行っていただきます。</p>
+                    <p>具体的には以下のような業務を担当していただきます：</p>
+                    <ul>
+                        <li>AIネックレス製品の筐体・機構設計</li>
+                        <li>3D CADを使用した精密な設計</li>
+                        <li>小型デバイスの熱設計・構造設計</li>
+                        <li>製造性を考慮した設計（DFM/DFA）</li>
+                        <li>試作品の評価・検証と改善</li>
+                        <li>量産に向けた設計最適化</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>3D CADを使用した筐体設計の経験（3年以上）</li>
+                        <li>小型デバイスの設計経験</li>
+                        <li>量産化を見据えたDFM/DFAの知識</li>
+                        <li>熱設計・構造設計の知識</li>
+                        <li>3Dプリンタなどを使用した試作経験</li>
+                        <li>製造プロセスに関する知識</li>
+                        <li>英語でのコミュニケーション能力（読み書きレベル）</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>美しさと機能性を両立させる設計センスを持つ方</li>
+                        <li>ユーザー視点を持ち、使いやすさにこだわりを持てる方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>新しい技術やアイデアに対して好奇心を持ち、常に学び続ける姿勢がある方</li>
+                    </ul>`
+                },
+                'ai': {
+                    'duties': `<p>当社のAIネックレス製品におけるAIモデルの開発・最適化を担当していただきます。音声認識や自然言語処理、マルチモーダルモデルなどの開発と軽量化を行い、エッジデバイスからクラウドまでの最適な実装を担当していただきます。</p>
+                    <p>具体的には以下のような業務を担当していただきます：</p>
+                    <ul>
+                        <li>音声認識・自然言語処理モデルの開発と最適化</li>
+                        <li>マルチモーダルAIモデルの研究開発</li>
+                        <li>エッジデバイス向けモデル軽量化（量子化、蒸留など）</li>
+                        <li>オンデバイス学習の実装</li>
+                        <li>クラウドAIサービスとの連携設計</li>
+                        <li>AIモデルの評価・検証と改善</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>機械学習・深層学習の実務経験（3年以上）</li>
+                        <li>Python、TensorFlow、PyTorchなどの開発経験</li>
+                        <li>自然言語処理や音声認識の知識</li>
+                        <li>モデル軽量化技術の知識と経験</li>
+                        <li>エッジデバイスでのAI実装経験があれば尚可</li>
+                        <li>クラウドAIサービスの利用経験</li>
+                        <li>英語でのコミュニケーション能力（読み書きレベル）</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>AIの最新技術動向に関心を持ち、常に学び続ける姿勢がある方</li>
+                        <li>研究開発と実用化のバランスを取れる方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>ユーザー視点を持ち、AIの実用性と使いやすさにこだわりを持てる方</li>
+                    </ul>`
+                },
+                'embedded': {
+                    'duties': `<p>当社のAIネックレス製品における組み込みソフトウェア開発を担当していただきます。SoCやMCUの起動処理からファームウェア、OTA更新基盤まで、幅広い組み込みソフトウェア開発を行っていただきます。</p>
+                    <p>具体的には以下のような業務を担当していただきます：</p>
+                    <ul>
+                        <li>SoC/MCUのブートローダー開発</li>
+                        <li>リアルタイムOSを使用したファームウェア開発</li>
+                        <li>センサーデータ処理・制御ソフトウェア開発</li>
+                        <li>低消費電力設計の実装</li>
+                        <li>OTA更新システムの設計と実装</li>
+                        <li>デバッグ・性能最適化</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>C/C++、Rustなどによる組み込みソフトウェア開発経験（3年以上）</li>
+                        <li>リアルタイムOSの知識</li>
+                        <li>低消費電力設計やデバック経験</li>
+                        <li>ARM Cortex-Mシリーズなどのマイコン開発経験</li>
+                        <li>ファームウェア開発・更新システムの知識</li>
+                        <li>組み込みLinuxの経験があれば尚可</li>
+                        <li>英語でのコミュニケーション能力（読み書きレベル）</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>ハードウェアとソフトウェアの両方に興味を持ち、境界領域で活躍できる方</li>
+                        <li>リソース制約のある環境での最適化に情熱を持てる方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>新しい技術やアイデアに対して好奇心を持ち、常に学び続ける姿勢がある方</li>
+                    </ul>`
+                },
+                'mobile': {
+                    'duties': `<p>当社のAIネックレス製品と連携するモバイルアプリケーションの開発を担当していただきます。iOS/Androidアプリの設計・開発からリリース、保守まで一貫して担当していただきます。</p>
+                    <p>具体的には以下のような業務を担当していただきます：</p>
+                    <ul>
+                        <li>iOS/Androidアプリの設計・開発</li>
+                        <li>BLE通信を使用したデバイス連携機能の実装</li>
+                        <li>UI/UXの設計と実装</li>
+                        <li>クラウドサービスとの連携機能開発</li>
+                        <li>アプリのリリースと継続的な改善</li>
+                        <li>ユーザーフィードバックに基づく機能改善</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>Swift/Kotlinによるアプリ開発経験（3年以上）</li>
+                        <li>BLE通信を使用したアプリ実装経験</li>
+                        <li>UI/UX設計の知識</li>
+                        <li>RESTful APIの利用経験</li>
+                        <li>アプリのリリース経験</li>
+                        <li>クロスプラットフォーム開発（Flutter、React Nativeなど）の経験があれば尚可</li>
+                        <li>英語でのコミュニケーション能力（読み書きレベル）</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>ユーザー視点を持ち、使いやすさと美しさを両立させるUI/UXにこだわりを持てる方</li>
+                        <li>最新のモバイル開発トレンドに関心を持ち、常に学び続ける姿勢がある方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>ハードウェアとソフトウェアの連携に興味を持ち、新しい体験を創造できる方</li>
+                    </ul>`
+                },
+                'open': {
+                    'duties': `<p>当社では、募集職種以外でも当社のビジョンに共感いただける方を広く募集しています。あなたのスキルや経験を活かして、AIネックレス製品の開発や事業成長に貢献していただける方をお待ちしています。</p>
+                    <p>以下のような分野での経験をお持ちの方は、ぜひご応募ください：</p>
+                    <ul>
+                        <li>プロダクトマネージャー</li>
+                        <li>UXデザイナー</li>
+                        <li>クラウドエンジニア</li>
+                        <li>データサイエンティスト</li>
+                        <li>マーケティング</li>
+                        <li>セールス</li>
+                        <li>カスタマーサポート</li>
+                        <li>その他、当社の製品開発や事業成長に貢献できる職種</li>
+                    </ul>`,
+                    'skills': `<ul>
+                        <li>AI技術やハードウェア開発への強い関心</li>
+                        <li>自ら考え、行動できる主体性</li>
+                        <li>チームでの協働を大切にする姿勢</li>
+                        <li>自身の専門分野での実務経験</li>
+                        <li>新しい技術やビジネスへの好奇心</li>
+                        <li>英語でのコミュニケーション能力があれば尚可</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>当社のビジョンに共感し、製品開発に情熱を持てる方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>新しい技術やアイデアに対して好奇心を持ち、常に学び続ける姿勢がある方</li>
+                        <li>多様な価値観を尊重し、チームの一員として成長できる方</li>
+                    </ul>`
+                },
+                'other': {
+                    'duties': `<p>当社では、様々な職種で人材を募集しています。あなたのスキルや経験を活かして、AIネックレス製品の開発や事業成長に貢献していただける方をお待ちしています。</p>
+                    <p>具体的な職種については、採用ページの募集職種一覧をご確認ください。</p>`,
+                    'skills': `<ul>
+                        <li>AI技術やハードウェア開発への強い関心</li>
+                        <li>自ら考え、行動できる主体性</li>
+                        <li>チームでの協働を大切にする姿勢</li>
+                        <li>自身の専門分野での実務経験</li>
+                        <li>新しい技術やビジネスへの好奇心</li>
+                    </ul>`,
+                    'personality': `<ul>
+                        <li>当社のビジョンに共感し、製品開発に情熱を持てる方</li>
+                        <li>チームでの協働を大切にし、オープンなコミュニケーションができる方</li>
+                        <li>課題解決に主体的に取り組み、最後までやり抜く粘り強さがある方</li>
+                        <li>新しい技術やアイデアに対して好奇心を持ち、常に学び続ける姿勢がある方</li>
+                    </ul>`
+                }
+            };
+            
+            // 職種情報を取得
+            const jobContent = jobContents[jobType] || jobContents['electronics'];
+            
+            // 職務内容を更新
+            const dutiesSection = document.querySelector('.job-section:nth-of-type(1)');
+            if (dutiesSection) {
+                const dutiesContent = dutiesSection.querySelector('p').parentNode;
+                dutiesContent.innerHTML = `<h3>職務内容</h3>${jobContent.duties}`;
+            }
+            
+            // 求める経験・スキルを更新
+            const skillsSection = document.querySelector('.job-section:nth-of-type(2)');
+            if (skillsSection) {
+                const skillsContent = skillsSection.querySelector('ul').parentNode;
+                skillsContent.innerHTML = `<h3>求める経験・スキル</h3>${jobContent.skills}`;
+            }
+            
+            // 求める人物像を更新
+            const personalitySection = document.querySelector('.job-section:nth-of-type(3)');
+            if (personalitySection) {
+                const personalityContent = personalitySection.querySelector('ul').parentNode;
+                personalityContent.innerHTML = `<h3>求める人物像</h3>${jobContent.personality}`;
+            }
+            
+            // 応募ボタンのリンクを更新
+            const applyButton = document.querySelector('.btn-apply');
+            if (applyButton) {
+                applyButton.href = `apply.html?job=${jobType}`;
+            }
+        }
+    </script>
     <style>
         .job-detail-hero {
             background: #F3F5F6;
