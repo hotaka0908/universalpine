@@ -278,15 +278,8 @@
             const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
             let mobileNavActive = false;
             
-            // ハンバーガーメニューの開閉
-            menuToggle.addEventListener('click', function(e) {
-                e.stopPropagation(); // イベントの伝播を停止
-                nav.classList.toggle('active');
-                mobileNav.classList.toggle('active');
-                mobileNavActive = !mobileNavActive;
-            });
-            
-            // ×ボタンを追加
+            // ハンバーガーメニューの開閉と×ボタンの追加
+            // モバイルナビゲーションに×ボタンを追加
             const closeButton = document.createElement('div');
             closeButton.className = 'close-button';
             closeButton.innerHTML = '×';
@@ -298,19 +291,26 @@
             closeButton.style.color = '#333';
             closeButton.style.zIndex = '1001';
             closeButton.style.display = 'none';
-            document.body.appendChild(closeButton);
+            mobileNav.appendChild(closeButton); // モバイルナビゲーション内に追加
             
-            // ハンバーガーメニューが開いたら×ボタンを表示
-            menuToggle.addEventListener('click', function() {
-                if (mobileNavActive) {
-                    closeButton.style.display = 'none';
-                } else {
-                    closeButton.style.display = 'block';
-                }
+            // ハンバーガーメニューの開閉処理
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation(); // イベントの伝播を停止
+                
+                // メニューの開閉状態を切り替え
+                nav.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                mobileNavActive = !mobileNavActive;
+                
+                // メニューが開いている場合は×ボタンを表示、閉じている場合は非表示
+                closeButton.style.display = mobileNavActive ? 'block' : 'none';
             });
             
             // ×ボタンを押したらメニューを閉じる
-            closeButton.addEventListener('click', function() {
+            closeButton.addEventListener('click', function(e) {
+                e.stopPropagation(); // イベントの伝播を停止
+                
+                // メニューを閉じる
                 nav.classList.remove('active');
                 mobileNav.classList.remove('active');
                 mobileNavActive = false;
