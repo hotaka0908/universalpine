@@ -1741,10 +1741,17 @@ footer {
 }
 
 /* プライバシーポリシーリンク */
+.privacy-check-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 .privacy-policy-link {
-  margin-top: 5px;
+  margin-top: 0;
   margin-bottom: 10px;
   font-size: 0.9rem;
+  margin-left: 24px; /* チェックボックスの幅と同じインデント */
 }
 
 .privacy-policy-link a {
