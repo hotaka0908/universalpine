@@ -1747,6 +1747,11 @@ footer {
   margin-bottom: 8px;
 }
 
+.privacy-check-container input[type="checkbox"] {
+  margin-right: 8px;
+  margin-top: 0;
+}
+
 .privacy-policy-link {
   margin-top: 0;
   margin-bottom: 10px;
