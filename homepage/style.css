@@ -144,7 +144,7 @@ nav a:hover {
 }
 
 .dropdown-content {
-  display: none;
+  display: block;
   position: absolute;
   background-color: #e6e6e6;
   min-width: 220px;
@@ -156,7 +156,8 @@ nav a:hover {
   left: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none; /* 非表示時はクリックできないように */
+  transition: opacity 0.3s ease, visibility 0.3s ease, pointer-events 0.3s ease;
 }
 
 .dropdown-content a {
@@ -181,14 +182,18 @@ nav a:hover {
 /* PCでのホバー時の動作 */
 @media (min-width: 769px) {
   .dropdown:hover .dropdown-content {
-    display: block;
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
   }
 }
 
 /* モバイルでのクリック時の動作 */
 @media (max-width: 768px) {
+  .dropdown-content {
+    display: none; /* モバイルでは初期状態で非表示 */
+  }
+  
   .dropdown.active .dropdown-content {
     display: block;
     opacity: 1;
@@ -198,6 +203,7 @@ nav a:hover {
     box-shadow: none;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+    pointer-events: auto;
   }
   
   .dropdown-content a {
