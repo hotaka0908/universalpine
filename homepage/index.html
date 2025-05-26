@@ -322,8 +322,12 @@
             });
             
             // 画面外をクリックしたらメニューを閉じる
-            document.addEventListener('click', function() {
-                if (mobileNavActive) {
+            document.addEventListener('click', function(e) {
+                // クリックした要素がメニュー内の要素でない場合のみメニューを閉じる
+                const isClickInsideMenu = e.target.closest('.mobile-nav') !== null;
+                const isClickOnMenuToggle = e.target.closest('.menu-toggle') !== null;
+                
+                if (mobileNavActive && !isClickInsideMenu && !isClickOnMenuToggle) {
                     nav.classList.remove('active');
                     mobileNav.classList.remove('active');
                     mobileNavActive = false;
