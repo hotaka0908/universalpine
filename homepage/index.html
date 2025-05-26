@@ -255,24 +255,7 @@
     <script src="responsive.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const accordionButtons = document.querySelectorAll('.accordion-button');
-            
-            accordionButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const content = this.nextElementSibling;
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
             // ハンバーガーメニューの要素を取得
             const menuToggle = document.querySelector('.menu-toggle');
             const nav = document.querySelector('nav');
@@ -292,9 +275,11 @@
             closeButton.style.zIndex = '1001';
             closeButton.style.display = 'none';
             mobileNav.appendChild(closeButton);
+            console.log('Close button added');
             
             // ハンバーガーメニューの開閉
             menuToggle.addEventListener('click', function(e) {
+                console.log('Menu toggle clicked');
                 e.stopPropagation();
                 nav.classList.toggle('active');
                 mobileNav.classList.toggle('active');
@@ -304,6 +289,7 @@
             
             // ×ボタンでメニューを閉じる
             closeButton.addEventListener('click', function(e) {
+                console.log('Close button clicked');
                 e.stopPropagation();
                 nav.classList.remove('active');
                 mobileNav.classList.remove('active');
@@ -321,37 +307,23 @@
                 e.stopPropagation();
             });
             
-            // 画面外をクリックしたらメニューを閉じる
-            document.addEventListener('click', function(e) {
-                // クリックした要素がメニュー内の要素でない場合のみメニューを閉じる
-                const isClickInsideMenu = e.target.closest('.mobile-nav') !== null;
-                const isClickOnMenuToggle = e.target.closest('.menu-toggle') !== null;
-                
-                if (mobileNavActive && !isClickInsideMenu && !isClickOnMenuToggle) {
-                    nav.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    mobileNavActive = false;
-                    closeButton.style.display = 'none';
-                    
-                    // すべてのアコーディオンを閉じる
-                    document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                }
-            });
+            // アコーディオンヘッダーのイベントリスナーを追加
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            console.log('Found accordion headers:', accordionHeaders.length);
             
-            // アコーディオンメニューの処理 - シンプルに書き直し
-            document.querySelectorAll('.accordion-header').forEach(header => {
+            accordionHeaders.forEach(header => {
                 header.addEventListener('click', function(e) {
+                    console.log('Accordion header clicked');
                     e.preventDefault();
                     e.stopPropagation();
                     
                     const item = this.parentElement;
+                    console.log('Accordion item:', item);
                     const isActive = item.classList.contains('active');
                     
                     // 他のアコーディオンを閉じる
                     document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                        if (otherItem !== item) {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
                             otherItem.classList.remove('active');
                         }
                     });
@@ -363,6 +335,26 @@
                         item.classList.add('active');
                     }
                 });
+            });
+            
+            // 画面外をクリックしたらメニューを閉じる
+            document.addEventListener('click', function(e) {
+                // クリックした要素がメニュー内の要素でない場合のみメニューを閉じる
+                const isClickInsideMenu = e.target.closest('.mobile-nav') !== null;
+                const isClickOnMenuToggle = e.target.closest('.menu-toggle') !== null;
+                
+                if (mobileNavActive && !isClickInsideMenu && !isClickOnMenuToggle) {
+                    console.log('Closing menu from outside click');
+                    nav.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    mobileNavActive = false;
+                    closeButton.style.display = 'none';
+                    
+                    // すべてのアコーディオンを閉じる
+                    document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
             });
             
             // 画面サイズ変更時の処理
