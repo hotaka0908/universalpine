@@ -33,11 +33,11 @@ h3 {
 
 /* 特定のクラスを持つ要素に対する具体的なスタイル */
 .recruit-label.text-center {
-  color: white !important;
+  color: #333333 !important;
 }
 
 .text-center.subtitle-text {
-  color: white !important;
+  color: #333333 !important;
   font-size: 1.1rem !important;
 }
 

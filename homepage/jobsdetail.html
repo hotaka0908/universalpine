@@ -51,6 +51,18 @@
             // デフォルトは電気/電子設計エンジニア
             if (!jobType) jobType = 'electronics';
             
+            // 職種ごとの文字カラーを定義
+            const jobColors = {
+                'electronics': '#2a00e7', // 電気/電子設計エンジニア
+                'mechanical': '#2a00e7', // 機構設計エンジニア
+                'ai': '#2a00e7',        // AIエンジニア
+                'embedded': '#2a00e7',   // 組み込みエンジニア
+                'mobile': '#2a00e7',     // モバイルアプリエンジニア
+                'open': '#007b24',       // オープンエントリー
+                'parttime': '#007b24',   // アルバイト
+                'other': '#333333'       // その他の職種
+            };
+            
             const jobTitles = {
                 'electronics': {
                     'ja': '電気/電子設計エンジニア',
@@ -99,8 +111,25 @@
             
             // タイトルと説明を更新
             document.title = `${jobInfo.ja} - Universal Pine`;
-            document.querySelector('.job-title').textContent = jobInfo.ja;
-            document.querySelector('.job-subtitle').textContent = jobInfo.en;
+            
+            // 職種見出しの文字カラーを設定
+            const jobHeading = document.querySelector('.tech-engineer');
+            if (jobHeading) {
+                const jobColor = jobColors[jobType] || jobColors['electronics'];
+                jobHeading.style.color = jobColor;
+            }
+            // タイトルを更新
+            const jobHeadingElement = document.querySelector('.tech-engineer');
+            if (jobHeadingElement) {
+                // 日本語タイトルを更新
+                jobHeadingElement.childNodes[1].textContent = jobInfo.ja;
+                
+                // 英語タイトルを更新
+                const enTitleElement = jobHeadingElement.querySelector('.en-title');
+                if (enTitleElement) {
+                    enTitleElement.textContent = jobInfo.en;
+                }
+            }
             
             // アルバイトの場合、雇用情報を更新
             if (jobType === 'parttime') {
@@ -680,20 +709,29 @@
         
         .btn-apply {
             display: inline-block;
+            width: 150px;
+            height: 40px;
+            line-height: 38px;
+            padding: 0;
+            border-radius: 20px;
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            margin: 0 5px;
             background-color: #006cff;
             color: white;
-            padding: 15px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 108, 255, 0.2);
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
         }
         
         .btn-apply:hover {
             background-color: #005bdb;
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 108, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
         }
         
         .back-to-jobs {
@@ -725,6 +763,23 @@
         }
         
         /* モバイル向けスタイル */
+        /* 職種見出しのアルファベット（英語タイトル）のスタイル */
+        .en-title {
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 3px; /* 下部の余白を追加 */
+        }
+        
+        /* 職種見出しのスタイル */
+        .tech-engineer {
+            text-align: center; /* 中央寄せ配置 */
+            margin: 30px 0; /* 上下にマージンを追加 */
+            font-size: 1.5rem; /* 日本語の文字サイズを1.5倍程度に変更 */
+            /* 色はJavaScriptで動的に設定 */
+        }
+        
         @media (max-width: 768px) {
             .job-detail-hero {
                 padding: 60px 0;
@@ -801,8 +856,7 @@
     <section class="job-detail-section">
         <div class="container">
             <div class="job-detail-container">
-                <h2 class="job-title">電気/電子設計エンジニア</h2>
-                <p class="job-subtitle">Electronics Engineer</p>
+                <h3 class="tech-engineer"><span class="en-title">Electronics Engineer</span>電気/電子設計エンジニア</h3>
                 
                 <div class="job-meta">
                     <div class="job-meta-item">
