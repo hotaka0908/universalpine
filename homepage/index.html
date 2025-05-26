@@ -286,18 +286,40 @@
                 mobileNavActive = !mobileNavActive;
             });
             
-            // 画面外をクリックしたらメニューを閉じる
-            document.addEventListener('click', function(event) {
-                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && !mobileNav.contains(event.target) && mobileNavActive) {
-                    nav.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    mobileNavActive = false;
-                    
-                    // すべてのドロップダウンを閉じる
-                    mobileDropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                    });
+            // ×ボタンを追加
+            const closeButton = document.createElement('div');
+            closeButton.className = 'close-button';
+            closeButton.innerHTML = '×';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.fontSize = '24px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.color = '#333';
+            closeButton.style.zIndex = '1001';
+            closeButton.style.display = 'none';
+            document.body.appendChild(closeButton);
+            
+            // ハンバーガーメニューが開いたら×ボタンを表示
+            menuToggle.addEventListener('click', function() {
+                if (mobileNavActive) {
+                    closeButton.style.display = 'none';
+                } else {
+                    closeButton.style.display = 'block';
                 }
+            });
+            
+            // ×ボタンを押したらメニューを閉じる
+            closeButton.addEventListener('click', function() {
+                nav.classList.remove('active');
+                mobileNav.classList.remove('active');
+                mobileNavActive = false;
+                closeButton.style.display = 'none';
+                
+                // すべてのドロップダウンを閉じる
+                mobileDropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
             });
             
             // メインナビゲーションのドロップダウンメニュー
