@@ -1152,6 +1152,8 @@ footer {
     flex-direction: row;
     padding: calc(var(--spacing-unit) * 1);
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .logo {
