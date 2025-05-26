@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const normalImage = document.getElementById('hero-image');
     const funImage = document.getElementById('hero-image-fun');
 
-    // Normal画像表示ボタンのクリックイベント
+    // Serious画像表示ボタンのクリックイベント
     normalBtn.addEventListener('click', function() {
         // ボタンのアクティブ状態を切り替え
         normalBtn.classList.add('active');
