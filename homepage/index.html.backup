@@ -262,12 +262,6 @@
     <script src="config.js"></script>
     <script src="script.js"></script>
     <script src="js/image-toggle.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded');
-            // ハンバーガーメニューの要素を取得
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
             const mobileNav = document.querySelector('.mobile-nav');
             let mobileNavActive = false;
             
@@ -413,5 +407,6 @@
             });
         });
     </script>
+
 </body>
 </html>
