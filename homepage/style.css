@@ -305,15 +305,13 @@ nav a:hover {
 .microphone-icon {
   width: 80px;
   height: 80px;
-  background-color: white;
+  background-color: var(--primary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  position: relative;
 }
 
 .microphone-icon i {
@@ -1740,4 +1738,22 @@ footer {
 .back-link-container {
   text-align: center;
   margin-top: 30px;
+}
+
+/* プライバシーポリシーリンク */
+.privacy-policy-link {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.privacy-policy-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.privacy-policy-link a:hover {
+  text-decoration: underline;
+  color: var(--accent-color);
 }
