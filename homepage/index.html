@@ -273,15 +273,13 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ハンバーガーメニューの要素を取得
             const menuToggle = document.querySelector('.menu-toggle');
             const nav = document.querySelector('nav');
-            const dropdowns = document.querySelectorAll('.dropdown');
             const mobileNav = document.querySelector('.mobile-nav');
-            const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
             let mobileNavActive = false;
             
-            // ハンバーガーメニューの開閉と×ボタンの追加
-            // モバイルナビゲーションに×ボタンを追加
+            // ×ボタンの作成と追加
             const closeButton = document.createElement('div');
             closeButton.className = 'close-button';
             closeButton.innerHTML = '×';
@@ -293,101 +291,74 @@
             closeButton.style.color = '#333';
             closeButton.style.zIndex = '1001';
             closeButton.style.display = 'none';
-            mobileNav.appendChild(closeButton); // モバイルナビゲーション内に追加
+            mobileNav.appendChild(closeButton);
             
-            // ハンバーガーメニューの開閉処理
+            // ハンバーガーメニューの開閉
             menuToggle.addEventListener('click', function(e) {
-                e.stopPropagation(); // イベントの伝播を停止
-                
-                // メニューの開閉状態を切り替え
+                e.stopPropagation();
                 nav.classList.toggle('active');
                 mobileNav.classList.toggle('active');
                 mobileNavActive = !mobileNavActive;
-                
-                // メニューが開いている場合は×ボタンを表示、閉じている場合は非表示
                 closeButton.style.display = mobileNavActive ? 'block' : 'none';
             });
             
-            // ×ボタンを押したらメニューを閉じる
+            // ×ボタンでメニューを閉じる
             closeButton.addEventListener('click', function(e) {
-                e.stopPropagation(); // イベントの伝播を停止
-                
-                // メニューを閉じる
+                e.stopPropagation();
                 nav.classList.remove('active');
                 mobileNav.classList.remove('active');
                 mobileNavActive = false;
                 closeButton.style.display = 'none';
                 
-                // すべてのドロップダウンを閉じる
-                mobileDropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
+                // すべてのアコーディオンを閉じる
+                document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
+                    item.classList.remove('active');
                 });
             });
             
-            // メインナビゲーションのドロップダウンメニュー
-            dropdowns.forEach(dropdown => {
-                const link = dropdown.querySelector('a');
-                link.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        
-                        // 他のドロップダウンを閉じる
-                        dropdowns.forEach(otherDropdown => {
-                            if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
-                                otherDropdown.classList.remove('active');
-                            }
-                        });
-                        
-                        // クリックしたドロップダウンを開閉
-                        dropdown.classList.toggle('active');
-                    }
-                });
+            // モバイルナビをクリックしても閉じないようにする
+            mobileNav.addEventListener('click', function(e) {
+                e.stopPropagation();
             });
             
-            // アコーディオンメニューの処理
-            const accordionItems = document.querySelectorAll('.mobile-nav .accordion-item');
-            accordionItems.forEach(item => {
-                const header = item.querySelector('.accordion-header');
-                const content = item.querySelector('.accordion-content');
-                
-                // アコーディオンヘッダーのクリックイベント
+            // 画面外をクリックしたらメニューを閉じる
+            document.addEventListener('click', function() {
+                if (mobileNavActive) {
+                    nav.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    mobileNavActive = false;
+                    closeButton.style.display = 'none';
+                    
+                    // すべてのアコーディオンを閉じる
+                    document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            });
+            
+            // アコーディオンメニューの処理 - シンプルに書き直し
+            document.querySelectorAll('.accordion-header').forEach(header => {
                 header.addEventListener('click', function(e) {
-                    e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
-                    e.preventDefault(); // リンク先への移動を防止
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const item = this.parentElement;
+                    const isActive = item.classList.contains('active');
                     
                     // 他のアコーディオンを閉じる
-                    accordionItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        if (otherItem !== item) {
                             otherItem.classList.remove('active');
                         }
                     });
                     
-                    // クリックしたアコーディオンの開閉状態を切り替える
-                    const isActive = item.classList.contains('active');
-                    
-                    // 既に開いている場合は閉じる、閉じている場合は開く
+                    // クリックしたアコーディオンの開閉を切り替え
                     if (isActive) {
                         item.classList.remove('active');
                     } else {
                         item.classList.add('active');
                     }
                 });
-                
-                // アコーディオン内のリンクの処理
-                const subLinks = item.querySelectorAll('.accordion-content a');
-                subLinks.forEach(subLink => {
-                    subLink.addEventListener('click', function(subEvent) {
-                        // イベントの伝播を停止して親要素のイベントが発火しないようにする
-                        subEvent.stopPropagation();
-                        // サブメニューのリンクはそのままリンク先に移動させる
-                        // ここでは特に何もしない（preventDefaultを呼び出さない）
-                    });
-                });
-            });
-            
-            // モバイルナビゲーション自体のクリックイベントを阻止して閉じないようにする
-            mobileNav.addEventListener('click', function(e) {
-                e.stopPropagation(); // イベントの伝播を停止
             });
             
             // 画面サイズ変更時の処理
@@ -396,11 +367,11 @@
                     nav.classList.remove('active');
                     mobileNav.classList.remove('active');
                     mobileNavActive = false;
-                    dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                    });
-                    mobileDropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
+                    closeButton.style.display = 'none';
+                    
+                    // すべてのアコーディオンを閉じる
+                    document.querySelectorAll('.accordion-item').forEach(item => {
+                        item.classList.remove('active');
                     });
                 }
             });
