@@ -289,55 +289,7 @@
             }
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const nav = document.querySelector('nav');
-            const dropdowns = document.querySelectorAll('.dropdown');
-            
-            // ハンバーガーメニューの開閉
-            menuToggle.addEventListener('click', function() {
-                nav.classList.toggle('active');
-            });
-            
-            // 画面外をクリックしたらメニューを閉じる
-            document.addEventListener('click', function(event) {
-                if (!nav.contains(event.target) && !menuToggle.contains(event.target) && nav.classList.contains('active')) {
-                    nav.classList.remove('active');
-                }
-            });
-            
-            // モバイル表示時のドロップダウンメニュー
-            dropdowns.forEach(dropdown => {
-                const link = dropdown.querySelector('a');
-                link.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        
-                        // 他のドロップダウンを閉じる
-                        dropdowns.forEach(otherDropdown => {
-                            if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
-                                otherDropdown.classList.remove('active');
-                            }
-                        });
-                        
-                        // クリックしたドロップダウンを開閉
-                        dropdown.classList.toggle('active');
-                    }
-                });
-            });
-            
-            // 画面サイズ変更時の処理
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    nav.classList.remove('active');
-                    dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                    });
-                }
-            });
-        });
-    </script>
+
     <script src="js/mobile-menu.js"></script>
 </body>
 </html>
