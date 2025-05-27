@@ -2,9 +2,8 @@
 
 /* Philosophy Section */
 #philosophy {
-    background-image: url('images/sky.png');
-    background-size: cover;
-    background-position: center;
+    background-color: var(--light-bg);
+    padding: calc(var(--spacing-unit) * 3) 0;
 }
 
 .philosophy-heading {
