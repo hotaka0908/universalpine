@@ -537,7 +537,7 @@ nav a:hover {
 
 /* Contact Simple Section */
 .contact-simple {
-  background-image: url("images/contact.jpg");
+  background-image: url("images/contact_bg.jpeg");
   background-size: cover;
   background-position: center;
   position: relative;
