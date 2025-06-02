@@ -121,16 +121,50 @@ img {
     color: #005DFF;
 }
 
-/* 会社情報のドロップダウン用の調整 */
-.mobile-nav .dropdown:nth-child(3) .dropdown-content {
-    max-height: 250px; /* 会社情報のドロップダウンに特別な高さを設定 */
-}
-
 /* メディアクエリ - タブレット */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .container {
-        width: 95%;
+        width: 90%;
         padding: 0 15px;
+    }
+    
+    /* ニュース項目のモバイル表示調整 */
+    .news-item {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 0;
+    }
+    
+    .news-date {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+    
+    .news-category {
+        order: 2;
+        width: auto;
+        min-width: 80px;
+    }
+    
+    .news-item-title {
+        width: 100%;
+        margin-right: 0;
+        order: 3;
+        margin-top: 8px;
+        white-space: normal;
+    }
+    
+    .news-item-title a {
+        white-space: normal;
+        line-height: 1.4;
+    }
+    
+    .news-arrow {
+        order: 4;
+        position: absolute;
+        right: 0;
+        top: 14px;
     }
     
     /* ヘッダーナビゲーション調整 */
