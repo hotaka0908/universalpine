@@ -46,7 +46,7 @@
     margin-bottom: 48px;
 }
 
-.news-title {
+.news-header .section-title {
     font-size: 48px;
     font-weight: 700;
     margin-bottom: 8px;
@@ -273,7 +273,7 @@
 }
 
 @media (max-width: 576px) {
-    .news-title {
+    .news-header .section-title {
         font-size: 32px;
     }
     
