@@ -380,14 +380,7 @@ nav a:hover {
   position: relative;
 }
 
-.news-link:hover .news-title {
-  color: #005DFF;
-}
-
-.news-link:hover .news-arrow {
-  color: #005DFF;
-  transform: translateX(3px);
-}
+/* ホバー時の色変更を削除 */
 
 .news-date {
   color: #666;
@@ -396,12 +389,23 @@ nav a:hover {
   font-family: "Inter", sans-serif;
 }
 
+.news-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.news-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .news-title {
   color: #333;
   font-weight: 500;
   font-size: 1rem !important;
   line-height: 1.4;
-  flex-grow: 1;
   transition: color 0.2s ease;
 }
 
@@ -425,7 +429,12 @@ nav a:hover {
   color: #999;
   font-size: 0.8rem;
   width: 20px;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
 }
 
 /* Philosophy Section */
@@ -1048,6 +1057,11 @@ nav a:hover {
     top: 50%;
     right: 5px;
     transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
   }
 
   .news-entry {

@@ -328,13 +328,7 @@
     display: inline-block;
 }
 
-.news-link:hover {
-    color: var(--accent-color);
-}
-
-.news-link:hover::after {
-    transform: translateX(5px);
-}
+/* ホバー時の色変更とアニメーションを削除 */
 
 /* Responsive Styles */
 @media (max-width: 768px) {

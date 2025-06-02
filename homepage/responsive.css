@@ -160,11 +160,32 @@ img {
         line-height: 1.4;
     }
     
+    .news-link {
+        flex-wrap: wrap;
+    }
+    
+    .news-left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        width: 70%;
+    }
+    
+    .news-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        width: 30%;
+    }
+    
     .news-arrow {
-        order: 4;
-        position: absolute;
-        right: 0;
-        top: 14px;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
     }
     
     /* ヘッダーナビゲーション調整 */
