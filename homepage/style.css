@@ -291,24 +291,21 @@ nav a:hover {
 }
 
 .news-link {
-  display: grid;
-  grid-template-columns: 120px 1fr auto 24px;
+  display: flex;
   align-items: center;
   padding: 16px 0;
   width: 100%;
   text-decoration: none;
   transition: all 0.2s ease;
-  gap: 10px;
+  gap: 15px;
 }
 
 .news-date {
   color: #666;
   font-size: 0.9rem;
-  grid-column: 1;
 }
 
 .news-category {
-  grid-column: 3;
   font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 12px;
@@ -316,7 +313,6 @@ nav a:hover {
   color: white;
   display: inline-block;
   width: 90px;
-  margin-right: 10px;
 }
 
 .news-category.press {
@@ -330,12 +326,10 @@ nav a:hover {
 .news-title {
   font-size: 1rem;
   color: #333;
-  grid-column: 2;
-  padding-left: 0;
+  flex-grow: 1;
 }
 
 .news-arrow {
-  grid-column: 4;
   text-align: right;
   color: #999;
   font-size: 0.8rem;
@@ -872,7 +866,9 @@ nav a:hover {
   }
 
   .news-link {
-    grid-template-columns: 90px 1fr auto 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 12px 0;
   }
 
@@ -925,16 +921,14 @@ nav a:hover {
   }
 
   .news-link {
-    grid-template-columns: 1fr auto auto;
-    grid-template-rows: auto auto;
-    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 15px 0;
     position: relative;
   }
 
   .news-date {
-    grid-column: 1;
-    grid-row: 1;
     font-size: 0.8rem;
   }
 
@@ -944,12 +938,11 @@ nav a:hover {
     padding-left: 0;
     margin-top: 5px;
     font-weight: 500;
-    margin-right: 10px;
+    font-size: 0.9rem;
+    flex-grow: 1;
   }
 
   .news-category {
-    grid-column: 2;
-    grid-row: 2;
     width: auto;
     max-width: 80px;
     font-size: 0.65rem;
