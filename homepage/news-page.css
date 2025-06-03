@@ -116,21 +116,23 @@
 }
 
 .news-date {
-    font-size: 14px;
-    color: #757575;
-    font-weight: 500;
+    color: #999;
+    font-size: 0.8rem;
+    min-width: 80px;
+    flex: 0 0 auto;
+    font-family: "Inter", sans-serif;
 }
 
 .news-category {
-    background: none;
-    border: 1px solid #E5E5E5;
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 12px;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border-radius: 12px;
     text-align: center;
-    color: #333;
+    color: white;
     display: inline-block;
-    white-space: nowrap;
+    width: 80px;
+    margin: 0 5px;
+    flex: 0 0 auto;
 }
 
 .news-item-title {
@@ -165,6 +167,62 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.news-entry {
+    margin-bottom: 10px;
+}
+
+.news-link {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.news-link:hover {
+    background-color: #f9f9f9;
+}
+
+.news-title {
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem !important;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+    flex: 1 1 auto;
+    margin-right: 10px;
+}
+
+.news-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.news-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.news-arrow {
+    text-align: right;
+    color: #999;
+    font-size: 0.8rem;
+    width: 20px;
+    transition: color 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    flex: 0 0 auto;
 }
 
 /* Press Release Styles */
@@ -310,21 +368,6 @@
         right: 0;
     }
 }
-
-/* 古いスタイルを削除 */
-
-.news-link {
-    display: inline-block;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.news-link::after {
-    content: '→';
-    transition: transform 0.3s ease;
     display: inline-block;
 }
 
