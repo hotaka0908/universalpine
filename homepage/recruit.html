@@ -94,81 +94,95 @@
         }
         
         .job-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
             margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .job-card {
-            background-color: white;
-            border-radius: 27px;
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-header {
+            background-color: white;
+            padding: 20px;
+            cursor: pointer;
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
         }
         
-        .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        .accordion-header:hover {
+            background-color: #fafafa;
         }
         
-        .job-header {
-            background-color: #005DFF;
-            color: white;
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .accordion-header h3.tech-engineer {
+            color: #333;
+        }
+        
+        .accordion-header h3.open-position {
+            color: #333;
+        }
+        
+        .accordion-toggle {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            transform: rotate(90deg);
+        }
+        
+        .accordion-toggle.active {
+            transform: rotate(270deg);
+        }
+        
+        /* ハードウェアエンジニアのヘッダー背景色 */
+        .tech-engineer-header {
+            background-color: white !important;
             padding: 20px;
         }
         
-        .job-header h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: white;
-        }
-        
-        /* エンジニア職種の見出しスタイル */
-        .job-header h3.tech-engineer {
-            color: #2a00e7;
-        }
-        
-        /* エンジニア職種のヘッダー背景色 */
-        .tech-engineer-header {
-            background-color: #e1e7ff !important;
-            padding: 28px;
+        .tech-engineer-header .accordion-toggle {
+            color: #333;
         }
         
         /* オープンポジションの見出しスタイル */
-        .job-header h3.open-position {
-            color: #007b24;
+        .accordion-header.open-position-header {
+            background-color: white !important;
         }
         
         /* オープンポジションのヘッダー背景色 */
         .open-position-header {
-            background-color: #d4fbd6 !important;
-            padding: 28px;
+            background-color: white !important;
         }
         
-        /* オープンポジションのスキルラベル */
-        .skill-label.open-position-skill {
-            color: #007b24;
+        .open-position-header .accordion-toggle {
+            color: #333;
         }
         
-        /* 職種見出しのアルファベット（英語タイトル）のスタイル */
-        .job-header h3 .en-title {
-            font-family: "Inter", sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            display: block;
-            margin-bottom: 3px; /* 下部の余白を追加 */
-        }
-        
-        .job-body {
-            padding: 25px;
-            flex: 1;
+        .accordion-footer {
+            padding-top: 20px;
             display: flex;
-            flex-direction: column;
+            justify-content: flex-end;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
         }
         
         /* 職務説明の段落のスタイル */
@@ -177,18 +191,32 @@
             line-height: 1.6;
         }
         
-        /* skill-labelを含む段落のスタイル */
-        .job-body p {
-            margin-bottom: 5px;
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.3s ease;
+            background-color: white;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
         }
         
-        /* 求める経験・スキルのスタイル */
+        .accordion-content.active {
+            padding: 20px;
+            max-height: 500px; /* 十分な高さを確保 */
+        }
+        
+        .job-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
         .skill-label {
             color: #2a00e7;
             font-size: 0.9rem;
             display: inline-block;
             margin-bottom: 0; /* 下部の余白をなくし、ulのmargin-topで調整 */
-            margin-top: 15px; /* 上部の余白を追加 */
         }
         
         .job-body ul {
@@ -200,16 +228,6 @@
         .job-body ul li {
             margin-bottom: 3px;
             font-size: 0.9rem;
-        }
-        
-        .job-footer {
-            padding: 15px 20px;
-            border-top: 1px solid #eee;
-            text-align: right;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
         }
         
         .apply-button, .details-button {
@@ -366,7 +384,6 @@
             line-height: 1.6;
         }
         
-
     </style>
 </head>
 <body>
@@ -470,11 +487,13 @@
 
             <h2 class="section-title">募集職種</h2>
             <div class="job-list">
-                <div class="job-card">
-                    <div class="job-header tech-engineer-header">
-                        <h3 class="tech-engineer"><span class="en-title">Electronics Engineer</span>電気/電子設計エンジニア</h3>
+                <!-- 電気/電子設計エンジニア -->                
+                <div class="accordion-item">
+                    <div class="accordion-header tech-engineer-header">
+                        <h3 class="tech-engineer">電気/電子設計エンジニア</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
+                    <div class="accordion-content">
                         <p class="job-description">多層PCBを設計し、量産までリードしていただきます。</p>
                         <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
@@ -482,124 +501,129 @@
                             <li>センサー/BELインターフェースの設計経験</li>
                             <li>多層PCBレイアウト設計経験</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=electronics" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header tech-engineer-header">
-                        <h3 class="tech-engineer"><span class="en-title">Mechanical Design Engineer</span>機構設計エンジニア</h3>
+                <!-- 機構設計エンジニア -->
+                <div class="accordion-item">
+                    <div class="accordion-header tech-engineer-header">
+                        <h3 class="tech-engineer">機構設計エンジニア</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
-                        <p class="job-description">筐体/機構設計から量産まで担当していただきます。</p>
+                    <div class="accordion-content">
+                        <p class="job-description">AIデバイスの機構設計、製造プロセスの最適化を担当していただきます。</p>
                         <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
-                            <li>3D CADを使用した筐体設計の経験</li>
-                            <li>小型デバイスの設計経験</li>
-                            <li>量産化を見据えたDFM/DFAの知識</li>
+                            <li>機構設計の実務経験</li>
+                            <li>3DCADの使用経験（Fusion360など）</li>
+                            <li>量産設計の知識</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=mechanical" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header tech-engineer-header">
-                        <h3 class="tech-engineer"><span class="en-title">AI Engineer</span>AIエンジニア</h3>
+                <!-- AIエンジニア -->
+                <div class="accordion-item">
+                    <div class="accordion-header tech-engineer-header">
+                        <h3 class="tech-engineer">AIエンジニア</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
-                        <p class="job-description">音声/マルチモーダルモデルなどを軽量化し、エッジからクラウドまで最適化していただきます。</p>
+                    <div class="accordion-content">
+                        <p class="job-description">機械学習モデルの開発・実装、AIアルゴリズムの最適化を担当していただきます。</p>
                         <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
-                            <li>機械学習・深層学習の実務経験</li>
-                            <li>Python、TensorFlow、PyTorchなどの開発経験</li>
-                            <li>自然言語処理や音声認識の知識</li>
+                            <li>機械学習/深層学習の実務経験</li>
+                            <li>Python, TensorFlow, PyTorchなどの経験</li>
+                            <li>自然言語処理または画像認識の知識</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=ai" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header tech-engineer-header">
-                        <h3 class="tech-engineer"><span class="en-title">Embedded Software Engineer</span>組み込みエンジニア</h3>
+                <!-- 組み込みエンジニア -->
+                <div class="accordion-item">
+                    <div class="accordion-header tech-engineer-header">
+                        <h3 class="tech-engineer">組み込みエンジニア</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
-                        <p class="job-description">SoC/MCUの起動からOTA更新基盤まで担当していただきます。</p>
+                    <div class="accordion-content">
+                        <p class="job-description">AIデバイス向けの組み込みソフトウェア開発を担当していただきます。</p>
                         <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
-                            <li>C/C++、Rustなどによる組み込みソフトウェア開発経験</li>
-                            <li>リアルタイムOSの知識</li>
-                            <li>低消費電力設計やデバック経験</li>
+                            <li>組み込みソフトウェア開発経験</li>
+                            <li>C/C++プログラミングスキル</li>
+                            <li>マイコン制御の知識</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=embedded" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header tech-engineer-header">
-                        <h3 class="tech-engineer"><span class="en-title">Mobile Application Engineer</span>モバイルアプリエンジニア</h3>
+                <!-- モバイルアプリエンジニア -->
+                <div class="accordion-item">
+                    <div class="accordion-header tech-engineer-header">
+                        <h3 class="tech-engineer">モバイルアプリエンジニア</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
-                        <p class="job-description">iOS/Androidアプリの開発を担当していただきます。</p>
+                    <div class="accordion-content">
+                        <p class="job-description">AIデバイスと連携するモバイルアプリケーションの開発を担当していただきます。</p>
                         <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
-                            <li>Swift/Kotlinによるアプリ開発経験</li>
-                            <li>BLE通信を使用したアプリ実装経験</li>
-                            <li>UI/UX設計の知識</li>
+                            <li>iOS/Androidアプリ開発経験</li>
+                            <li>Swift, Kotlin, Flutterなどの経験</li>
+                            <li>UIUXデザインへの理解</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=mobile" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header open-entry open-position-header">
-                        <h3 class="open-position"><span class="en-title">Open Application</span>オープンエントリー</h3>
+                <!-- オープンエントリー -->
+                <div class="accordion-item">
+                    <div class="accordion-header open-position-header">
+                        <h3 class="open-position">オープンエントリー</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
-                        <p class="job-description">募集のない職種で当社のビジョンに共感いただける方はご応募ください。</p>
-                        <p><strong class="skill-label open-position-skill">求める経験・スキル</strong></p>
+                    <div class="accordion-content">
+                        <p class="job-description">募集のない職種でも、当社のビジョンに共感いただける方はご応募ください。</p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
-                            <li>AI技術やハードウェア開発への強い関心</li>
-                            <li>自ら考え、行動できる主体性</li>
-                            <li>チームでの協働を大切にする姿勢</li>
+                            <li>AI技術への興味</li>
+                            <li>主体的に行動できる姿勢</li>
+                            <li>チームでの協働経験</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=open" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="job-card">
-                    <div class="job-header open-entry open-position-header">
-                        <h3 class="open-position"><span class="en-title">Part-Time Position</span>アルバイト</h3>
+                <!-- アルバイト -->
+                <div class="accordion-item">
+                    <div class="accordion-header open-position-header">
+                        <h3 class="open-position">アルバイト</h3>
+                        <span class="accordion-toggle">›</span>
                     </div>
-                    <div class="job-body">
+                    <div class="accordion-content">
                         <p class="job-description">学生の方や副業をお考えの方も歓迎します。柔軟な働き方に対応します。</p>
-                        <p><strong class="skill-label open-position-skill">求める経験・スキル</strong></p>
+                        <p><strong class="skill-label">求める経験・スキル</strong></p>
                         <ul>
                             <li>新しい技術への好奇心</li>
-                            <li>AIが好きな人</li>
-                            <li>週2日以上の勤務が可能な方</li>
+                            <li>AIが好きな方</li>
+                            <li>週2日以上勤務可能な方</li>
                         </ul>
-                    </div>
-                    <div class="job-footer">
-                        <a href="jobsdetail.html?job=parttime" class="details-button">詳細</a>
-                        <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="accordion-footer">
+                            <a href="apply.html" class="apply-button">応募する</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -744,5 +768,40 @@
     <script src="script.js"></script>
     <script src="responsive.js"></script>
     <script src="js/mobile-menu.js"></script>
+    
+    <script>
+        // アコーディオン機能の実装
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            // 初期状態ではすべてのアコーディオンが閉じている状態
+            accordionHeaders.forEach(header => {
+                const toggle = header.querySelector('.accordion-toggle');
+                // 初期状態ではトグルは非active（矢印は90度回転した状態）
+                toggle.classList.remove('active');
+                
+                // コンテンツは非active（非表示）
+                const content = header.nextElementSibling;
+                content.classList.remove('active');
+                
+                // クリックイベントの設定
+                header.addEventListener('click', function() {
+                    // トグルアイコンのクラスを切り替える
+                    toggle.classList.toggle('active');
+                    
+                    // コンテンツ部分の表示/非表示を切り替える
+                    content.classList.toggle('active');
+                    
+                    // 他のアコーディオンを閉じる（オプション）
+                    // accordionHeaders.forEach(otherHeader => {
+                    //     if (otherHeader !== header) {
+                    //         otherHeader.querySelector('.accordion-toggle').classList.remove('active');
+                    //         otherHeader.nextElementSibling.classList.remove('active');
+                    //     }
+                    // });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
