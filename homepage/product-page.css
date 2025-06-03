@@ -85,6 +85,37 @@
     margin-top: 48px;
 }
 
+/* Product Image Gallery */
+.product-gallery-section {
+    background-color: white;
+    padding: 10px 0;
+}
+
+.full-width-container {
+    max-width: 100%;
+    width: 100%;
+}
+
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.gallery-item {
+    position: relative;
+    width: 100%;
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    max-height: 80vh;
+}
+
 .hero-card {
     background-color: white;
     border-radius: 16px;
