@@ -198,7 +198,7 @@
     font-weight: 500;
     font-size: 1rem !important;
     line-height: 1.4;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, transform 0.3s ease;
     flex: 1 1 auto;
     margin-right: 10px;
 }
@@ -220,7 +220,7 @@
     color: #999;
     font-size: 0.8rem;
     width: 20px;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, transform 0.3s ease;
     background: none;
     border: none;
     padding: 0;
@@ -399,4 +399,18 @@
     .news-date {
         margin-bottom: calc(var(--spacing-unit) * 0.5);
     }
+}
+
+.news-link:hover .news-arrow {
+    color: var(--primary-color);
+    transform: translateX(3px);
+}
+
+.news-link:hover .news-arrow i {
+    animation: arrow-pulse 1s infinite;
+}
+
+@keyframes arrow-pulse {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
 }
