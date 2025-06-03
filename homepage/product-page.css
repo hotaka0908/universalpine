@@ -89,11 +89,14 @@
 .product-gallery-section {
     background-color: white;
     padding: 10px 0;
+    width: 100%;
 }
 
 .full-width-container {
     max-width: 100%;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .product-gallery {
@@ -109,10 +112,10 @@
 }
 
 .gallery-image {
-    width: 100%;
+    width: 100vw;
     height: auto;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 0;
     max-height: 80vh;
 }
 
