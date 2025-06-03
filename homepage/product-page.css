@@ -374,16 +374,17 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 120px;
-    width: 4px;
-    background-color: #000000;
-    border-radius: 2px;
+    left: 140px;
+    width: 6px;
+    background: linear-gradient(to bottom, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff);
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
 }
 
 .timeline-item {
     position: relative;
     margin-bottom: calc(var(--spacing-unit) * 3);
-    padding-left: 160px;
+    padding-left: 180px;
 }
 
 .timeline-date {
@@ -399,9 +400,16 @@
     position: relative;
 }
 
-/* 接続線を削除 */
+/* 接続線 */
 .timeline-content::before {
-    display: none;
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 15px;
+    width: 30px;
+    height: 3px;
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.7), rgba(153, 51, 255, 0.7));
+    border-radius: 2px;
 }
 
 .timeline-content h3 {
