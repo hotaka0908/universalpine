@@ -15,12 +15,6 @@
 }
 
 /* CEO Signature */
-.signature-image {
-    width: 80px;
-    vertical-align: middle;
-    margin-left: 5px;
-    display: inline-block;
-}
 
 .ceo-signature-container {
     margin-top: calc(var(--spacing-unit) * 2);
@@ -159,6 +153,24 @@
     line-height: 1.6;
 }
 
+/* Main Image Styling */
+.main-image-container {
+    max-width: 640px;
+    margin: 0 auto;
+    margin-top: 96px;
+    margin-bottom: 96px;
+    padding: 64px 0;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+.main-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 /* CEO Message Styling */
 .message-container {
     max-width: 800px;
@@ -170,9 +182,8 @@
 }
 
 .message-content {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: calc(var(--spacing-unit) * 2);
+    display: block;
+    width: 100%;
 }
 
 .ceo-image-placeholder {
@@ -190,6 +201,10 @@
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: calc(var(--spacing-unit) * 0.8);
     display: inline-block;
+}
+
+.message-text {
+    width: 100%;
 }
 
 .message-text p {
@@ -224,12 +239,39 @@
     text-align: center;
 }
 
+.founder-card-horizontal {
+    text-align: left;
+}
+
+.founder-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.founder-image-container {
+    flex: 0 0 200px;
+    margin-right: calc(var(--spacing-unit) * 2);
+}
+
+.founder-info {
+    flex: 1;
+}
+
 .founder-image-placeholder {
     width: 150px;
     height: 150px;
     background-color: #e0e0e0;
     border-radius: 50%;
     margin: 0 auto calc(var(--spacing-unit) * 2);
+}
+
+.founder-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
 }
 
 .founder-card h4 {
