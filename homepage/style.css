@@ -1783,16 +1783,16 @@ footer {
   transition: all 0.3s ease;
   cursor: pointer;
   text-align: center;
-  background-color: #006cff;
+  background-color: #333;
   color: white;
   border: none;
-  box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .cta-btn-primary:hover {
-  background-color: #005bdb;
+  background-color: #000;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* 戻るリンクコンテナ */

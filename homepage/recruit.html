@@ -70,7 +70,7 @@
             display: block;
             width: 50px;
             height: 3px;
-            background-color: #005DFF;
+            background-color: #333;
             margin: 15px auto 0;
         }
         
@@ -186,6 +186,27 @@
             justify-content: flex-end;
             border-top: 1px solid #eee;
             margin-top: 15px;
+        }
+        
+        .skills-apply-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 15px;
+        }
+        
+        .skills-section {
+            flex: 1;
+            padding-right: 20px;
+        }
+        
+        .apply-button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 20px;
+            border-left: 1px solid #eee;
+            min-height: 100px;
         }
         
         /* 職務説明の段落のスタイル */
@@ -334,7 +355,7 @@
         .step-number {
             flex: 0 0 60px;
             height: 60px;
-            background-color: #005DFF;
+            background-color: #333;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -352,7 +373,7 @@
             content: '';
             position: absolute;
             width: 2px;
-            background-color: #005DFF;
+            background-color: #333;
             top: 60px;
             bottom: -40px;
             left: 50%;
@@ -368,7 +389,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 10px;
-            color: #005DFF;
+            color: #333;
         }
         
         .step-desc {
@@ -504,14 +525,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">多層PCBを設計し、量産までリードしていただきます。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>アナログ/デジタル回路設計の実務経験</li>
-                            <li>センサー/BELインターフェースの設計経験</li>
-                            <li>多層PCBレイアウト設計経験</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>アナログ/デジタル回路設計の実務経験</li>
+                                    <li>センサー/BELインターフェースの設計経験</li>
+                                    <li>多層PCBレイアウト設計経験</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=electronics" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -524,14 +549,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">AIデバイスの機構設計、製造プロセスの最適化を担当していただきます。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>機構設計の実務経験</li>
-                            <li>3DCADの使用経験（Fusion360など）</li>
-                            <li>量産設計の知識</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>機構設計の実務経験</li>
+                                    <li>3DCADの使用経験（Fusion360など）</li>
+                                    <li>量産設計の知識</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=mechanical" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -544,14 +573,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">機械学習モデルの開発・実装、AIアルゴリズムの最適化を担当していただきます。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>機械学習/深層学習の実務経験</li>
-                            <li>Python, TensorFlow, PyTorchなどの経験</li>
-                            <li>自然言語処理または画像認識の知識</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>機械学習/深層学習の実務経験</li>
+                                    <li>Python, TensorFlow, PyTorchなどの経験</li>
+                                    <li>自然言語処理または画像認識の知識</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=ai" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -564,14 +597,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">AIデバイス向けの組み込みソフトウェア開発を担当していただきます。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>組み込みソフトウェア開発経験</li>
-                            <li>C/C++プログラミングスキル</li>
-                            <li>マイコン制御の知識</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>組み込みソフトウェア開発経験</li>
+                                    <li>C/C++プログラミングスキル</li>
+                                    <li>マイコン制御の知識</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=embedded" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -584,14 +621,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">AIデバイスと連携するモバイルアプリケーションの開発を担当していただきます。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>iOS/Androidアプリ開発経験</li>
-                            <li>Swift, Kotlin, Flutterなどの経験</li>
-                            <li>UIUXデザインへの理解</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>iOS/Androidアプリ開発経験</li>
+                                    <li>Swift, Kotlin, Flutterなどの経験</li>
+                                    <li>UIUXデザインへの理解</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=mobile" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -604,14 +645,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">募集のない職種でも、当社のビジョンに共感いただける方はご応募ください。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>AI技術への興味</li>
-                            <li>主体的に行動できる姿勢</li>
-                            <li>チームでの協働経験</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>AI技術への興味</li>
+                                    <li>主体的に行動できる姿勢</li>
+                                    <li>チームでの協働経験</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=open" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -624,14 +669,18 @@
                     </div>
                     <div class="accordion-content">
                         <p class="job-description">学生の方や副業をお考えの方も歓迎します。柔軟な働き方に対応します。</p>
-                        <p><strong class="skill-label">求める経験・スキル</strong></p>
-                        <ul>
-                            <li>新しい技術への好奇心</li>
-                            <li>AIが好きな方</li>
-                            <li>週2日以上勤務可能な方</li>
-                        </ul>
-                        <div class="accordion-footer">
-                            <a href="apply.html" class="apply-button">応募する</a>
+                        <div class="skills-apply-container">
+                            <div class="skills-section">
+                                <p><strong class="skill-label">求める経験・スキル</strong></p>
+                                <ul>
+                                    <li>新しい技術への好奇心</li>
+                                    <li>AIが好きな方</li>
+                                    <li>週2日以上勤務可能な方</li>
+                                </ul>
+                            </div>
+                            <div class="apply-button-container">
+                                <a href="jobsdetail.html?job=parttime" class="apply-button">応募する</a>
+                            </div>
                         </div>
                     </div>
                 </div>
