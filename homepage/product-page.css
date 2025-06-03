@@ -376,7 +376,7 @@
     bottom: 0;
     left: 120px;
     width: 4px;
-    background-color: #006CFF;
+    background-color: #000000;
     border-radius: 2px;
 }
 
@@ -392,25 +392,16 @@
     width: 100px;
     text-align: right;
     font-weight: 700;
-    color: #006CFF;
+    color: #000000;
 }
 
 .timeline-content {
-    background-color: white;
-    padding: calc(var(--spacing-unit) * 2);
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     position: relative;
 }
 
+/* 接続線を削除 */
 .timeline-content::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 20px;
-    width: 20px;
-    height: 4px;
-    background-color: #006CFF;
+    display: none;
 }
 
 .timeline-content h3 {
@@ -418,8 +409,21 @@
     color: var(--accent-color);
 }
 
-.timeline-item.current .timeline-content {
-    border: 2px solid #006CFF;
+/* 現在のアイテムのスタイル */
+.timeline-item.current .timeline-content h3 {
+    font-weight: bold;
+}
+
+/* 現在進行中マーカー */
+.current-marker {
+    display: inline-block;
+    background-color: #000000;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    font-weight: 500;
 }
 
 .ai-necklace-css.small {
@@ -445,7 +449,7 @@
 
 .progress {
     height: 100%;
-    background-color: #006CFF;
+    background-color: #000000;
     border-radius: 10px;
     transition: width 1s ease;
 }
