@@ -570,6 +570,18 @@ nav a:hover {
   position: relative;
   padding: calc(var(--spacing-unit) * 4) 0;
   color: white;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* スマホ表示用のレスポンシブ対応 */
+@media (max-width: 768px) {
+  .careers-simple {
+    background-attachment: scroll;
+    background-position: center center;
+    height: auto;
+    min-height: 300px;
+  }
 }
 
 .careers-content {
