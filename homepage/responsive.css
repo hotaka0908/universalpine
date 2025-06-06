@@ -112,7 +112,6 @@ img {
     display: block;
     padding: 8px 0;
     margin-bottom: 5px;
-    border-left: 2px solid #9DD941;
     padding-left: 10px;
     word-break: break-word; /* 長いテキストがある場合に改行 */
 }

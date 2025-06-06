@@ -208,7 +208,7 @@ nav a:hover {
   
   .dropdown-content a {
     padding: 0.8rem 1rem 0.8rem 2rem; /* 左側にインデントを追加 */
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: #ffffff;
   }
 }
 
@@ -1336,7 +1336,7 @@ footer {
   .dropdown-content {
     position: static;
     box-shadow: none;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     width: 100%;
     padding: 0;
     max-height: 0;
