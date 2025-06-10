@@ -205,9 +205,9 @@ input.error, select.error, textarea.error {
 .submit-button {
     width: 260px;
     height: 48px;
-    background-color: #006CFF;
-    color: white;
-    border: none;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ddd;
     border-radius: 9999px;
     font-size: 1rem;
     font-weight: 700;
@@ -218,7 +218,7 @@ input.error, select.error, textarea.error {
 }
 
 .submit-button:hover {
-    background-color: #005BDB;
+    background-color: #f5f5f5;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
