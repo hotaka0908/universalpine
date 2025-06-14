@@ -129,11 +129,15 @@ header .container {
   color: var(--primary-color);
 }
 
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-family: "Inter", sans-serif;
-  letter-spacing: -0.5px;
+.logo-image {
+  height: 40px;
+  width: auto;
+  max-width: 200px;
+  transition: transform 0.2s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.02);
 }
 
 nav {

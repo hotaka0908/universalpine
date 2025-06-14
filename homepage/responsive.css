@@ -602,8 +602,9 @@ img {
     }
     
     /* ロゴ調整 */
-    .logo-text {
-        font-size: 1.3rem;
+    .logo-image {
+        height: 32px;
+        max-width: 160px;
     }
     
     /* セクション間の余白調整 */
