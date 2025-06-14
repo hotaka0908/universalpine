@@ -146,6 +146,13 @@ img {
     transform: scale(0.95);
 }
 
+/* ハンバーガーメニューが×になった時のスタイル */
+.menu-toggle[aria-expanded="true"] {
+    background-color: rgba(74, 74, 74, 0.1);
+    border-color: #4a4a4a;
+    color: #4a4a4a;
+}
+
 /* モバイルナビゲーション */
 .mobile-nav {
     display: none;

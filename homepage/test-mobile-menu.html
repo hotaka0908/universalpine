@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モバイルメニューテスト</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        body { margin: 0; padding: 20px; font-family: "Noto Sans JP", sans-serif; }
+        .test-info { 
+            background: #f0f8ff; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px;
+            border-left: 4px solid #4a4a4a;
+        }
+        .test-instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>📱 モバイルメニュー×ボタン重複テスト</h1>
+        <p>このページでモバイルハンバーガーメニューの×ボタン重複問題が修正されているかテストします。</p>
+    </div>
+
+    <div class="test-instructions">
+        <h3>🧪 テスト手順</h3>
+        <ol>
+            <li>ブラウザの開発者ツールを開く (F12)</li>
+            <li>モバイルビューに切り替え (width: 768px以下)</li>
+            <li>右上のハンバーガーメニュー (☰) をクリック</li>
+            <li>×ボタンが1つだけ表示されることを確認</li>
+            <li>×ボタンをクリックしてメニューが閉じることを確認</li>
+            <li>再度ハンバーガーボタン (☰) が表示されることを確認</li>
+        </ol>
+        <p><strong>期待する動作:</strong> ×ボタンは1つだけ（ハンバーガーボタンが×に変わったもの）</p>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">Universal Pine</span>
+                </a>
+            </div>
+            
+            <button class="menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-nav" 
+                    aria-label="メニューを開く">
+                ☰
+            </button>
+
+            <nav role="navigation" aria-label="メインナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="モバイルナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 40px 20px;">
+        <div class="test-info">
+            <h2>✅ 修正内容</h2>
+            <ul>
+                <li><strong>重複削除:</strong> 動的に作成していた×ボタンを削除</li>
+                <li><strong>統一化:</strong> ハンバーガーボタンが☰ ⇄ ×で切り替わる単一ボタン</li>
+                <li><strong>視覚改善:</strong> ×状態の時のボタンスタイルを追加</li>
+                <li><strong>動作確認:</strong> 画面外クリック・ESCキーでの閉じる機能も維持</li>
+            </ul>
+        </div>
+
+        <div class="test-info">
+            <h2>🎯 確認ポイント</h2>
+            <ul>
+                <li>☰ボタンをクリック → メニュー開く + ボタンが×に変化</li>
+                <li>×ボタンをクリック → メニュー閉じる + ボタンが☰に戻る</li>
+                <li>画面外をクリック → メニュー閉じる</li>
+                <li>ESCキー → メニュー閉じる</li>
+                <li>ドロップダウンメニューの動作確認</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="js/mobile-menu.js"></script>
+    <script>
+        // デバッグ情報表示
+        function showDebugInfo() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            
+            console.log('Debug Info:', {
+                menuToggle: !!menuToggle,
+                mobileNav: !!mobileNav,
+                menuToggleContent: menuToggle?.innerHTML,
+                mobileNavActive: mobileNav?.classList.contains('active'),
+                ariaExpanded: menuToggle?.getAttribute('aria-expanded'),
+                closeButtons: document.querySelectorAll('.close-button').length
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== モバイルメニューテスト開始 ===');
+            showDebugInfo();
+            
+            // メニュー開閉時にデバッグ情報を表示
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    setTimeout(showDebugInfo, 100);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

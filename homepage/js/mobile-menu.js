@@ -12,26 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let mobileNavActive = false;
     
-    // ×ボタンの作成と追加
-    const closeButton = document.createElement('button');
-    closeButton.className = 'close-button';
-    closeButton.innerHTML = '×';
-    closeButton.setAttribute('aria-label', 'メニューを閉じる');
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '20px';
-    closeButton.style.right = '20px';
-    closeButton.style.fontSize = '24px';
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.color = '#333';
-    closeButton.style.zIndex = '1001';
-    closeButton.style.display = 'none';
-    closeButton.style.border = 'none';
-    closeButton.style.background = 'transparent';
-    closeButton.style.padding = '10px';
-    closeButton.style.minWidth = '44px';
-    closeButton.style.minHeight = '44px';
-    mobileNav.appendChild(closeButton);
-    
     // ハンバーガーメニューの開閉
     menuToggle.addEventListener('click', function(e) {
         e.preventDefault();
@@ -56,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileNav.classList.add('active');
         });
         mobileNavActive = true;
-        closeButton.style.display = 'block';
         body.style.overflow = 'hidden';
         body.style.position = 'fixed';
         body.style.width = '100%';
@@ -77,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeMenu() {
         mobileNav.classList.remove('active');
         mobileNavActive = false;
-        closeButton.style.display = 'none';
         body.style.overflow = '';
         body.style.position = '';
         body.style.width = '';
@@ -108,11 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.focus();
     }
     
-    // ×ボタンでメニューを閉じる
-    closeButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        closeMenu();
-    });
     
     // モバイルナビをクリックしても閉じないようにする
     mobileNav.addEventListener('click', function(e) {
