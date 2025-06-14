@@ -5,25 +5,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const body = document.body
 
   if (menuToggle && mobileNav) {
+    // ハンバーガーメニューのクリック処理
     menuToggle.addEventListener('click', function () {
-      mobileNav.classList.toggle('active')
-      body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : ''
+      const isActive = mobileNav.classList.contains('active')
       
-      // ハンバーガーアイコンの変更
-      this.innerHTML = mobileNav.classList.contains('active') ? '✕' : '☰'
-    })
-
-    // モバイルナビゲーション内のリンククリック時にメニューを閉じる
-    const mobileNavLinks = mobileNav.querySelectorAll('a')
-    mobileNavLinks.forEach(link => {
-      link.addEventListener('click', function () {
-        // ドロップダウンでない場合のみメニューを閉じる
-        if (!this.parentElement.classList.contains('dropdown')) {
-          mobileNav.classList.remove('active')
-          body.style.overflow = ''
-          menuToggle.innerHTML = '☰'
-        }
-      })
+      if (isActive) {
+        // メニューを閉じる
+        mobileNav.classList.remove('active')
+        body.style.overflow = ''
+        this.innerHTML = '☰'
+        // 全てのドロップダウンを閉じる
+        const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active')
+        activeDropdowns.forEach(dropdown => {
+          dropdown.classList.remove('active')
+        })
+      } else {
+        // メニューを開く
+        mobileNav.classList.add('active')
+        body.style.overflow = 'hidden'
+        this.innerHTML = '✕'
+      }
     })
 
     // ドロップダウンメニューの動作
@@ -33,9 +34,46 @@ document.addEventListener('DOMContentLoaded', function () {
       if (dropdownLink) {
         dropdownLink.addEventListener('click', function (e) {
           e.preventDefault()
+          e.stopPropagation()
+          
+          // 他のドロップダウンを閉じる
+          dropdowns.forEach(otherDropdown => {
+            if (otherDropdown !== dropdown) {
+              otherDropdown.classList.remove('active')
+            }
+          })
+          
+          // 現在のドロップダウンをトグル
           dropdown.classList.toggle('active')
         })
       }
+    })
+
+    // ドロップダウン内のサブメニューリンクのクリック処理
+    const subMenuLinks = mobileNav.querySelectorAll('.dropdown-content a')
+    subMenuLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+        // サブメニューをクリックしたらモバイルナビを閉じる
+        mobileNav.classList.remove('active')
+        body.style.overflow = ''
+        menuToggle.innerHTML = '☰'
+        // 全てのドロップダウンを閉じる
+        const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active')
+        activeDropdowns.forEach(dropdown => {
+          dropdown.classList.remove('active')
+        })
+      })
+    })
+
+    // 通常のメニューリンク（ドロップダウンでない）のクリック処理
+    const normalLinks = mobileNav.querySelectorAll('li:not(.dropdown) > a')
+    normalLinks.forEach(link => {
+      link.addEventListener('click', function () {
+        // 通常のリンクをクリックしたらモバイルナビを閉じる
+        mobileNav.classList.remove('active')
+        body.style.overflow = ''
+        menuToggle.innerHTML = '☰'
+      })
     })
 
     // 画面サイズ変更時の処理
@@ -44,6 +82,11 @@ document.addEventListener('DOMContentLoaded', function () {
         mobileNav.classList.remove('active')
         body.style.overflow = ''
         menuToggle.innerHTML = '☰'
+        // 全てのドロップダウンを閉じる
+        const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active')
+        activeDropdowns.forEach(dropdown => {
+          dropdown.classList.remove('active')
+        })
       }
     })
   }
