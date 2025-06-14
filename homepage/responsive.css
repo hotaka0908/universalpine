@@ -49,24 +49,6 @@ html {
     font-size: clamp(14px, 2.5vw, 16px);
 }
 
-/* スキップリンク */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: #005DFF;
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    border-radius: 0 0 4px 4px;
-    z-index: 10000;
-    font-weight: 600;
-    transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-    top: 0;
-}
 
 /* 改善されたフォーカス状態 */
 *:focus-visible {
