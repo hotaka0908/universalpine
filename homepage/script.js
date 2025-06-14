@@ -161,4 +161,37 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   }
+
+  // ミッションセクションのアコーディオンボタンの処理
+  const accordionButtons = document.querySelectorAll('.accordion-button')
+  
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const isExpanded = this.classList.contains('active')
+      this.classList.toggle('active')
+      
+      // ARIA属性の更新
+      this.setAttribute('aria-expanded', !isExpanded)
+      
+      const content = this.nextElementSibling
+      
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null
+        this.textContent = 'ミッション詳細を表示'
+        this.title = 'ミッション詳細を表示'
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px'
+        this.textContent = 'ミッション詳細を閉じる'
+        this.title = 'ミッション詳細を閉じる'
+      }
+    })
+    
+    // キーボードアクセシビリティ（Enter/Space キー）
+    button.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        this.click()
+      }
+    })
+  })
 })

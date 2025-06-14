@@ -1,8 +1,131 @@
 /* レスポンシブデザイン用CSS */
 
+/* 大画面対応 */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    /* 大画面でのセクション余白増加 */
+    section {
+        padding: 100px 0;
+    }
+    
+    /* 製品グリッドを3列に */
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+    
+    /* タイポグラフィの最適化 */
+    h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+    }
+    
+    h2 {
+        font-size: clamp(2rem, 3vw, 2.8rem);
+    }
+    
+    .hero h1 {
+        font-size: clamp(3rem, 5vw, 4rem);
+        line-height: 1.2;
+    }
+    
+    .hero p {
+        font-size: clamp(1.2rem, 2vw, 1.4rem);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
 /* 基本設定 */
 * {
     box-sizing: border-box;
+}
+
+/* 流動的なタイポグラフィ */
+html {
+    font-size: clamp(14px, 2.5vw, 16px);
+}
+
+/* スキップリンク */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #005DFF;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 10000;
+    font-weight: 600;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* 改善されたフォーカス状態 */
+*:focus-visible {
+    outline: 2px solid #005DFF;
+    outline-offset: 2px;
+}
+
+/* キーボードナビゲーション改善 */
+.menu-toggle:focus-visible,
+.mobile-nav a:focus-visible,
+nav a:focus-visible {
+    outline: 3px solid #005DFF;
+    outline-offset: 2px;
+    background-color: rgba(0, 93, 255, 0.1);
+}
+
+/* ドロップダウンメニューのキーボードアクセシビリティ */
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+/* アコーディオンボタンのアクセシビリティ */
+.accordion-button {
+    cursor: pointer;
+    position: relative;
+}
+
+.accordion-button:focus-visible {
+    outline: 3px solid #005DFF;
+    outline-offset: 4px;
+}
+
+/* ボタンやリンクのアクセシビリティ向上 */
+a, button, [role="button"] {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+/* 高コントラストモード対応 */
+@media (prefers-contrast: high) {
+    .menu-toggle {
+        border-color: #000;
+    }
+    
+    .mobile-nav .dropdown-content a {
+        color: #000;
+    }
+}
+
+/* モーション軽減対応 */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 img {
@@ -179,6 +302,34 @@ img {
     padding-left: 20px;
 }
 
+/* メディアクエリ - タブレット専用 */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .container {
+        width: 90%;
+        padding: 0 30px;
+    }
+    
+    /* セクション余白調整 */
+    section {
+        padding: 60px 0;
+    }
+    
+    /* 製品グリッドをタブレットサイズに最適化 */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    /* フォントサイズの中間調整 */
+    h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+    }
+    
+    h2 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+}
+
 /* メディアクエリ - タブレット・モバイル統合 */
 @media (max-width: 768px) {
     .container {
@@ -208,13 +359,32 @@ img {
     
     /* ヒーローセクション調整 */
     .hero h1 {
-        font-size: 2.2rem;
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
         line-height: 1.3;
     }
     
     .hero p {
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 3vw, 1.1rem);
         line-height: 1.6;
+    }
+    
+    /* 製品グリッドをモバイルで改善 */
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(20px, 4vw, 30px);
+        padding: 0 10px;
+    }
+    
+    .product-item {
+        text-align: center;
+        padding: 20px;
+        background: #fafafa;
+        border-radius: 12px;
+        transition: transform 0.2s ease;
+    }
+    
+    .product-item:hover {
+        transform: translateY(-2px);
     }
     
     /* カード・グリッドレイアウト調整 */
@@ -230,10 +400,26 @@ img {
     }
     
     /* ボタン調整 */
-    .button, .more-button, .apply-button {
-        padding: 12px 24px;
+    .button, .more-button, .apply-button, .btn {
+        padding: 15px 30px;
         font-size: 1rem;
-        min-height: 44px; /* タッチターゲットサイズ */
+        min-height: 48px; /* WCAG AA準拠のタッチターゲットサイズ */
+        border-radius: 8px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        margin: 5px;
+    }
+    
+    /* ニュースリンクのタッチターゲット改善 */
+    .news-link {
+        padding: 15px 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .news-link:hover {
+        background-color: rgba(0, 93, 255, 0.05);
     }
     
     /* ニュース項目のモバイル表示調整 */

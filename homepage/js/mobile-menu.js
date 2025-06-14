@@ -1,15 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Mobile menu script loaded');
     // ハンバーガーメニューの要素を取得
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
     const mobileNav = document.querySelector('.mobile-nav');
+    
+    // 必要な要素が存在しない場合は早期リターン
+    if (!menuToggle || !nav || !mobileNav) {
+        return;
+    }
+    
     let mobileNavActive = false;
     
     // ×ボタンの作成と追加
-    const closeButton = document.createElement('div');
+    const closeButton = document.createElement('button');
     closeButton.className = 'close-button';
     closeButton.innerHTML = '×';
+    closeButton.setAttribute('aria-label', 'メニューを閉じる');
     closeButton.style.position = 'absolute';
     closeButton.style.top = '20px';
     closeButton.style.right = '20px';
@@ -18,27 +24,47 @@ document.addEventListener('DOMContentLoaded', function() {
     closeButton.style.color = '#333';
     closeButton.style.zIndex = '1001';
     closeButton.style.display = 'none';
+    closeButton.style.border = 'none';
+    closeButton.style.background = 'transparent';
+    closeButton.style.padding = '10px';
+    closeButton.style.minWidth = '44px';
+    closeButton.style.minHeight = '44px';
     mobileNav.appendChild(closeButton);
-    console.log('Close button added');
     
     // ハンバーガーメニューの開閉
     menuToggle.addEventListener('click', function(e) {
-        console.log('Menu toggle clicked');
         e.stopPropagation();
         nav.classList.toggle('active');
         mobileNav.classList.toggle('active');
         mobileNavActive = !mobileNavActive;
         closeButton.style.display = mobileNavActive ? 'block' : 'none';
+        
+        // ARIA属性の更新
+        this.setAttribute('aria-expanded', mobileNavActive);
+        this.setAttribute('aria-label', mobileNavActive ? 'メニューを閉じる' : 'メニューを開く');
+        
+        // フォーカス管理
+        if (mobileNavActive) {
+            // メニューが開いた時は最初のリンクにフォーカス
+            const firstLink = mobileNav.querySelector('a');
+            firstLink?.focus();
+        }
     });
     
     // ×ボタンでメニューを閉じる
     closeButton.addEventListener('click', function(e) {
-        console.log('Close button clicked');
         e.stopPropagation();
         nav.classList.remove('active');
         mobileNav.classList.remove('active');
         mobileNavActive = false;
         closeButton.style.display = 'none';
+        
+        // ARIA属性の更新
+        menuToggle.setAttribute('aria-expanded', false);
+        menuToggle.setAttribute('aria-label', 'メニューを開く');
+        
+        // フォーカスをメニューボタンに戻す
+        menuToggle.focus();
         
         // すべてのアコーディオンを閉じる
         document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
@@ -53,14 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ドロップダウンメニューの処理
     const mobileDropdowns = document.querySelectorAll('.mobile-nav .dropdown');
-    console.log('Found mobile dropdowns:', mobileDropdowns.length);
     
     mobileDropdowns.forEach(dropdown => {
         const link = dropdown.querySelector('a');
         let dropdownActive = false; // ドロップダウンの状態を追跡
         
         link.addEventListener('click', function(e) {
-            console.log('Dropdown link clicked');
             e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
             
             // 必ずハンバーガーメニューが閉じないようにする
@@ -86,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const subLinks = dropdown.querySelectorAll('.dropdown-content a');
         subLinks.forEach(subLink => {
             subLink.addEventListener('click', function(subEvent) {
-                console.log('Dropdown sublink clicked');
                 // イベントの伝播を停止して親要素のイベントが発火しないようにする
                 subEvent.stopPropagation();
                 // サブメニューのリンクはそのままリンク先に移動させる（デフォルトの動作を許可）
@@ -101,11 +124,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const isClickOnMenuToggle = e.target.closest('.menu-toggle') !== null;
         
         if (mobileNavActive && !isClickInsideMenu && !isClickOnMenuToggle) {
-            console.log('Closing menu from outside click');
             nav.classList.remove('active');
             mobileNav.classList.remove('active');
             mobileNavActive = false;
             closeButton.style.display = 'none';
+            
+            // ARIA属性の更新
+            menuToggle.setAttribute('aria-expanded', false);
+            menuToggle.setAttribute('aria-label', 'メニューを開く');
             
             // すべてのアコーディオンを閉じる
             document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
@@ -121,6 +147,10 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileNav.classList.remove('active');
             mobileNavActive = false;
             closeButton.style.display = 'none';
+            
+            // ARIA属性の更新
+            menuToggle.setAttribute('aria-expanded', false);
+            menuToggle.setAttribute('aria-label', 'メニューを開く');
             
             // すべてのアコーディオンを閉じる
             document.querySelectorAll('.accordion-item').forEach(item => {
