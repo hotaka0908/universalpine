@@ -43,9 +43,31 @@ h3 {
 
 .container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 calc(var(--spacing-unit) * 1);
+  padding: 0 calc(var(--spacing-unit) * 2);
+}
+
+/* レスポンシブ対応のコンテナ調整 */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 95%;
+    padding: 0 calc(var(--spacing-unit) * 1.5);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 0 calc(var(--spacing-unit) * 1);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
 }
 
 section {

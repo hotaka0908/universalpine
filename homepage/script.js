@@ -1,4 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // ハンバーガーメニューの動作
+  const menuToggle = document.querySelector('.menu-toggle')
+  const mobileNav = document.querySelector('.mobile-nav')
+  const body = document.body
+
+  if (menuToggle && mobileNav) {
+    menuToggle.addEventListener('click', function () {
+      mobileNav.classList.toggle('active')
+      body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : ''
+      
+      // ハンバーガーアイコンの変更
+      this.innerHTML = mobileNav.classList.contains('active') ? '✕' : '☰'
+    })
+
+    // モバイルナビゲーション内のリンククリック時にメニューを閉じる
+    const mobileNavLinks = mobileNav.querySelectorAll('a')
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', function () {
+        // ドロップダウンでない場合のみメニューを閉じる
+        if (!this.parentElement.classList.contains('dropdown')) {
+          mobileNav.classList.remove('active')
+          body.style.overflow = ''
+          menuToggle.innerHTML = '☰'
+        }
+      })
+    })
+
+    // ドロップダウンメニューの動作
+    const dropdowns = mobileNav.querySelectorAll('.dropdown')
+    dropdowns.forEach(dropdown => {
+      const dropdownLink = dropdown.querySelector('a')
+      if (dropdownLink) {
+        dropdownLink.addEventListener('click', function (e) {
+          e.preventDefault()
+          dropdown.classList.toggle('active')
+        })
+      }
+    })
+
+    // 画面サイズ変更時の処理
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        mobileNav.classList.remove('active')
+        body.style.overflow = ''
+        menuToggle.innerHTML = '☰'
+      }
+    })
+  }
+
   // Smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
