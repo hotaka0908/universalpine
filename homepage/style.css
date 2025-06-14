@@ -620,17 +620,6 @@ nav a:hover {
   -o-background-size: cover;
 }
 
-/* 暗いオーバーレイで文字を読みやすく */
-.careers-simple::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
-}
 
 /* タブレット表示用のレスポンシブ対応 */
 @media (max-width: 1024px) {
@@ -650,9 +639,6 @@ nav a:hover {
     background-size: cover;
   }
   
-  .careers-simple::before {
-    background: rgba(0, 0, 0, 0.5); /* モバイルでは少し暗く */
-  }
 }
 
 /* 小型スマホ用 */
@@ -663,9 +649,6 @@ nav a:hover {
     background-position: center center;
   }
   
-  .careers-simple::before {
-    background: rgba(0, 0, 0, 0.6); /* 小画面ではさらに暗く */
-  }
 }
 
 .careers-content {
