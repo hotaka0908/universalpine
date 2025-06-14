@@ -75,6 +75,7 @@
         }
         .team-member {
             text-align: center;
+            position: relative;
         }
         .team-member img {
             width: 150px;
@@ -82,6 +83,55 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .team-member img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        .team-member img:active {
+            transform: scale(0.98);
+        }
+        
+        /* メッセージポップアップのスタイル */
+        .message-popup {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+            pointer-events: none;
+        }
+        
+        .message-popup.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        
+        .message-popup::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #357abd;
         }
         .team-member h4 {
             font-size: 18px;
@@ -159,10 +209,25 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+            .message-popup {
+                font-size: 12px;
+                padding: 6px 12px;
+                top: -5px;
+                right: -5px;
+            }
         }
         @media (max-width: 480px) {
             .team-grid {
                 grid-template-columns: 1fr;
+            }
+            .team-member img {
+                width: 120px;
+                height: 120px;
+            }
+            .message-popup {
+                font-size: 11px;
+                padding: 5px 10px;
+                border-radius: 15px;
             }
         }
     </style>
@@ -292,17 +357,20 @@
             <p class="text-center">AIネックレスプロジェクトを推進する主要メンバーをご紹介します</p>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="images/hotaka.png" alt="プロジェクトリーダー" />
+                    <img id="hotaka-image" src="images/hotaka.png" alt="プロジェクトリーダー" />
+                    <div class="message-popup" id="hotaka-message">は〜い👋</div>
                     <h4>船橋 穂天</h4>
                     <p>プロジェクトリーダー</p>
                 </div>
                 <div class="team-member">
-                    <img src="images/friend.jpg.avif" alt="ハードウェアエンジニア" />
+                    <img id="friend-image-1" src="images/friend.jpg.avif" alt="ハードウェアエンジニア" />
+                    <div class="message-popup" id="friend-message-1">一緒にやる？🤝</div>
                     <h4>空きポジション</h4>
                     <p>ハードウェアエンジニア</p>
                 </div>
                 <div class="team-member">
-                    <img src="images/friend.jpg.avif" alt="ソフトウェアエンジニア" />
+                    <img id="friend-image-2" src="images/friend.jpg.avif" alt="ソフトウェアエンジニア" />
+                    <div class="message-popup" id="friend-message-2">一緒にやる？🤝</div>
                     <h4>空きポジション</h4>
                     <p>ソフトウェアエンジニア</p>
                 </div>
@@ -430,6 +498,49 @@
                     nav.classList.remove('active');
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('active');
+                    });
+                }
+            });
+            
+            // 画像クリック時のメッセージ表示機能
+            function showMessage(imageId, messageId) {
+                const image = document.getElementById(imageId);
+                const message = document.getElementById(messageId);
+                
+                if (!image || !message) return;
+                
+                image.addEventListener('click', function() {
+                    // 他のメッセージを非表示にする
+                    const allMessages = document.querySelectorAll('.message-popup');
+                    allMessages.forEach(msg => {
+                        if (msg !== message) {
+                            msg.classList.remove('show');
+                        }
+                    });
+                    
+                    // メッセージを表示
+                    message.classList.add('show');
+                    
+                    // 3秒後に自動で非表示
+                    setTimeout(() => {
+                        message.classList.remove('show');
+                    }, 3000);
+                });
+            }
+            
+            // 各画像のクリックイベントを設定
+            showMessage('hotaka-image', 'hotaka-message');
+            showMessage('friend-image-1', 'friend-message-1');
+            showMessage('friend-image-2', 'friend-message-2');
+            
+            // 画面外をクリックした時にメッセージを非表示にする
+            document.addEventListener('click', function(event) {
+                // チームメンバーのコンテナ外をクリックした場合
+                const teamSection = document.querySelector('.team-section');
+                if (!teamSection.contains(event.target)) {
+                    const allMessages = document.querySelectorAll('.message-popup');
+                    allMessages.forEach(msg => {
+                        msg.classList.remove('show');
                     });
                 }
             });
