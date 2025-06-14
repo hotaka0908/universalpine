@@ -51,10 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // メニューを開く関数
     function openMenu() {
         mobileNav.style.display = 'block';
-        mobileNav.classList.add('active');
+        // 少し遅延させてアニメーションを有効にする
+        requestAnimationFrame(() => {
+            mobileNav.classList.add('active');
+        });
         mobileNavActive = true;
         closeButton.style.display = 'block';
         body.style.overflow = 'hidden';
+        body.style.position = 'fixed';
+        body.style.width = '100%';
         menuToggle.innerHTML = '✕';
         
         // ARIA属性の更新
@@ -74,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileNavActive = false;
         closeButton.style.display = 'none';
         body.style.overflow = '';
+        body.style.position = '';
+        body.style.width = '';
         menuToggle.innerHTML = '☰';
         
         // ARIA属性の更新
@@ -84,6 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active');
         activeDropdowns.forEach(dropdown => {
             dropdown.classList.remove('active');
+            const icon = dropdown.querySelector('.dropdown-icon');
+            if (icon) {
+                icon.innerHTML = '▼';
+            }
         });
         
         // アニメーション後にdisplay: noneを設定
@@ -113,20 +124,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     mobileDropdowns.forEach(dropdown => {
         const link = dropdown.querySelector('a');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        
+        // ドロップダウンアイコンを追加
+        if (!link.querySelector('.dropdown-icon')) {
+            const icon = document.createElement('span');
+            icon.className = 'dropdown-icon';
+            icon.innerHTML = '▼';
+            link.appendChild(icon);
+        }
         
         link.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
+            const isCurrentlyActive = dropdown.classList.contains('active');
+            
             // 他のドロップダウンを閉じる
             mobileDropdowns.forEach(otherDropdown => {
                 if (otherDropdown !== dropdown) {
                     otherDropdown.classList.remove('active');
+                    const otherIcon = otherDropdown.querySelector('.dropdown-icon');
+                    if (otherIcon) {
+                        otherIcon.innerHTML = '▼';
+                    }
                 }
             });
             
             // 現在のドロップダウンをトグル
-            dropdown.classList.toggle('active');
+            if (isCurrentlyActive) {
+                dropdown.classList.remove('active');
+                const icon = link.querySelector('.dropdown-icon');
+                if (icon) {
+                    icon.innerHTML = '▼';
+                }
+            } else {
+                dropdown.classList.add('active');
+                const icon = link.querySelector('.dropdown-icon');
+                if (icon) {
+                    icon.innerHTML = '▲';
+                }
+            }
         });
         
         // ドロップダウン内のサブメニューリンクのクリック処理
