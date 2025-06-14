@@ -6,12 +6,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (menuToggle && mobileNav) {
     // ハンバーガーメニューのクリック処理
-    menuToggle.addEventListener('click', function () {
+    menuToggle.addEventListener('click', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      
       const isActive = mobileNav.classList.contains('active')
       
       if (isActive) {
         // メニューを閉じる
         mobileNav.classList.remove('active')
+        setTimeout(() => {
+          mobileNav.style.display = 'none'
+        }, 300)
         body.style.overflow = ''
         this.innerHTML = '☰'
         // 全てのドロップダウンを閉じる
@@ -21,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
       } else {
         // メニューを開く
+        mobileNav.style.display = 'block'
         mobileNav.classList.add('active')
         body.style.overflow = 'hidden'
         this.innerHTML = '✕'
@@ -55,6 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
       link.addEventListener('click', function (e) {
         // サブメニューをクリックしたらモバイルナビを閉じる
         mobileNav.classList.remove('active')
+        setTimeout(() => {
+          mobileNav.style.display = 'none'
+        }, 300)
         body.style.overflow = ''
         menuToggle.innerHTML = '☰'
         // 全てのドロップダウンを閉じる
@@ -71,6 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
       link.addEventListener('click', function () {
         // 通常のリンクをクリックしたらモバイルナビを閉じる
         mobileNav.classList.remove('active')
+        setTimeout(() => {
+          mobileNav.style.display = 'none'
+        }, 300)
         body.style.overflow = ''
         menuToggle.innerHTML = '☰'
       })
@@ -80,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', function () {
       if (window.innerWidth > 768) {
         mobileNav.classList.remove('active')
+        mobileNav.style.display = 'none'
         body.style.overflow = ''
         menuToggle.innerHTML = '☰'
         // 全てのドロップダウンを閉じる
