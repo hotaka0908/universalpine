@@ -391,9 +391,9 @@
     }
     
     .founder-image-wrapper {
-        width: 180px;
+        width: 200px;
         height: 180px;
-        border-radius: 50%;
+        border-radius: 12px;
         overflow: hidden;
         position: relative;
     }
@@ -469,6 +469,7 @@
     .founder-image-wrapper {
         width: 150px;
         height: 150px;
+        border-radius: 12px;
     }
     
     .founder-info-column {
