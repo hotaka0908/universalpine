@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     // ハンバーガーメニューの要素を取得
     const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav');
     const mobileNav = document.querySelector('.mobile-nav');
+    const body = document.body;
     
     // 必要な要素が存在しない場合は早期リターン
-    if (!menuToggle || !nav || !mobileNav) {
+    if (!menuToggle || !mobileNav) {
+        console.warn('Mobile menu elements not found:', { menuToggle, mobileNav });
         return;
     }
     
@@ -33,43 +34,73 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ハンバーガーメニューの開閉
     menuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
         e.stopPropagation();
-        nav.classList.toggle('active');
-        mobileNav.classList.toggle('active');
-        mobileNavActive = !mobileNavActive;
-        closeButton.style.display = mobileNavActive ? 'block' : 'none';
         
-        // ARIA属性の更新
-        this.setAttribute('aria-expanded', mobileNavActive);
-        this.setAttribute('aria-label', mobileNavActive ? 'メニューを閉じる' : 'メニューを開く');
+        const isActive = mobileNav.classList.contains('active');
         
-        // フォーカス管理
-        if (mobileNavActive) {
-            // メニューが開いた時は最初のリンクにフォーカス
-            const firstLink = mobileNav.querySelector('a');
-            firstLink?.focus();
+        if (isActive) {
+            // メニューを閉じる
+            closeMenu();
+        } else {
+            // メニューを開く
+            openMenu();
         }
     });
     
-    // ×ボタンでメニューを閉じる
-    closeButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        nav.classList.remove('active');
+    // メニューを開く関数
+    function openMenu() {
+        mobileNav.style.display = 'block';
+        mobileNav.classList.add('active');
+        mobileNavActive = true;
+        closeButton.style.display = 'block';
+        body.style.overflow = 'hidden';
+        menuToggle.innerHTML = '✕';
+        
+        // ARIA属性の更新
+        menuToggle.setAttribute('aria-expanded', true);
+        menuToggle.setAttribute('aria-label', 'メニューを閉じる');
+        
+        // フォーカス管理
+        setTimeout(() => {
+            const firstLink = mobileNav.querySelector('a');
+            firstLink?.focus();
+        }, 100);
+    }
+    
+    // メニューを閉じる関数
+    function closeMenu() {
         mobileNav.classList.remove('active');
         mobileNavActive = false;
         closeButton.style.display = 'none';
+        body.style.overflow = '';
+        menuToggle.innerHTML = '☰';
         
         // ARIA属性の更新
         menuToggle.setAttribute('aria-expanded', false);
         menuToggle.setAttribute('aria-label', 'メニューを開く');
         
+        // 全てのドロップダウンを閉じる
+        const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active');
+        activeDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+        
+        // アニメーション後にdisplay: noneを設定
+        setTimeout(() => {
+            if (!mobileNavActive) {
+                mobileNav.style.display = 'none';
+            }
+        }, 300);
+        
         // フォーカスをメニューボタンに戻す
         menuToggle.focus();
-        
-        // すべてのアコーディオンを閉じる
-        document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
-            item.classList.remove('active');
-        });
+    }
+    
+    // ×ボタンでメニューを閉じる
+    closeButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu();
     });
     
     // モバイルナビをクリックしても閉じないようにする
@@ -82,80 +113,63 @@ document.addEventListener('DOMContentLoaded', function() {
     
     mobileDropdowns.forEach(dropdown => {
         const link = dropdown.querySelector('a');
-        let dropdownActive = false; // ドロップダウンの状態を追跡
         
         link.addEventListener('click', function(e) {
-            e.stopPropagation(); // イベントの伝播を停止してハンバーガーメニューが閉じないようにする
+            e.preventDefault();
+            e.stopPropagation();
             
-            // 必ずハンバーガーメニューが閉じないようにする
-            e.preventDefault(); // リンクのデフォルト動作を常に防止
+            // 他のドロップダウンを閉じる
+            mobileDropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('active');
+                }
+            });
             
-            // ドロップダウンの開閉状態を切り替える
-            if (dropdown.classList.contains('active')) {
-                dropdown.classList.remove('active');
-            } else {
-                // 他のドロップダウンを閉じる
-                mobileDropdowns.forEach(otherDropdown => {
-                    if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-                
-                // クリックしたドロップダウンを開く
-                dropdown.classList.add('active');
-            }
+            // 現在のドロップダウンをトグル
+            dropdown.classList.toggle('active');
         });
         
-        // ドロップダウン内のリンクはそのままリンク先に移動させる
+        // ドロップダウン内のサブメニューリンクのクリック処理
         const subLinks = dropdown.querySelectorAll('.dropdown-content a');
         subLinks.forEach(subLink => {
-            subLink.addEventListener('click', function(subEvent) {
-                // イベントの伝播を停止して親要素のイベントが発火しないようにする
-                subEvent.stopPropagation();
-                // サブメニューのリンクはそのままリンク先に移動させる（デフォルトの動作を許可）
+            subLink.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // サブメニューをクリックしたらモバイルナビを閉じる
+                closeMenu();
             });
+        });
+    });
+    
+    // 通常のメニューリンク（ドロップダウンでない）のクリック処理
+    const normalLinks = mobileNav.querySelectorAll('li:not(.dropdown) > a');
+    normalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // 通常のリンクをクリックしたらモバイルナビを閉じる
+            closeMenu();
         });
     });
     
     // 画面外をクリックしたらメニューを閉じる
     document.addEventListener('click', function(e) {
-        // クリックした要素がメニュー内の要素でない場合のみメニューを閉じる
         const isClickInsideMenu = e.target.closest('.mobile-nav') !== null;
         const isClickOnMenuToggle = e.target.closest('.menu-toggle') !== null;
         
         if (mobileNavActive && !isClickInsideMenu && !isClickOnMenuToggle) {
-            nav.classList.remove('active');
-            mobileNav.classList.remove('active');
-            mobileNavActive = false;
-            closeButton.style.display = 'none';
-            
-            // ARIA属性の更新
-            menuToggle.setAttribute('aria-expanded', false);
-            menuToggle.setAttribute('aria-label', 'メニューを開く');
-            
-            // すべてのアコーディオンを閉じる
-            document.querySelectorAll('.mobile-nav .accordion-item').forEach(item => {
-                item.classList.remove('active');
-            });
+            closeMenu();
+        }
+    });
+    
+    // ESCキーでメニューを閉じる
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNavActive) {
+            closeMenu();
         }
     });
     
     // 画面サイズ変更時の処理
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            nav.classList.remove('active');
-            mobileNav.classList.remove('active');
-            mobileNavActive = false;
-            closeButton.style.display = 'none';
-            
-            // ARIA属性の更新
-            menuToggle.setAttribute('aria-expanded', false);
-            menuToggle.setAttribute('aria-label', 'メニューを開く');
-            
-            // すべてのアコーディオンを閉じる
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('active');
-            });
+        if (window.innerWidth > 768 && mobileNavActive) {
+            closeMenu();
         }
     });
 });

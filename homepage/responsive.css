@@ -149,9 +149,9 @@ img {
     border: 2px solid transparent;
     min-width: 48px;
     min-height: 48px;
-    display: flex;
     align-items: center;
     justify-content: center;
+    font-family: inherit;
 }
 
 .menu-toggle:hover {
@@ -182,9 +182,9 @@ img {
 }
 
 .mobile-nav.active {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .mobile-nav ul {
@@ -344,7 +344,7 @@ img {
     
     /* ハンバーガーメニュー表示 */
     .menu-toggle {
-        display: flex;
+        display: flex !important;
     }
     
     /* ロゴ調整 */

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ハンバーガーメニューテスト</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        body { margin: 0; padding: 20px; font-family: "Noto Sans JP", sans-serif; }
+        .test-info { 
+            background: #f0f8ff; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px;
+            border-left: 4px solid #005DFF;
+        }
+        .test-button { 
+            background: #005DFF; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>🍔 ハンバーガーメニューテスト</h1>
+        <p>このページはモバイル表示でハンバーガーメニューの動作を確認するためのテストページです。</p>
+        <p>ブラウザの開発者ツールでモバイルビューに切り替えてテストしてください。</p>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">Universal Pine</span>
+                </a>
+            </div>
+            
+            <button class="menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-nav" 
+                    aria-label="メニューを開く">
+                ☰
+            </button>
+
+            <nav role="navigation" aria-label="メインナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="モバイルナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 40px 20px;">
+        <div class="test-info">
+            <h2>テスト手順</h2>
+            <ol>
+                <li>ブラウザの開発者ツールを開く (F12)</li>
+                <li>モバイルビュー (width: 768px以下) に切り替え</li>
+                <li>右上のハンバーガーメニュー (☰) をクリック</li>
+                <li>メニューが開くことを確認</li>
+                <li>ドロップダウンメニューの動作を確認</li>
+                <li>✕ボタンでメニューが閉じることを確認</li>
+                <li>画面外クリックでメニューが閉じることを確認</li>
+                <li>ESCキーでメニューが閉じることを確認</li>
+            </ol>
+        </div>
+
+        <div class="test-info">
+            <h2>デバッグ情報</h2>
+            <button class="test-button" onclick="debugMenu()">メニュー状態を確認</button>
+            <button class="test-button" onclick="toggleMenu()">強制メニュー開閉</button>
+            <div id="debug-info" style="margin-top: 10px; font-family: monospace; font-size: 12px;"></div>
+        </div>
+    </main>
+
+    <script src="js/mobile-menu.js"></script>
+    <script>
+        function debugMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const debugInfo = document.getElementById('debug-info');
+            
+            debugInfo.innerHTML = `
+                <strong>デバッグ情報:</strong><br>
+                メニューボタン存在: ${!!menuToggle}<br>
+                モバイルナビ存在: ${!!mobileNav}<br>
+                モバイルナビ表示: ${mobileNav ? mobileNav.style.display : 'N/A'}<br>
+                モバイルナビactive: ${mobileNav ? mobileNav.classList.contains('active') : 'N/A'}<br>
+                ARIA expanded: ${menuToggle ? menuToggle.getAttribute('aria-expanded') : 'N/A'}<br>
+                画面幅: ${window.innerWidth}px
+            `;
+        }
+        
+        function toggleMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.click();
+            }
+        }
+        
+        // 初期デバッグ情報表示
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(debugMenu, 500);
+        });
+    </script>
+</body>
+</html>
