@@ -556,32 +556,43 @@ nav a:hover {
 
 /* Button Styles */
 .btn {
-  display: inline-block;
-  width: 150px;
-  height: 40px;
-  line-height: 38px;
-  padding: 0;
-  border-radius: 20px;
-  font-family: "Inter", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
   font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   text-align: center;
+  letter-spacing: 0.02em;
+  border: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2), 0 2px 6px rgba(51, 51, 51, 0.1);
 }
 
 .btn-primary:hover {
-  background-color: #f5f5f5;
-  color: #000000;
+  background: linear-gradient(135deg, #222222 0%, #444444 100%);
+  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px rgba(51, 51, 51, 0.25), 0 4px 12px rgba(51, 51, 51, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.2);
 }
 
 /* Careers Section */
@@ -713,26 +724,37 @@ nav a:hover {
 }
 
 .more-button {
-  display: inline-block;
-  width: 160px;
-  height: 44px;
-  line-height: 44px;
-  background-color: #006cff;
-  color: white;
-  text-decoration: none;
-  padding: 0;
-  border-radius: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 600;
   font-size: 1rem;
-  font-weight: 700;
-  transition: all 0.3s ease;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 108, 255, 0.2);
+  letter-spacing: 0.02em;
+  border: none;
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2), 0 2px 6px rgba(51, 51, 51, 0.1);
 }
 
 .more-button:hover {
-  background-color: #005bdb;
+  background: linear-gradient(135deg, #222222 0%, #444444 100%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 108, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(51, 51, 51, 0.25), 0 4px 12px rgba(51, 51, 51, 0.15);
+}
+
+.more-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.2);
 }
 
 /* Accordion Menu Styling */
@@ -1193,23 +1215,38 @@ nav a:hover {
 }
 
 .submit-button {
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.02em;
+  border: none;
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2), 0 2px 6px rgba(51, 51, 51, 0.1);
   margin-top: calc(var(--spacing-unit) * 1);
 }
 
 .submit-button:hover {
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, #222222 0%, #444444 100%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(51, 51, 51, 0.25), 0 4px 12px rgba(51, 51, 51, 0.15);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.2);
 }
 
 /* Footer */
@@ -1466,19 +1503,37 @@ footer {
 }
 
 .send-button {
-  padding: 10px 20px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: 40px;
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-align: center;
+  letter-spacing: 0.02em;
+  border: none;
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.15), 0 1px 4px rgba(51, 51, 51, 0.1);
 }
 
 .send-button:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #222222 0%, #444444 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2), 0 2px 6px rgba(51, 51, 51, 0.1);
+}
+
+.send-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(51, 51, 51, 0.15);
 }
 
 .cancel-button {
@@ -1805,28 +1860,37 @@ footer {
 
 /* ボタンスタイル */
 .cta-btn-primary {
-  display: inline-block;
-  width: 180px;
-  height: 40px;
-  line-height: 38px;
-  padding: 0;
-  border-radius: 20px;
-  font-family: 'Inter', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
   font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   text-align: center;
-  background-color: #333;
-  color: white;
+  letter-spacing: 0.02em;
   border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.2), 0 2px 6px rgba(51, 51, 51, 0.1);
 }
 
 .cta-btn-primary:hover {
-  background-color: #000;
+  background: linear-gradient(135deg, #222222 0%, #444444 100%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(51, 51, 51, 0.25), 0 4px 12px rgba(51, 51, 51, 0.15);
+}
+
+.cta-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.2);
 }
 
 /* 戻るリンクコンテナ */

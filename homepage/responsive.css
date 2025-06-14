@@ -420,13 +420,19 @@ img {
     
     /* ボタン調整 */
     .button, .more-button, .apply-button, .btn {
-        padding: 15px 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
         font-size: 1rem;
         min-height: 48px; /* WCAG AA準拠のタッチターゲットサイズ */
-        border-radius: 8px;
-        font-weight: 500;
+        border-radius: 12px;
+        font-weight: 600;
         letter-spacing: 0.02em;
         margin: 5px;
+        min-width: 160px;
+        line-height: 1.5;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     /* ニュースリンクのタッチターゲット改善 */
@@ -600,10 +606,19 @@ img {
     
     /* ボタン調整 */
     .button, .more-button, .apply-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         text-align: center;
-        padding: 15px;
+        padding: 12px 20px;
         font-size: 1rem;
+        min-height: 48px;
+        border-radius: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        line-height: 1.5;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     /* ヒーローセクション調整 */
