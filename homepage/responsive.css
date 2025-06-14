@@ -52,7 +52,7 @@ html {
 
 /* 改善されたフォーカス状態 */
 *:focus-visible {
-    outline: 2px solid #005DFF;
+    outline: 2px solid #4a4a4a;
     outline-offset: 2px;
 }
 
@@ -60,9 +60,9 @@ html {
 .menu-toggle:focus-visible,
 .mobile-nav a:focus-visible,
 nav a:focus-visible {
-    outline: 3px solid #005DFF;
+    outline: 3px solid #4a4a4a;
     outline-offset: 2px;
-    background-color: rgba(0, 93, 255, 0.1);
+    background-color: rgba(74, 74, 74, 0.1);
 }
 
 /* ドロップダウンメニューのキーボードアクセシビリティ */
@@ -77,7 +77,7 @@ nav a:focus-visible {
 }
 
 .accordion-button:focus-visible {
-    outline: 3px solid #005DFF;
+    outline: 3px solid #4a4a4a;
     outline-offset: 4px;
 }
 
@@ -151,7 +151,7 @@ img {
     display: none;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     width: 100%;
     height: 100vh;
     background-color: #fff;
@@ -160,7 +160,7 @@ img {
     overflow-y: auto;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-100%);
+    transform: translateX(100%);
     transition: all 0.3s ease;
 }
 
@@ -200,9 +200,9 @@ img {
 
 .mobile-nav li:not(.dropdown) > a:hover,
 .mobile-nav li:not(.dropdown) > a:focus {
-    color: #005DFF;
-    background-color: rgba(0, 93, 255, 0.05);
-    border-left-color: #005DFF;
+    color: #4a4a4a;
+    background-color: rgba(74, 74, 74, 0.05);
+    border-left-color: #4a4a4a;
     transform: translateX(2px);
 }
 
@@ -229,15 +229,15 @@ img {
 
 .mobile-nav .dropdown > a:hover,
 .mobile-nav .dropdown > a:focus {
-    color: #005DFF;
-    background-color: rgba(0, 93, 255, 0.05);
-    border-left-color: #005DFF;
+    color: #4a4a4a;
+    background-color: rgba(74, 74, 74, 0.05);
+    border-left-color: #4a4a4a;
 }
 
 .mobile-nav .dropdown.active > a {
-    background-color: rgba(0, 93, 255, 0.1);
-    border-left-color: #005DFF;
-    color: #005DFF;
+    background-color: rgba(74, 74, 74, 0.1);
+    border-left-color: #4a4a4a;
+    color: #4a4a4a;
 }
 
 
@@ -251,7 +251,7 @@ img {
 }
 
 .mobile-nav .dropdown.active .dropdown-icon {
-    color: #005DFF;
+    color: #4a4a4a;
     transform: rotate(180deg);
 }
 
@@ -265,7 +265,7 @@ img {
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s ease;
-    border-left: 3px solid #005DFF;
+    border-left: 3px solid #4a4a4a;
 }
 
 .mobile-nav .dropdown.active .dropdown-content {
@@ -304,21 +304,21 @@ img {
 .mobile-nav .dropdown-content a:before {
     content: '→';
     margin-right: 8px;
-    color: #005DFF;
+    color: #4a4a4a;
     font-weight: bold;
     opacity: 0.7;
 }
 
 .mobile-nav .dropdown-content a:hover,
 .mobile-nav .dropdown-content a:focus {
-    color: #005DFF;
-    background-color: rgba(0, 93, 255, 0.1);
-    border-left-color: #005DFF;
+    color: #4a4a4a;
+    background-color: rgba(74, 74, 74, 0.1);
+    border-left-color: #4a4a4a;
     transform: translateX(4px);
 }
 
 .mobile-nav .dropdown-content a:active {
-    background-color: rgba(0, 93, 255, 0.2);
+    background-color: rgba(74, 74, 74, 0.2);
 }
 
 /* メディアクエリ - タブレット専用 */
@@ -438,7 +438,7 @@ img {
     }
     
     .news-link:hover {
-        background-color: rgba(0, 93, 255, 0.05);
+        background-color: rgba(74, 74, 74, 0.05);
     }
     
     /* ニュース項目のモバイル表示調整 */
