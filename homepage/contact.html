@@ -54,9 +54,12 @@
                 </a>
             </div>
 
-            <div class="menu-toggle">
+            <button class="menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-nav" 
+                    aria-label="メニューを開く">
                 ☰
-            </div>
+            </button>
 
             <nav>
                 <ul>
@@ -93,7 +96,7 @@
             </nav>
             
             <!-- モバイルナビゲーション -->
-            <div class="mobile-nav">
+            <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="モバイルナビゲーション">
                 <ul>
                     <li class="dropdown">
                         <a href="news.html">ニュース</a>
@@ -125,7 +128,7 @@
                         <a href="contact.html">お問い合わせ</a>
                     </li>
                 </ul>
-            </div>
+            </nav>
         </div>
     </header>
     

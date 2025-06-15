@@ -83,9 +83,12 @@
                     <img src="images/logohead.svg" alt="Universal Pine" class="logo-image">
                 </a>
             </div>
-            <div class="menu-toggle">
+            <button class="menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-nav" 
+                    aria-label="メニューを開く">
                 ☰
-            </div>
+            </button>
             <nav>
                 <ul>
                     <li class="dropdown">
@@ -119,42 +122,43 @@
                     </li>
                 </ul>
             </nav>
+            
+            <!-- モバイルナビゲーション -->
+            <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="モバイルナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                            <a href="about.html#founders">創業者紹介</a>
+                            <a href="about.html#history">沿革</a>
+                            <a href="about.html#about">会社概要</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
-    
-    <div class="mobile-nav">
-        <ul>
-            <li class="dropdown">
-                <a href="news.html">ニュース</a>
-                <div class="dropdown-content">
-                    <a href="news.html#announcements">お知らせ</a>
-                    <a href="news.html#press">プレスリリース</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="product.html">製品</a>
-                <div class="dropdown-content">
-                    <a href="product.html">AIネックレス</a>
-                </div>
-            </li>
-            <li>
-                <a href="recruit.html">採用</a>
-            </li>
-            <li class="dropdown">
-                <a href="about.html">会社情報</a>
-                <div class="dropdown-content">
-                    <a href="about.html#philosophy">理念</a>
-                    <a href="about.html#message">代表メッセージ</a>
-                    <a href="about.html#founders">創業者紹介</a>
-                    <a href="about.html#history">沿革</a>
-                    <a href="about.html#about">会社概要</a>
-                </div>
-            </li>
-            <li>
-                <a href="contact.html">お問い合わせ</a>
-            </li>
-        </ul>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero-banner">
@@ -204,5 +208,6 @@
 
     <script src="script.js"></script>
     <script src="responsive.js"></script>
+    <script src="js/mobile-menu.js"></script>
 </body>
 </html>
