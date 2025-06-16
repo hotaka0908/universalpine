@@ -662,7 +662,6 @@ nav a:hover {
 
 .careers-simple h2 {
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin-bottom: calc(var(--spacing-unit) * 1.5);
 }
 
@@ -671,12 +670,10 @@ nav a:hover {
   margin-top: 8px;
   margin-bottom: calc(var(--spacing-unit) * 2);
   color: white;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .careers-simple .recruit-label {
   color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* レスポンシブ時のテキストサイズ調整 */
@@ -1397,16 +1394,19 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
   .mission-first,
-  .mission-second,
-  .team-first,
-  .team-second {
+  .mission-second {
     display: block;
     text-align: center;
   }
 
-  .mission-first,
-  .team-first {
+  .mission-first {
     margin-bottom: 0.5rem;
+  }
+  
+  .team-first,
+  .team-second {
+    display: inline;
+    text-align: center;
   }
 
   .section-heading {
@@ -1540,12 +1540,7 @@ footer {
   font-weight: 600;
 }
 
-/* Ensure team heading spans are centered */
-.team-first,
-.team-second {
-  text-align: center;
-  display: block;
-}
+/* Team heading spans should stay inline */
 /* Mission Text Styling */
 .mission-first,
 .mission-second,
