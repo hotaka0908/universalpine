@@ -679,7 +679,12 @@ nav a:hover {
 /* レスポンシブ時のテキストサイズ調整 */
 @media (max-width: 768px) {
   .careers-simple h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+  }
+  
+  .careers-simple .team-first,
+  .careers-simple .team-second {
+    white-space: nowrap;
   }
   
   .careers-simple h3 {
@@ -694,7 +699,13 @@ nav a:hover {
 
 @media (max-width: 480px) {
   .careers-simple h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+  
+  .careers-simple .team-first,
+  .careers-simple .team-second {
+    font-size: 1.2rem;
+    white-space: nowrap;
   }
   
   .careers-simple h3 {
@@ -703,6 +714,18 @@ nav a:hover {
   
   .careers-simple .recruit-label {
     font-size: 0.8rem;
+  }
+}
+
+/* 極小画面用の追加調整 */
+@media (max-width: 360px) {
+  .careers-simple h2 {
+    font-size: 1.1rem;
+  }
+  
+  .careers-simple .team-first,
+  .careers-simple .team-second {
+    font-size: 1.1rem;
   }
 }
 
