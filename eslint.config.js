@@ -3,6 +3,16 @@
 module.exports = [
   {
     files: ['**/*.js'],
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'api/.next/**',
+      'voice-chat-app/.next/**',
+      'nextjs-app/.next/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.vercel/**'
+    ],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module'
