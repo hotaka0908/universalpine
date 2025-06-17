@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Resend } from 'resend';
 
 // Resendクライアントの初期化
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // バリデーションスキーマの定義
 const schema = z.object({
@@ -67,6 +67,10 @@ ${data.message || 'なし'}
     `;
 
     // Resendを使用してメールを送信
+    if (!resend) {
+      console.warn('RESEND_API_KEYが設定されていません。メールは送信されません。');
+      console.log('フォームデータ:', emailBody);
+    } else {
     try {
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: 'Universal Pine <noreply@universalpine.com>',
@@ -117,6 +121,7 @@ Universal Pine
       console.error('Email sending failed:', emailError);
       // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
       console.log('フォームデータ:', emailBody);
+    }
     }
 
     // 成功レスポンスを返す
