@@ -695,45 +695,40 @@
                         date: document.getElementById('date').value,
                         time: selectedTimeInput.value,
                         participants: document.getElementById('participants').value,
-                        interests: Array.from(interestsField.selectedOptions).map(option => option.text),
-                        message: document.getElementById('message').value
+                        interests: Array.from(interestsField.selectedOptions).map(option => option.text).join(', '),
+                        message: document.getElementById('message').value || ''
                     };
                     
-                    // Create email body
-                    const emailBody = `
-新しいプロジェクト体験の申し込みがありました。
-
-【申込者情報】
-名前: ${formData.name}
-メールアドレス: ${formData.email}
-
-【希望日時】
-日付: ${formData.date}
-時間: ${formData.time}
-参加人数: ${formData.participants}名
-
-【関心のある職種】
-${formData.interests.join('\n')}
-
-【メッセージ】
-${formData.message || 'なし'}
-                    `.trim();
-                    
-                    // Create mailto link
-                    const mailtoLink = `mailto:ho@universalpine.com?subject=${encodeURIComponent('プロジェクト体験申し込み - ' + formData.name)}&body=${encodeURIComponent(emailBody)}`;
-                    
-                    // Open email client
-                    window.location.href = mailtoLink;
-                    
-                    // Reset form after a delay
-                    setTimeout(() => {
-                        alert('メールクライアントが開きました。内容をご確認の上、送信してください。');
-                        form.reset();
-                        timeSlots.forEach(s => s.classList.remove('selected'));
-                        selectedTimeInput.value = '';
+                    // Send form data to API endpoint
+                    fetch('/api/trial', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Success
+                            alert('プロジェクト体験の申し込みを受け付けました。確認メールをお送りいたします。');
+                            form.reset();
+                            timeSlots.forEach(s => s.classList.remove('selected'));
+                            selectedTimeInput.value = '';
+                            submitButton.disabled = false;
+                            submitButton.textContent = '予約を申し込む';
+                        } else {
+                            // Error
+                            alert('送信に失敗しました。後ほど再度お試しください。');
+                            submitButton.disabled = false;
+                            submitButton.textContent = '予約を申し込む';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('送信に失敗しました。後ほど再度お試しください。');
                         submitButton.disabled = false;
                         submitButton.textContent = '予約を申し込む';
-                    }, 1500);
+                    });
                 }
             });
 
