@@ -428,7 +428,7 @@
     <section class="trial-hero">
         <div class="container">
             <span class="section-label">WORKPLACE EXPERIENCE</span>
-            <h1>プロジェクト体験</h1>
+            <h1>無料プロジェクト体験</h1>
         </div>
     </section>
 
@@ -453,7 +453,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
                             <h3>場所</h3>
-                            <p>Universal Pine オフィス</p>
+                            <p>(株)Universal Pine オフィス</p>
                             <p>〒150-0002 東京都世田谷区下馬1-19-5</p>
                         </div>
                     </div>
@@ -462,7 +462,7 @@
                         <i class="fas fa-user-check"></i>
                         <div>
                             <h3>対象者</h3>
-                            <p>入社を検討されている方</p>
+                            <p>プロジェクトに興味がある方</p>
                             <p>会社の雰囲気を知りたい方</p>
                         </div>
                     </div>
@@ -484,23 +484,18 @@
                     <form class="trial-form" id="trialForm" action="#" method="POST">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="lastName">お名前（姓）<span class="required">*</span></label>
-                                <input type="text" id="lastName" name="lastName" required>
-                                <div class="error-message" id="lastNameError"></div>
+                                <label for="name">お名前 <span class="required">*</span></label>
+                                <input type="text" id="name" name="name" required>
+                                <div class="error-message" id="nameError"></div>
                             </div>
                             <div class="form-group">
-                                <label for="firstName">お名前（名）<span class="required">*</span></label>
-                                <input type="text" id="firstName" name="firstName" required>
-                                <div class="error-message" id="firstNameError"></div>
+                                <label for="email">メールアドレス <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message" id="emailError"></div>
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">メールアドレス<span class="required">*</span></label>
-                                <input type="email" id="email" name="email" required>
-                                <div class="error-message" id="emailError"></div>
-                            </div>
                             <div class="form-group">
                                 <label for="phone">電話番号<span class="required">*</span></label>
                                 <input type="tel" id="phone" name="phone" required>
@@ -629,7 +624,7 @@
                 let isValid = true;
                 
                 // Validate required fields
-                const requiredFields = ['lastName', 'firstName', 'email', 'phone', 'date'];
+                const requiredFields = ['name', 'email', 'phone', 'date'];
                 requiredFields.forEach(fieldId => {
                     const field = document.getElementById(fieldId);
                     const errorElement = document.getElementById(fieldId + 'Error');
