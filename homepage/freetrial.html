@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Universal Pineの職場体験予約ページ。実際のオフィスを訪問し、会社の雰囲気や仕事内容を体験できます。入社前に会社を知る機会として、お気軽にご参加ください。">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://universalpine.com/freetrial.html">
+    <meta property="og:title" content="職場体験 - Universal Pine">
+    <meta property="og:description" content="Universal Pineの職場体験予約ページ。実際のオフィスを訪問し、会社の雰囲気や仕事内容を体験できます。">
+    <meta property="og:image" content="https://universalpine.com/images/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://universalpine.com/freetrial.html">
+    <meta property="twitter:title" content="職場体験 - Universal Pine">
+    <meta property="twitter:description" content="Universal Pineの職場体験予約ページ。実際のオフィスを訪問し、会社の雰囲気や仕事内容を体験できます。">
+    <meta property="twitter:image" content="https://universalpine.com/images/og-image.png">
+    
+    <title>職場体験 - Universal Pine</title>
+    <!-- セキュリティヘッダー -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://www.clarity.ms; frame-src 'none'">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <link rel="canonical" href="https://universalpine.com/freetrial.html" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Free Trial Page Specific Styles */
+        .trial-hero {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 0;
+            text-align: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trial-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .section-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .trial-section {
+            padding: calc(var(--spacing-unit) * 6) 0;
+            background-color: var(--light-bg);
+        }
+
+        .trial-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: calc(var(--spacing-unit) * 4);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trial-info {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .trial-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            color: var(--primary-color);
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            align-items: flex-start;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: #4a90e2;
+            margin-right: calc(var(--spacing-unit) * 1.5);
+            width: 24px;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .info-item div h3 {
+            font-size: 1.2rem;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+            color: var(--primary-color);
+        }
+
+        .info-item div p {
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .trial-form-container {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .trial-form-container h2 {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .trial-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            font-size: 1rem;
+            background-color: #F5F5F5;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #9EA3A8;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            min-height: 18px;
+        }
+
+        input.error, select.error, textarea.error {
+            border: 1px solid #e74c3c;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .time-slot {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover {
+            border-color: #4a90e2;
+            background-color: #f0f7ff;
+        }
+
+        .time-slot.selected {
+            border-color: #4a90e2;
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .time-slot.disabled {
+            background-color: #f5f5f5;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .time-slot.disabled:hover {
+            border-color: #ddd;
+            background-color: #f5f5f5;
+        }
+
+        .form-submit {
+            display: flex;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .submit-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 280px;
+            height: 56px;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-family: "Inter", "Noto Sans JP", sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 0.02em;
+            border: none;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(74, 144, 226, 0.25), 0 4px 12px rgba(74, 144, 226, 0.15);
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, #357abd 0%, #2c5d8a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3), 0 6px 16px rgba(74, 144, 226, 0.2);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.25);
+        }
+
+        .submit-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .trial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .trial-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .trial-hero {
+                height: 250px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .submit-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .trial-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .trial-hero {
+                height: 200px;
+            }
+
+            .time-slots {
+                grid-template-columns: 1fr;
+            }
+
+            .section-label {
+                font-size: 10px;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+    
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "rd86xw1i3g");
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="images/logohead.svg" alt="Universal Pine" class="logo-image">
+                </a>
+            </div>
+
+            <button class="menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-nav" 
+                    aria-label="メニューを開く">
+                ☰
+            </button>
+
+            <nav>
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                            <a href="about.html#founders">創業者紹介</a>
+                            <a href="about.html#history">沿革</a>
+                            <a href="about.html#about">会社概要</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- モバイルナビゲーション -->
+            <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="モバイルナビゲーション">
+                <ul>
+                    <li class="dropdown">
+                        <a href="news.html">ニュース</a>
+                        <div class="dropdown-content">
+                            <a href="news.html#announcements">お知らせ</a>
+                            <a href="news.html#press">プレスリリース</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="product.html">製品</a>
+                        <div class="dropdown-content">
+                            <a href="product.html">AIネックレス</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="recruit.html">採用</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="about.html">会社情報</a>
+                        <div class="dropdown-content">
+                            <a href="about.html#philosophy">理念</a>
+                            <a href="about.html#message">代表メッセージ</a>
+                            <a href="about.html#founders">創業者紹介</a>
+                            <a href="about.html#history">沿革</a>
+                            <a href="about.html#about">会社概要</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="contact.html">お問い合わせ</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="trial-hero">
+        <div class="container">
+            <span class="section-label">WORKPLACE EXPERIENCE</span>
+            <h1>職場体験</h1>
+        </div>
+    </section>
+
+    <!-- Trial Booking Section -->
+    <section class="trial-section">
+        <div class="container">
+            <div class="trial-container">
+                <!-- Trial Information -->
+                <div class="trial-info">
+                    <h2>職場体験について</h2>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>体験時間</h3>
+                            <p>約60分〜90分</p>
+                            <p>オフィス見学・業務説明・質疑応答を含みます</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>場所</h3>
+                            <p>Universal Pine オフィス</p>
+                            <p>〒150-0002 東京都渋谷区1-1-1</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-user-check"></i>
+                        <div>
+                            <h3>対象者</h3>
+                            <p>入社を検討されている方</p>
+                            <p>会社の雰囲気を知りたい方</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-gift"></i>
+                        <div>
+                            <h3>体験内容</h3>
+                            <p>実際の業務内容の説明</p>
+                            <p>チームメンバーとの交流</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <div class="trial-form-container">
+                    <h2>職場体験予約フォーム</h2>
+                    
+                    <form class="trial-form" id="trialForm" action="#" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="lastName">お名前（姓）<span class="required">*</span></label>
+                                <input type="text" id="lastName" name="lastName" required>
+                                <div class="error-message" id="lastNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName">お名前（名）<span class="required">*</span></label>
+                                <input type="text" id="firstName" name="firstName" required>
+                                <div class="error-message" id="firstNameError"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">メールアドレス<span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">電話番号<span class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" required>
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">希望日<span class="required">*</span></label>
+                            <input type="date" id="date" name="date" required>
+                            <div class="error-message" id="dateError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>希望時間<span class="required">*</span></label>
+                            <div class="time-slots" id="timeSlots">
+                                <div class="time-slot" data-time="10:00">10:00</div>
+                                <div class="time-slot" data-time="11:00">11:00</div>
+                                <div class="time-slot" data-time="13:00">13:00</div>
+                                <div class="time-slot" data-time="14:00">14:00</div>
+                                <div class="time-slot" data-time="15:00">15:00</div>
+                                <div class="time-slot" data-time="16:00">16:00</div>
+                                <div class="time-slot" data-time="17:00">17:00</div>
+                                <div class="time-slot" data-time="18:00">18:00</div>
+                            </div>
+                            <input type="hidden" id="selectedTime" name="selectedTime" required>
+                            <div class="error-message" id="timeError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participants">参加人数</label>
+                            <select id="participants" name="participants">
+                                <option value="1">1名</option>
+                                <option value="2">2名</option>
+                                <option value="3">3名</option>
+                                <option value="4">4名</option>
+                                <option value="5">5名以上</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interests">関心のある職種（複数選択可）</label>
+                            <select id="interests" name="interests" multiple>
+                                <option value="hardware">ハードウェアエンジニア</option>
+                                <option value="software">ソフトウェアエンジニア</option>
+                                <option value="ai">AI・機械学習エンジニア</option>
+                                <option value="design">デザイナー</option>
+                                <option value="business">ビジネス開発</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">ご質問・ご要望</label>
+                            <textarea id="message" name="message" rows="4" placeholder="知りたいことや聞きたいこと、現在のスキルや経験などございましたらお聞かせください"></textarea>
+                        </div>
+
+                        <div class="form-submit">
+                            <button type="submit" class="submit-button" id="submitButton">予約を申し込む</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Universal Pine</h2>
+                </div>
+                
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="news.html">ニュース</a></li>
+                        <li><a href="about.html">会社情報</a></li>
+                        <li><a href="recruit.html">採用情報</a></li>
+                        <li><a href="contact.html">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Universal Pine. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="js/mobile-menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Date input minimum date to today
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+
+            // Time slot selection
+            const timeSlots = document.querySelectorAll('.time-slot');
+            const selectedTimeInput = document.getElementById('selectedTime');
+
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    
+                    // Remove selected class from all slots
+                    timeSlots.forEach(s => s.classList.remove('selected'));
+                    
+                    // Add selected class to clicked slot
+                    this.classList.add('selected');
+                    
+                    // Update hidden input
+                    selectedTimeInput.value = this.getAttribute('data-time');
+                    
+                    // Clear time error
+                    document.getElementById('timeError').textContent = '';
+                });
+            });
+
+            // Form validation and submission
+            const form = document.getElementById('trialForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Validate required fields
+                const requiredFields = ['lastName', 'firstName', 'email', 'phone', 'date'];
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    const errorElement = document.getElementById(fieldId + 'Error');
+                    
+                    if (!field.value.trim()) {
+                        field.classList.add('error');
+                        errorElement.textContent = 'この項目は必須です';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('error');
+                        errorElement.textContent = '';
+                    }
+                });
+
+                // Validate email format
+                const emailField = document.getElementById('email');
+                const emailError = document.getElementById('emailError');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailField.value && !emailRegex.test(emailField.value)) {
+                    emailField.classList.add('error');
+                    emailError.textContent = '正しいメールアドレスを入力してください';
+                    isValid = false;
+                }
+
+                // Validate time selection
+                const timeError = document.getElementById('timeError');
+                if (!selectedTimeInput.value) {
+                    timeError.textContent = '希望時間を選択してください';
+                    isValid = false;
+                }
+
+                // Validate date is not in the past
+                const selectedDate = new Date(dateInput.value);
+                const currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < currentDate) {
+                    const dateError = document.getElementById('dateError');
+                    dateInput.classList.add('error');
+                    dateError.textContent = '今日以降の日付を選択してください';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Show loading state
+                    const submitButton = document.getElementById('submitButton');
+                    submitButton.disabled = true;
+                    submitButton.textContent = '送信中...';
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        alert('職場体験の申し込みを受け付けました。確認メールをお送りいたします。');
+                        form.reset();
+                        timeSlots.forEach(s => s.classList.remove('selected'));
+                        selectedTimeInput.value = '';
+                        submitButton.disabled = false;
+                        submitButton.textContent = '予約を申し込む';
+                    }, 1500);
+                }
+            });
+
+            // Real-time validation for email
+            document.getElementById('email').addEventListener('input', function() {
+                const emailError = document.getElementById('emailError');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (this.value && !emailRegex.test(this.value)) {
+                    this.classList.add('error');
+                    emailError.textContent = '正しいメールアドレスを入力してください';
+                } else {
+                    this.classList.remove('error');
+                    emailError.textContent = '';
+                }
+            });
+
+            // Clear errors on input
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    this.classList.remove('error');
+                    const errorElement = document.getElementById(this.id + 'Error');
+                    if (errorElement) {
+                        errorElement.textContent = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
