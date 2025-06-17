@@ -1,4 +1,8 @@
 import { z } from 'zod';
+import { Resend } from 'resend';
+
+// Resendクライアントの初期化
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // バリデーションスキーマの定義
 const schema = z.object({
@@ -53,17 +57,55 @@ ${data.message}
 送信日時: ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}
     `;
 
-    // ここで実際のメール送信処理を行う
-    // 本番環境では、SendGrid、AWS SES、Nodemailerなどを使用
-    console.log('お問い合わせを受信しました:');
-    console.log(emailBody);
+    // Resendを使用してメールを送信
+    try {
+      const { data: emailData, error: emailError } = await resend.emails.send({
+        from: 'Universal Pine <noreply@universalpine.com>',
+        to: ['ho@universalpine.com'],
+        subject: `お問い合わせ - ${data.category} - ${data.name}`,
+        text: emailBody,
+        html: emailBody.replace(/\n/g, '<br>'),
+        reply_to: data.email
+      });
 
-    // 本番環境では、ここでho@universalpine.comにメールを送信
-    // 例: await sendEmail({
-    //   to: 'ho@universalpine.com',
-    //   subject: `お問い合わせ - ${data.category} - ${data.name}`,
-    //   body: emailBody
-    // });
+      if (emailError) {
+        console.error('Resend error:', emailError);
+        throw new Error('メール送信に失敗しました');
+      }
+
+      console.log('メール送信成功:', emailData);
+
+      // お問い合わせ者にも確認メールを送信
+      const confirmationEmail = `
+${data.name} 様
+
+お問い合わせありがとうございます。
+以下の内容でお問い合わせを受け付けました。
+
+【お問い合わせ内容】
+カテゴリー: ${data.category}
+
+${data.message}
+
+担当者より2営業日以内にご連絡させていただきます。
+
+--
+Universal Pine
+株式会社ユニバーサルパイン
+      `;
+
+      await resend.emails.send({
+        from: 'Universal Pine <noreply@universalpine.com>',
+        to: [data.email],
+        subject: 'お問い合わせ受付確認',
+        text: confirmationEmail,
+        html: confirmationEmail.replace(/\n/g, '<br>')
+      });
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
+      console.log('フォームデータ:', emailBody);
+    }
 
     // 成功レスポンスを返す
     res.status(200).json({ 
