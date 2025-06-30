@@ -72,7 +72,7 @@ ${data.message}
     }
     try {
       const { data: emailData, error: emailError } = await resend.emails.send({
-        from: 'お問い合わせフォーム <onboarding@resend.dev>',
+        from: 'Universal Pine <ho@universalpine.com>',
         to: ['ho@universalpine.com'],
         subject: `お問い合わせ - ${data.category} - ${data.name}`,
         text: emailBody,
@@ -107,7 +107,7 @@ Universal Pine
       `;
 
       await resend.emails.send({
-        from: 'Universal Pine <onboarding@resend.dev>',
+        from: 'Universal Pine <ho@universalpine.com>',
         to: [data.email],
         subject: 'お問い合わせ受付確認',
         text: confirmationEmail,
