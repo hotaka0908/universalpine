@@ -10,7 +10,8 @@ const schema = z.object({
   email: z.string().email('有効なメールアドレスを入力してください'),
   category: z.string().min(1, 'カテゴリーは必須です'),
   message: z.string().min(1, 'メッセージは必須です'),
-  privacy: z.string().optional()
+  privacy: z.string().optional(),
+  honeypot: z.string().optional()
 });
 
 module.exports = async function handler(req, res) {
@@ -41,6 +42,21 @@ module.exports = async function handler(req, res) {
 
     const data = parsed.data;
 
+    // ハニーポットチェック（スパム対策）
+    if (data.honeypot) {
+      console.log('Spam detected via honeypot');
+      return res.status(400).json({ error: 'Invalid request' });
+    }
+
+    // カテゴリの日本語表記
+    const categoryLabels = {
+      product: '製品について',
+      media: '取材について',
+      career: '採用について',
+      partnership: '協業について',
+      other: 'その他'
+    };
+
     // メール本文を作成
     const emailBody = `
 新しいお問い合わせがありました。
@@ -48,7 +64,7 @@ module.exports = async function handler(req, res) {
 【お問い合わせ内容】
 お名前: ${data.name}
 メールアドレス: ${data.email}
-カテゴリー: ${data.category}
+カテゴリー: ${categoryLabels[data.category] || data.category}
 
 【メッセージ】
 ${data.message}
@@ -59,14 +75,14 @@ ${data.message}
 
     // Resendを使用してメールを送信
     if (!resend) {
-      console.warn('RESEND_API_KEYが設定されていません。メールは送信されません。');
-      console.log('フォームデータ:', emailBody);
-    } else {
+      console.error('RESEND_API_KEY is not set');
+      return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
+    }
     try {
       const { data: emailData, error: emailError } = await resend.emails.send({
-        from: 'Universal Pine <noreply@universalpine.com>',
+        from: 'お問い合わせフォーム <onboarding@resend.dev>',
         to: ['ho@universalpine.com'],
-        subject: `お問い合わせ - ${data.category} - ${data.name}`,
+        subject: `【お問い合わせ】${categoryLabels[data.category] || data.category} - ${data.name}様より`,
         text: emailBody,
         html: emailBody.replace(/\n/g, '<br>'),
         reply_to: data.email
@@ -99,9 +115,9 @@ Universal Pine
       `;
 
       await resend.emails.send({
-        from: 'Universal Pine <noreply@universalpine.com>',
+        from: 'Universal Pine <onboarding@resend.dev>',
         to: [data.email],
-        subject: 'お問い合わせ受付確認',
+        subject: 'お問い合わせ受付確認 - Universal Pine',
         text: confirmationEmail,
         html: confirmationEmail.replace(/\n/g, '<br>')
       });
