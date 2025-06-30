@@ -126,7 +126,6 @@ Universal Pine
       // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
       console.log('フォームデータ:', emailBody);
     }
-    }
 
     // 成功レスポンスを返す
     res.status(200).json({ 

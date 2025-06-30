@@ -85,7 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
       // フォームデータをオブジェクトに変換
       const formDataObj = {}
       formData.forEach((value, key) => {
-        formDataObj[key] = value
+        if (key !== '_honey' && key !== '_csrf' && key !== '_captcha' && key !== '_subject' && key !== '_next' && key !== '_template' && key !== '_autoresponse') {
+          formDataObj[key] = value
+        }
       })
 
       // APIエンドポイントにPOSTリクエスト送信
@@ -99,10 +101,17 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
           if (response.ok) {
             // 送信成功時の処理
-            window.location.href = '/thanks.html'
+            alert('お問い合わせを受け付けました。担当者よりご連絡いたします。')
+            contactForm.reset()
+            submitButton.disabled = false
+            submitButton.textContent = '送信する'
           } else {
             // エラー処理
-            alert('送信に失敗しました。後ほど再度お試しください。')
+            response.json().then(errorData => {
+              alert(errorData.message || '送信に失敗しました。後ほど再度お試しください。')
+            }).catch(() => {
+              alert('送信に失敗しました。後ほど再度お試しください。')
+            })
             // 送信ボタンを再有効化
             submitButton.disabled = false
             submitButton.textContent = '送信する'

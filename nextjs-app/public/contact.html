@@ -121,17 +121,9 @@
         <div class="container">
             <div class="form-container-full">
                 <h2>お問い合わせフォーム</h2>
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/01304b0c4bb0329755e77d5adc3d5138" method="POST">
-                    <!-- CSRFトークン -->
-                    <input type="hidden" name="_csrf" id="csrf_token">
-                    <input type="hidden" name="_captcha" value="true">
-                    <input type="hidden" name="_subject" value="Universal Pineお問い合わせ">
-                    <input type="hidden" name="_next" value="https://universalpine.com/thanks.html">
-                    <input type="hidden" name="_template" value="table">
+                <form class="contact-form" id="contactForm">
                     <!-- ハニーポットトラップ -->
-                    <input type="text" name="_honey" class="honeypot" aria-label="ハニーポット" title="このフィールドは空欄のままにしてください">
-                    <!-- スパムフィルタ -->
-                    <input type="hidden" name="_autoresponse" value="Universal Pineお問い合わせありがとうございます。内容を確認後、担当者よりご連絡差し上げます。">
+                    <input type="text" name="honeypot" class="honeypot" aria-label="ハニーポット" title="このフィールドは空欄のままにしてください" style="display: none;">
                     <div class="form-group">
                         <label for="name">お名前 <span class="required">*</span></label>
                         <input type="text" id="name" name="name" placeholder="例）山田 太郎" required>
