@@ -7,7 +7,7 @@
     "lint:fix": "eslint . --fix",
     "start": "serve homepage",
     "dev": "serve -l 3000 homepage",
-    "build": "echo \"Static site, no build required\" && exit 0",
+    "build": "npm install",
     "audit": "npm audit",
     "audit:fix": "npm audit fix"
   },
