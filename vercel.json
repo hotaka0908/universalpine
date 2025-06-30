@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/homepage/index.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/homepage/$1"
+    }
+  ]
+}

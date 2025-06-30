@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { Resend } from 'resend';
+const { z } = require('zod');
+const { Resend } = require('resend');
 
 // Resendクライアントの初期化
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -15,7 +15,7 @@ const schema = z.object({
   message: z.string().optional()
 });
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

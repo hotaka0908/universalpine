@@ -1,4 +1,4 @@
-import { z } from 'zod';
+const { z } = require('zod');
 
 // バリデーションスキーマの定義
 const schema = z.object({
@@ -33,7 +33,7 @@ function maskSensitiveInfo(text) {
   return text.substring(0, 2) + '*'.repeat(text.length - 4) + text.substring(text.length - 2);
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const parsed = schema.safeParse(req.body);
