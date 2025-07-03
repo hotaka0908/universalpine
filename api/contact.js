@@ -19,6 +19,15 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  // Protection Bypassのチェック（環境変数が設定されている場合）
+  if (process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
+    const bypassToken = req.headers['x-vercel-protection-bypass'] || req.query['x-vercel-protection-bypass'];
+    if (bypassToken && bypassToken === process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
+      // 認証をバイパス
+      console.log('Protection bypass authorized');
+    }
+  }
 
   // OPTIONSリクエストの処理
   if (req.method === 'OPTIONS') {
@@ -79,7 +88,8 @@ ${data.message}
       return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
     }
     try {
-      const { data: emailData, error: emailError } = await resend.emails.send({
+      // メインのお問い合わせメールを送信
+      const mainEmailResult = await resend.emails.send({
         from: 'お問い合わせフォーム <onboarding@resend.dev>',
         to: ['ho@universalpine.com'],
         subject: `【お問い合わせ】${categoryLabels[data.category] || data.category} - ${data.name}様より`,
@@ -88,12 +98,12 @@ ${data.message}
         reply_to: data.email
       });
 
-      if (emailError) {
-        console.error('Resend error:', emailError);
+      if (mainEmailResult.error) {
+        console.error('Resend error (main email):', mainEmailResult.error);
         throw new Error('メール送信に失敗しました');
       }
 
-      console.log('メール送信成功:', emailData);
+      console.log('メール送信成功 (main):', mainEmailResult.data);
 
       // お問い合わせ者にも確認メールを送信
       const confirmationEmail = `
@@ -103,7 +113,7 @@ ${data.name} 様
 以下の内容でお問い合わせを受け付けました。
 
 【お問い合わせ内容】
-カテゴリー: ${data.category}
+カテゴリー: ${categoryLabels[data.category] || data.category}
 
 ${data.message}
 
@@ -114,13 +124,20 @@ Universal Pine
 株式会社ユニバーサルパイン
       `;
 
-      await resend.emails.send({
+      const confirmationResult = await resend.emails.send({
         from: 'Universal Pine <onboarding@resend.dev>',
         to: [data.email],
         subject: 'お問い合わせ受付確認 - Universal Pine',
         text: confirmationEmail,
         html: confirmationEmail.replace(/\n/g, '<br>')
       });
+
+      if (confirmationResult.error) {
+        console.error('Resend error (confirmation email):', confirmationResult.error);
+        // 確認メールの失敗は致命的ではないため、ログに記録するだけ
+      } else {
+        console.log('確認メール送信成功:', confirmationResult.data);
+      }
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
