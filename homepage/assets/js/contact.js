@@ -87,9 +87,11 @@ document.addEventListener('DOMContentLoaded', function () {
       formData.forEach((value, key) => {
         formDataObj[key] = value
       })
+      
+      console.log('送信データ:', formDataObj)
 
-      // APIエンドポイントにPOSTリクエスト送信
-      fetch('/api/contact', {
+      // VercelのAPIエンドポイントにPOSTリクエスト送信
+      fetch('https://universalpine.vercel.app/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -97,20 +99,26 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify(formDataObj)
       })
         .then(response => {
-          if (response.ok) {
+          console.log('Response status:', response.status)
+          return response.json().then(data => ({ status: response.status, data }))
+        })
+        .then(({ status, data }) => {
+          if (status === 200) {
             // 送信成功時の処理
+            console.log('送信成功:', data)
             window.location.href = '/thanks.html'
           } else {
             // エラー処理
-            alert('送信に失敗しました。後ほど再度お試しください。')
+            console.error('送信エラー:', data)
+            alert(`送信に失敗しました: ${data.message || 'エラーが発生しました'}`)
             // 送信ボタンを再有効化
             submitButton.disabled = false
             submitButton.textContent = '送信する'
           }
         })
         .catch(error => {
-          console.error('Error:', error)
-          alert('送信に失敗しました。後ほど再度お試しください。')
+          console.error('Network Error:', error)
+          alert('ネットワークエラーが発生しました。インターネット接続を確認してください。')
           // 送信ボタンを再有効化
           submitButton.disabled = false
           submitButton.textContent = '送信する'

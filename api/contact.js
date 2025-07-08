@@ -18,7 +18,8 @@ module.exports = async function handler(req, res) {
   // CORS設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, x-vercel-protection-bypass');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   
   // Protection Bypassのチェック（環境変数が設定されている場合）
   if (process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
