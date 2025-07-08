@@ -436,6 +436,10 @@
         padding: calc(var(--spacing-unit) * 2);
         margin: 20px 0;
     }
+    
+    .company-logo-image {
+        max-width: 250px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -499,6 +503,10 @@
     .timeline-container {
         padding: calc(var(--spacing-unit) * 1.5);
         margin: 15px 0;
+    }
+    
+    .company-logo-image {
+        max-width: 200px;
     }
 }
 
@@ -584,6 +592,15 @@
     color: var(--primary-color);
     margin: 0;
     letter-spacing: 0.05em;
+}
+
+/* Company Logo Image Styling */
+.company-logo-image {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Universal Pineの文字のみを表示 */
