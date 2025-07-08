@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // フィルタータブの要素を取得
   const filterTabs = document.querySelectorAll('.filter-tab')
   // ニュースアイテムの要素を取得
-  const newsItems = document.querySelectorAll('.news-item')
+  const newsItems = document.querySelectorAll('.news-entry')
 
   // 各フィルタータブにクリックイベントを追加
   filterTabs.forEach(tab => {

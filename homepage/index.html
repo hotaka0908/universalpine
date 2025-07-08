@@ -21,7 +21,7 @@
     
     <title>Universal Pine - 革新的なAI技術で未来を創造する</title>
     <!-- セキュリティヘッダー - XSS対策 -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://www.clarity.ms https://j.clarity.ms http://localhost:3000; frame-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.clarity.ms https://j.clarity.ms http://localhost:3000 https://api.resend.com; frame-src 'none';">
     <!-- クリックジャッキング対策 -->
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -29,7 +29,6 @@
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(self), camera=()">
     <link rel="canonical" href="https://universalpine.com/" />
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,7 +132,7 @@
     <main id="main" role="main">
     <section id="hero" aria-label="メインビジュアル">
         <div class="hero-image">
-            <img src="images/top2.png" alt="Universal Pine - AI技術で未来を創造する革新的なネックレス型デバイス" class="full-width-image" loading="lazy">
+            <img src="images/top2.png" alt="Universal Pine - AI技術で未来を創造する革新的なネックレス型デバイス" class="full-width-image" loading="eager" fetchpriority="high">
         </div>
     </section>
 
@@ -206,15 +205,15 @@
             
             <div class="product-grid">
                 <div class="product-item">
-                    <img src="images/device.png" alt="AIネックレス - 音声で操作できるウェアラブルデバイス" class="product-image" loading="lazy">
+                    <img src="images/device2.jpg" alt="AIネックレス - 音声で操作できるウェアラブルデバイス" class="product-image" loading="lazy">
                     <p class="product-caption">AIネックレス</p>
                 </div>
                 <div class="product-item">
-                    <img src="images/model3.png" alt="いつでも一緒に - 日常生活にAIアシスタントを" class="product-image" loading="lazy">
+                    <img src="images/model2.jpg" alt="いつでも一緒に - 日常生活にAIアシスタントを" class="product-image" loading="lazy">
                     <p class="product-caption">いつでも一緒に</p>
                 </div>
                 <div class="product-item">
-                    <img src="images/hello.png" alt="多様な機能で - 音声認識、翻訳、情報検索など" class="product-image" loading="lazy">
+                    <img src="images/hello2.jpg" alt="多様な機能で - 音声認識、翻訳、情報検索など" class="product-image" loading="lazy">
                     <p class="product-caption">多様な機能で</p>
                 </div>
                 <!-- 「想像を現実に」のセクションを削除しました -->
@@ -278,6 +277,5 @@
 
     <script src="script.js"></script>
     <script src="js/mobile-menu.js"></script>
-    <script src="js/image-toggle.js"></script>
 </body>
 </html>
