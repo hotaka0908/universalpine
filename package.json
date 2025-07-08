@@ -20,7 +20,8 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "resend": "^4.6.0"
+    "resend": "^4.6.0",
+    "zod": "^3.25.75"
   },
   "devDependencies": {
     "eslint": "^9.30.1",
