@@ -633,10 +633,11 @@ nav a:hover {
 @media (max-width: 768px) {
   .careers-simple {
     background-attachment: scroll;
-    background-position: center center;
+    background-position: left center;
     padding: calc(var(--spacing-unit) * 4) 0;
     min-height: 300px;
-    background-size: contain;
+    background-size: cover;
+    overflow: hidden;
   }
   
 }
@@ -646,8 +647,9 @@ nav a:hover {
   .careers-simple {
     padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 1);
     min-height: 280px;
-    background-position: center center;
-    background-size: contain;
+    background-position: left center;
+    background-size: cover;
+    overflow: hidden;
   }
   
 }
@@ -730,7 +732,9 @@ nav a:hover {
   }
   
   .careers-simple {
-    background-size: contain;
+    background-size: cover;
+    background-position: left center;
+    overflow: hidden;
     min-height: 250px;
   }
 }
