@@ -63,6 +63,7 @@ eee ├── recruit.html         # 採用情報
 ## 🛠️ 技術スタック
 
 ### フロントエンド
+
 - **HTML5**: セマンティックマークアップ
 - **CSS3**: レスポンシブデザイン、Flexbox、Grid
 - **JavaScript (ES6+)**: バニラJS、モジュラー構成
@@ -70,15 +71,18 @@ eee ├── recruit.html         # 採用情報
 - **Google Fonts**: Inter、Noto Sans JP
 
 ### バックエンド
+
 - **Node.js 20.x**: サーバーサイドランタイム
 - **Resend API**: メール送信サービス
 - **Zod**: バリデーションライブラリ
 
 ### インフラ・デプロイ
+
 - **Vercel**: ホスティング・デプロイメント
 - **GitHub**: バージョン管理
 
 ### 開発ツール
+
 - **ESLint**: コード品質チェック
 - **serve**: ローカル開発サーバー
 
@@ -143,8 +147,8 @@ npm run audit:fix
 
 - **メソッド**: POST
 - **用途**: お問い合わせフォームの送信
-- **送信先**: ho@universalpine.com
-- **機能**: 
+- **送信先**: <ho@universalpine.com>
+- **機能**:
   - バリデーション（Zod）
   - スパム対策（ハニーポット）
   - 確認メール送信
@@ -165,17 +169,20 @@ npm run audit:fix
 ## 🔒 セキュリティ機能
 
 ### Content Security Policy (CSP)
+
 - XSS攻撃の防止
 - 外部リソースの制限
 - インラインスクリプトの制限
 
 ### その他のセキュリティヘッダー
+
 - `X-Frame-Options`: クリックジャッキング対策
 - `X-Content-Type-Options`: MIME型スニッフィング対策
 - `Referrer-Policy`: リファラー情報の制御
 - `Permissions-Policy`: ブラウザ機能の制限
 
 ### スパム対策
+
 - ハニーポットフィールド
 - バリデーション強化
 - レート制限（Vercel標準）
@@ -183,34 +190,40 @@ npm run audit:fix
 ## 📊 パフォーマンス最適化
 
 ### 画像最適化
+
 - **最適化済み画像**: 95%のサイズ削減を実現
 - **遅延読み込み**: `loading="lazy"`属性
 - **適切なフォーマット**: WebP、JPEG、PNGの使い分け
 
 ### ファイルサイズ
+
 - **HTML**: 90.31 KB
 - **CSS**: 45.36 KB
 - **JavaScript**: 10.93 KB
 - **画像**: 31.71 MB（最適化済み）
 
 ### 読み込み速度
+
 - **ローカル**: 11ms
 - **本番**: 361ms
 
 ## 🎨 デザイン・UX
 
 ### レスポンシブデザイン
+
 - モバイルファーストアプローチ
 - ブレークポイント: 768px, 1024px, 1200px
 - タッチフレンドリーなUI
 
 ### アクセシビリティ
+
 - WCAG 2.1準拠
 - セマンティックHTML
 - ARIA属性の適切な使用
 - キーボードナビゲーション対応
 
 ### ブラウザ対応
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
@@ -219,11 +232,13 @@ npm run audit:fix
 ## 📈 分析・監視
 
 ### Microsoft Clarity
+
 - ユーザー行動分析
 - ヒートマップ
 - セッション録画
 
 ### パフォーマンス監視
+
 - Lighthouse CI
 - Core Web Vitals
 - ページ読み込み速度
@@ -251,11 +266,13 @@ Vercelダッシュボードで以下の環境変数を設定：
 ### 定期的なチェック項目
 
 1. **セキュリティ監査**: 月1回
+
    ```bash
    npm audit
    ```
 
 2. **依存関係の更新**: 月1回
+
    ```bash
    npm update
    ```
@@ -265,6 +282,7 @@ Vercelダッシュボードで以下の環境変数を設定：
    - PageSpeed Insights
 
 4. **画像最適化**: 新規画像追加時
+
    ```bash
    ./optimize-images.sh
    ```
@@ -330,7 +348,7 @@ chore: その他の変更
 
 技術的な問題や質問がある場合は、以下までお問い合わせください：
 
-- **メール**: ho@universalpine.com
+- **メール**: <ho@universalpine.com>
 - **GitHub Issues**: [リポジトリのIssues](https://github.com/hotaka0908/universalpine/issues)
 
 ---
