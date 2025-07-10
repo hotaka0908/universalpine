@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('送信データ:', formDataObj)
 
       // VercelのAPIエンドポイントにPOSTリクエスト送信
-      fetch('https://universalpine.vercel.app/api/contact', {
+      fetch('https://universalpine.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
