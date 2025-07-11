@@ -1,21 +1,30 @@
 const { z } = require('zod');
+const { Resend } = require('resend');
 
-// バリデーションスキーマの定義
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
 const schema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string(),
-  postal_code: z.string(),
-  address_line1: z.string(),
+  name: z.string().min(1, '名前は必須です'),
+  email: z.string().email('有効なメールアドレスを入力してください'),
+  phone: z.string().min(1, '電話番号は必須です'),
+  postal_code: z.string().min(1, '郵便番号は必須です'),
+  address_line1: z.string().min(1, '住所は必須です'),
   address_line2: z.string().optional(),
-  position: z.string(),
-  resume_url: z.string().url(),
-  portfolio_url: z.string().url(),
+  position: z.string().min(1, '応募職種は必須です'),
+  resume: z.object({
+    name: z.string(),
+    type: z.string(),
+    data: z.string()
+  }),
+  portfolio: z.object({
+    name: z.string(),
+    type: z.string(),
+    data: z.string()
+  }),
   message: z.string().optional(),
-  hp: z.string().optional()
+  privacy: z.string().optional()
 });
 
-// 職種名の日本語マッピング
 const positionNames = {
   'electronics-engineer': 'エレクトロニクスエンジニア',
   'ai-engineer': 'AIエンジニア',
@@ -26,72 +35,102 @@ const positionNames = {
   'part-time': 'アルバイト'
 };
 
-// 機密情報をマスクする関数
-function maskSensitiveInfo(text) {
-  if (!text) return '';
-  if (text.length <= 4) return '*'.repeat(text.length);
-  return text.substring(0, 2) + '*'.repeat(text.length - 4) + text.substring(text.length - 2);
-}
-
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const parsed = schema.safeParse(req.body);
-  if (!parsed.success || parsed.data.hp) return res.status(400).json({ error: 'invalid' });
+  if (!parsed.success) return res.status(400).json({ error: 'invalid', details: parsed.error.errors });
   const d = parsed.data;
 
-  // 住所を結合
   const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
 
-  // 安全なメール本文を作成（機密情報をマスク）
   const emailBody = `
 【応募情報】
 
 氏名: ${d.name}
 メールアドレス: ${d.email}
-電話番号: ${maskSensitiveInfo(d.phone)}
-郵便番号: ${maskSensitiveInfo(d.postal_code)}
-住所: ${maskSensitiveInfo(fullAddress)}
+電話番号: ${d.phone}
+郵便番号: ${d.postal_code}
+住所: ${fullAddress}
 
 応募職種: ${positionNames[d.position] || d.position}
-
-履歴書URL: ${d.resume_url}
-職務経歴書URL: ${d.portfolio_url}
 
 【メッセージ】
 ${d.message || '特になし'}
 
 -----
-※電話番号、郵便番号、住所はセキュリティのためマスクされています。
-※詳細情報は管理システムでご確認ください。
-  `;
+このメールには履歴書・職務経歴書が添付されています。
+`;
 
-  // 管理システム用の完全なデータ（本番環境では安全な保存先に保存する）
-  const fullData = {
-    name: d.name,
-    email: d.email,
-    phone: d.phone,
-    postal_code: d.postal_code,
-    address: fullAddress,
-    position: d.position,
-    position_name: positionNames[d.position] || d.position,
-    resume_url: d.resume_url,
-    portfolio_url: d.portfolio_url,
-    message: d.message || '',
-    application_date: new Date().toISOString()
-  };
+  if (!resend) {
+    console.error('RESEND_API_KEY is not set');
+    return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
+  }
+  try {
+    // メインのお問い合わせメールを送信
+    const mainEmailResult = await resend.emails.send({
+      from: '採用応募 <onboarding@resend.dev>',
+      to: ['ho@universalpine.com'],
+      subject: `【採用応募】${positionNames[d.position] || d.position} - ${d.name}様`,
+      text: emailBody,
+      html: emailBody.replace(/\n/g, '<br>'),
+      attachments: [
+        {
+          filename: d.resume.name,
+          content: d.resume.data,
+          type: d.resume.type,
+          encoding: 'base64'
+        },
+        {
+          filename: d.portfolio.name,
+          content: d.portfolio.data,
+          type: d.portfolio.type,
+          encoding: 'base64'
+        }
+      ]
+    });
 
-  // メール送信をシミュレート
-  console.log('応募データを受信しました:', {
-    name: d.name,
-    email: d.email,
-    position: positionNames[d.position] || d.position,
-    date: new Date().toISOString()
-  });
-  
-  // 成功レスポンスを返す
-  res.status(200).json({ 
-    ok: true, 
-    message: '応募を受信しました。担当者から連絡します。'
-  });
+    if (mainEmailResult.error) {
+      console.error('Resend error (main email):', mainEmailResult.error);
+      throw new Error('メール送信に失敗しました');
+    }
+
+    // 応募者にも確認メールを送信
+    const confirmationEmail = `
+${d.name} 様
+
+採用応募ありがとうございます。
+以下の内容で応募を受け付けました。
+
+【応募内容】
+応募職種: ${positionNames[d.position] || d.position}
+
+${d.message || ''}
+
+担当者より1週間以内にご連絡させていただきます。
+
+--
+Universal Pine
+株式会社ユニバーサルパイン
+    `;
+
+    await resend.emails.send({
+      from: 'Universal Pine <onboarding@resend.dev>',
+      to: [d.email],
+      subject: '採用応募受付確認 - Universal Pine',
+      text: confirmationEmail,
+      html: confirmationEmail.replace(/\n/g, '<br>')
+    });
+
+    res.status(200).json({ 
+      ok: true, 
+      message: '応募を受信しました。担当者から連絡します。'
+    });
+  } catch (error) {
+    console.error('Error processing apply form:', error);
+    res.status(500).json({ 
+      error: 'Internal server error',
+      message: '応募の処理中にエラーが発生しました。'
+    });
+  }
 }
