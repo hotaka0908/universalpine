@@ -31,12 +31,23 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // リクエストボディの存在確認
+    if (!req.body) {
+      console.error('No request body provided');
+      return res.status(400).json({ 
+        error: 'リクエストボディが提供されていません',
+        message: 'フォームデータが正しく送信されませんでした。'
+      });
+    }
+
     // リクエストボディの検証
     const parsed = schema.safeParse(req.body);
     
     if (!parsed.success) {
+      console.error('Validation error:', parsed.error.errors);
       return res.status(400).json({ 
-        error: 'Invalid data',
+        error: '入力データに問題があります',
+        message: '入力内容を確認してください。',
         details: parsed.error.errors 
       });
     }

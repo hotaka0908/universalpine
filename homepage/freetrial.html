@@ -717,9 +717,12 @@
                             submitButton.textContent = '予約を申し込む';
                         } else {
                             // Error
-                            alert('送信に失敗しました。後ほど再度お試しください。');
-                            submitButton.disabled = false;
-                            submitButton.textContent = '予約を申し込む';
+                            return response.json().then(data => {
+                                const errorMessage = data.message || data.error || '送信に失敗しました。後ほど再度お試しください。';
+                                alert(`送信に失敗しました: ${errorMessage}`);
+                                submitButton.disabled = false;
+                                submitButton.textContent = '予約を申し込む';
+                            });
                         }
                     })
                     .catch(error => {
