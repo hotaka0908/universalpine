@@ -69,10 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeDropdowns = mobileNav.querySelectorAll('.dropdown.active');
         activeDropdowns.forEach(dropdown => {
             dropdown.classList.remove('active');
-            const icon = dropdown.querySelector('.dropdown-icon');
-            if (icon) {
-                icon.innerHTML = '〉';
-            }
+            // CSSの回転で制御するため、アイコンの内容は変更しない
         });
         
         // アニメーション後にdisplay: noneを設定
@@ -113,30 +110,21 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const isCurrentlyActive = dropdown.classList.contains('active');
             
-            // 他のドロップダウンを閉じる
-            mobileDropdowns.forEach(otherDropdown => {
-                if (otherDropdown !== dropdown) {
-                    otherDropdown.classList.remove('active');
-                    const otherIcon = otherDropdown.querySelector('.dropdown-icon');
-                    if (otherIcon) {
-                        otherIcon.innerHTML = '〉';
-                    }
-                }
-            });
+                    // 他のドロップダウンを閉じる
+        mobileDropdowns.forEach(otherDropdown => {
+            if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('active');
+                // CSSの回転で制御するため、アイコンの内容は変更しない
+            }
+        });
             
             // 現在のドロップダウンをトグル
             if (isCurrentlyActive) {
                 dropdown.classList.remove('active');
-                const icon = link.querySelector('.dropdown-icon');
-                if (icon) {
-                    icon.innerHTML = '〉';
-                }
+                // CSSの回転で制御するため、アイコンの内容は変更しない
             } else {
                 dropdown.classList.add('active');
-                const icon = link.querySelector('.dropdown-icon');
-                if (icon) {
-                    icon.innerHTML = '〈';
-                }
+                // CSSの回転で制御するため、アイコンの内容は変更しない
             }
         });
         
