@@ -1850,6 +1850,7 @@ footer {
   margin-left: 8px;
   transition: transform 0.3s ease;
   transform: rotate(90deg); /* 初期状態：下向き */
+  vertical-align: middle; /* 文字と同じ高さに揃える */
 }
 
 .mobile-nav .dropdown.active .dropdown-icon {
