@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.classList.remove('active');
             const icon = dropdown.querySelector('.dropdown-icon');
             if (icon) {
-                icon.innerHTML = '▼';
+                icon.innerHTML = '〉';
             }
         });
         
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!link.querySelector('.dropdown-icon')) {
             const icon = document.createElement('span');
             icon.className = 'dropdown-icon';
-            icon.innerHTML = '▼';
+            icon.innerHTML = '〉';
             link.appendChild(icon);
         }
         
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     otherDropdown.classList.remove('active');
                     const otherIcon = otherDropdown.querySelector('.dropdown-icon');
                     if (otherIcon) {
-                        otherIcon.innerHTML = '▼';
+                        otherIcon.innerHTML = '〉';
                     }
                 }
             });
@@ -129,13 +129,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.remove('active');
                 const icon = link.querySelector('.dropdown-icon');
                 if (icon) {
-                    icon.innerHTML = '▼';
+                    icon.innerHTML = '〉';
                 }
             } else {
                 dropdown.classList.add('active');
                 const icon = link.querySelector('.dropdown-icon');
                 if (icon) {
-                    icon.innerHTML = '▲';
+                    icon.innerHTML = '〈';
                 }
             }
         });
