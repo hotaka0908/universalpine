@@ -1849,9 +1849,9 @@ footer {
   display: inline-block;
   margin-left: 8px;
   transition: transform 0.3s ease;
-  transform: rotate(135deg); /* 初期状態：下向き */
+  transform: rotate(90deg); /* 初期状態：下向き */
 }
 
 .mobile-nav .dropdown.active .dropdown-icon {
-  transform: rotate(-45deg); /* 開いている状態：上向き */
+  transform: rotate(-90deg); /* 開いている状態：上向き */
 }
