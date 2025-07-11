@@ -243,6 +243,22 @@
                     const resumeFile = document.getElementById('resume').files[0];
                     const portfolioFile = document.getElementById('portfolio').files[0];
                     
+                    // ファイルサイズチェック（10MB制限）
+                    if (resumeFile && resumeFile.size > 10 * 1024 * 1024) {
+                        formStatus.textContent = 'エラー: 履歴書のファイルサイズが大きすぎます（10MB以下にしてください）';
+                        formStatus.className = 'form-status error';
+                        submitButton.disabled = false;
+                        submitButton.textContent = '応募する';
+                        return;
+                    }
+                    if (portfolioFile && portfolioFile.size > 10 * 1024 * 1024) {
+                        formStatus.textContent = 'エラー: 職務経歴書のファイルサイズが大きすぎます（10MB以下にしてください）';
+                        formStatus.className = 'form-status error';
+                        submitButton.disabled = false;
+                        submitButton.textContent = '応募する';
+                        return;
+                    }
+                    
                     // FormDataオブジェクトからJSONに変換するためのオブジェクトを作成
                     const formDataObj = {};
                     formData.forEach((value, key) => {
@@ -272,7 +288,7 @@
                     }
                     
                     // APIエンドポイントにデータを送信
-                    const response = await fetch('/api/apply', {
+                    const response = await fetch('/api/apply.js', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -280,7 +296,12 @@
                         body: JSON.stringify(formDataObj)
                     });
                     
-                    const result = await response.json();
+                    let result = {};
+                    try {
+                        result = await response.json();
+                    } catch (jsonErr) {
+                        result = { error: 'サーバーから不正なレスポンスが返されました。' };
+                    }
                     
                     if (response.ok) {
                         // 成功時の処理

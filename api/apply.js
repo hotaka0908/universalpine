@@ -36,15 +36,30 @@ const positionNames = {
 };
 
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  // CORS対応
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const parsed = schema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).json({ error: 'invalid', details: parsed.error.errors });
-  const d = parsed.data;
+  // OPTIONSメソッド対応
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-  const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const emailBody = `
+  try {
+    const parsed = schema.safeParse(req.body);
+    if (!parsed.success) {
+      console.error('Validation error:', parsed.error.errors);
+      return res.status(400).json({ error: 'invalid', details: parsed.error.errors });
+    }
+    const d = parsed.data;
+
+    const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
+
+    const emailBody = `
 【応募情報】
 
 氏名: ${d.name}
@@ -62,11 +77,10 @@ ${d.message || '特になし'}
 このメールには履歴書・職務経歴書が添付されています。
 `;
 
-  if (!resend) {
-    console.error('RESEND_API_KEY is not set');
-    return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
-  }
-  try {
+    if (!resend) {
+      console.error('RESEND_API_KEY is not set');
+      return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
+    }
     // メインのお問い合わせメールを送信
     const mainEmailResult = await resend.emails.send({
       from: '採用応募 <onboarding@resend.dev>',
