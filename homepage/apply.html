@@ -243,16 +243,16 @@
                     const resumeFile = document.getElementById('resume').files[0];
                     const portfolioFile = document.getElementById('portfolio').files[0];
                     
-                    // ファイルサイズチェック（10MB制限）
-                    if (resumeFile && resumeFile.size > 10 * 1024 * 1024) {
-                        formStatus.textContent = 'エラー: 履歴書のファイルサイズが大きすぎます（10MB以下にしてください）';
+                    // ファイルサイズチェック（4MB制限）
+                    if (resumeFile && resumeFile.size > 4 * 1024 * 1024) {
+                        formStatus.textContent = 'エラー: 履歴書のファイルサイズが大きすぎます（4MB以下にしてください）';
                         formStatus.className = 'form-status error';
                         submitButton.disabled = false;
                         submitButton.textContent = '応募する';
                         return;
                     }
-                    if (portfolioFile && portfolioFile.size > 10 * 1024 * 1024) {
-                        formStatus.textContent = 'エラー: 職務経歴書のファイルサイズが大きすぎます（10MB以下にしてください）';
+                    if (portfolioFile && portfolioFile.size > 4 * 1024 * 1024) {
+                        formStatus.textContent = 'エラー: 職務経歴書のファイルサイズが大きすぎます（4MB以下にしてください）';
                         formStatus.className = 'form-status error';
                         submitButton.disabled = false;
                         submitButton.textContent = '応募する';
@@ -288,7 +288,7 @@
                     }
                     
                     // APIエンドポイントにデータを送信
-                    const response = await fetch('/api/apply.js', {
+                    const response = await fetch('/api/apply', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -310,7 +310,8 @@
                         form.reset();
                     } else {
                         // エラー時の処理
-                        formStatus.textContent = `エラー: ${result.error || '応募の送信中に問題が発生しました。'}`;
+                        const errorMessage = result.message || result.error || '応募の送信中に問題が発生しました。';
+                        formStatus.textContent = `エラー: ${errorMessage}`;
                         formStatus.className = 'form-status error';
                     }
                 } catch (error) {

@@ -50,10 +50,19 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
+    // リクエストボディの存在確認
+    if (!req.body) {
+      console.error('No request body provided');
+      return res.status(400).json({ error: 'リクエストボディが提供されていません' });
+    }
+
     const parsed = schema.safeParse(req.body);
     if (!parsed.success) {
       console.error('Validation error:', parsed.error.errors);
-      return res.status(400).json({ error: 'invalid', details: parsed.error.errors });
+      return res.status(400).json({ 
+        error: '入力データに問題があります', 
+        details: parsed.error.errors 
+      });
     }
     const d = parsed.data;
 
@@ -79,7 +88,10 @@ ${d.message || '特になし'}
 
     if (!resend) {
       console.error('RESEND_API_KEY is not set');
-      return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
+      return res.status(500).json({ 
+        error: 'サーバー設定エラーが発生しました',
+        message: 'メール送信の設定が正しく行われていません。管理者にお問い合わせください。'
+      });
     }
     // メインのお問い合わせメールを送信
     const mainEmailResult = await resend.emails.send({
@@ -106,7 +118,10 @@ ${d.message || '特になし'}
 
     if (mainEmailResult.error) {
       console.error('Resend error (main email):', mainEmailResult.error);
-      throw new Error('メール送信に失敗しました');
+      return res.status(500).json({ 
+        error: 'メール送信に失敗しました',
+        message: '応募の送信中にエラーが発生しました。後でもう一度お試しください。'
+      });
     }
 
     // 応募者にも確認メールを送信
@@ -128,13 +143,18 @@ Universal Pine
 株式会社ユニバーサルパイン
     `;
 
-    await resend.emails.send({
-      from: 'Universal Pine <onboarding@resend.dev>',
-      to: [d.email],
-      subject: '採用応募受付確認 - Universal Pine',
-      text: confirmationEmail,
-      html: confirmationEmail.replace(/\n/g, '<br>')
-    });
+    try {
+      await resend.emails.send({
+        from: 'Universal Pine <onboarding@resend.dev>',
+        to: [d.email],
+        subject: '採用応募受付確認 - Universal Pine',
+        text: confirmationEmail,
+        html: confirmationEmail.replace(/\n/g, '<br>')
+      });
+    } catch (confirmationError) {
+      console.error('Confirmation email error:', confirmationError);
+      // 確認メールの送信失敗はログに記録するが、メインの処理は続行
+    }
 
     res.status(200).json({ 
       ok: true, 
