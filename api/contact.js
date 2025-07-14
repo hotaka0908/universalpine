@@ -1,36 +1,14 @@
-const { z } = require('zod');
 const { Resend } = require('resend');
 
 // Resendクライアントの初期化
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-
-// バリデーションスキーマの定義
-const schema = z.object({
-  name: z.string().min(1, '名前は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  category: z.string().min(1, 'カテゴリーは必須です'),
-  message: z.string().min(1, 'メッセージは必須です'),
-  privacy: z.string().optional(),
-  honeypot: z.string().optional()
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports = async function handler(req, res) {
   // CORS設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, x-vercel-protection-bypass');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
-  // Protection Bypassのチェック（環境変数が設定されている場合）
-  if (process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
-    const bypassToken = req.headers['x-vercel-protection-bypass'] || req.query['x-vercel-protection-bypass'];
-    if (bypassToken && bypassToken === process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
-      // 認証をバイパス
-      console.log('Protection bypass authorized');
-    }
-  }
-
-  // OPTIONSリクエストの処理
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -40,33 +18,14 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    // リクエストボディの存在確認
-    if (!req.body) {
-      console.error('No request body provided');
+    const { name, email, category, message } = req.body;
+
+    // バリデーション
+    if (!name || !email || !category || !message) {
       return res.status(400).json({ 
-        error: 'リクエストボディが提供されていません',
-        message: 'フォームデータが正しく送信されませんでした。'
+        error: '必須項目が入力されていません',
+        message: 'すべての必須項目を入力してください。'
       });
-    }
-
-    // リクエストボディの検証
-    const parsed = schema.safeParse(req.body);
-    
-    if (!parsed.success) {
-      console.error('Validation error:', parsed.error.errors);
-      return res.status(400).json({ 
-        error: '入力データに問題があります',
-        message: '入力内容を確認してください。',
-        details: parsed.error.errors 
-      });
-    }
-
-    const data = parsed.data;
-
-    // ハニーポットチェック（スパム対策）
-    if (data.honeypot) {
-      console.log('Spam detected via honeypot');
-      return res.status(400).json({ error: 'Invalid request' });
     }
 
     // カテゴリの日本語表記
@@ -78,108 +37,55 @@ module.exports = async function handler(req, res) {
       other: 'その他'
     };
 
-    // メール本文を作成
+    // メール本文作成
     const emailBody = `
 新しいお問い合わせがありました。
 
 【お問い合わせ内容】
-お名前: ${data.name}
-メールアドレス: ${data.email}
-カテゴリー: ${categoryLabels[data.category] || data.category}
+お名前: ${name}
+メールアドレス: ${email}
+カテゴリー: ${categoryLabels[category] || category}
 
 【メッセージ】
-${data.message}
+${message}
 
 -----
-送信日時: ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+送信日時: ${new Date().toLocaleString('ja-JP')}
     `;
-
-    // Resendを使用してメールを送信
-    if (!resend) {
-      console.error('RESEND_API_KEY is not set');
-      return res.status(500).json({ 
-        error: 'サーバー設定エラーが発生しました',
-        message: 'メール送信の設定が正しく行われていません。'
-      });
-    }
 
     console.log('メール送信開始...');
     console.log('送信先:', 'ho@universalpine.com');
-    console.log('送信者:', data.email);
+    console.log('送信者:', email);
 
-    try {
-      // メインのお問い合わせメールを送信
-      const mainEmailResult = await resend.emails.send({
-        from: 'Universal Pine <onboarding@resend.dev>',
-        to: ['ho@universalpine.com'],
-        subject: `【お問い合わせ】${categoryLabels[data.category] || data.category} - ${data.name}様より`,
-        text: emailBody,
-        html: emailBody.replace(/\n/g, '<br>'),
-        reply_to: data.email
-      });
+    // Resendでメール送信
+    const result = await resend.emails.send({
+      from: 'Universal Pine <onboarding@resend.dev>',
+      to: ['ho@universalpine.com'],
+      subject: `【お問い合わせ】${categoryLabels[category] || category} - ${name}様より`,
+      text: emailBody,
+      html: emailBody.replace(/\n/g, '<br>'),
+      reply_to: email
+    });
 
-      console.log('Resend response:', mainEmailResult);
+    console.log('Resend response:', result);
 
-      if (mainEmailResult.error) {
-        console.error('Resend error (main email):', mainEmailResult.error);
-        throw new Error(`メール送信に失敗しました: ${mainEmailResult.error.message || 'Unknown error'}`);
-      }
-
-      console.log('メール送信成功 (main):', mainEmailResult.data);
-
-      // お問い合わせ者にも確認メールを送信
-      const confirmationEmail = `
-${data.name} 様
-
-お問い合わせありがとうございます。
-以下の内容でお問い合わせを受け付けました。
-
-【お問い合わせ内容】
-カテゴリー: ${categoryLabels[data.category] || data.category}
-
-${data.message}
-
-担当者より2営業日以内にご連絡させていただきます。
-
---
-Universal Pine
-株式会社ユニバーサルパイン
-      `;
-
-      const confirmationResult = await resend.emails.send({
-        from: 'Universal Pine <onboarding@resend.dev>',
-        to: [data.email],
-        subject: 'お問い合わせ受付確認 - Universal Pine',
-        text: confirmationEmail,
-        html: confirmationEmail.replace(/\n/g, '<br>')
-      });
-
-      if (confirmationResult.error) {
-        console.error('Resend error (confirmation email):', confirmationResult.error);
-        // 確認メールの失敗は致命的ではないため、ログに記録するだけ
-      } else {
-        console.log('確認メール送信成功:', confirmationResult.data);
-      }
-
-      // 成功レスポンスを返す
-      res.status(200).json({ 
-        ok: true,
-        message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。'
-      });
-
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      return res.status(500).json({ 
-        error: 'メール送信に失敗しました',
-        message: emailError.message || 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。'
-      });
+    if (result.error) {
+      console.error('Resend error:', result.error);
+      throw new Error(`メール送信に失敗しました: ${result.error.message || 'Unknown error'}`);
     }
 
+    console.log('メール送信成功:', result.data);
+
+    res.status(200).json({ 
+      success: true,
+      message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。'
+    });
+
   } catch (error) {
-    console.error('Error processing contact form:', error);
+    console.error('メール送信エラー:', error);
     res.status(500).json({ 
-      error: 'Internal server error',
-      message: 'お問い合わせの処理中にエラーが発生しました。'
+      error: 'メール送信に失敗しました',
+      message: error.message || 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。'
     });
   }
-}
+};
