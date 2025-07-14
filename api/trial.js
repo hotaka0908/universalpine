@@ -2,7 +2,7 @@ const { z } = require('zod');
 const { Resend } = require('resend');
 
 // Resendクライアントの初期化
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const resend = process.env.resend_key ? new Resend(process.env.resend_key) : null;
 
 // バリデーションスキーマの定義
 const schema = z.object({
@@ -79,7 +79,7 @@ ${data.message || 'なし'}
 
     // Resendを使用してメールを送信
     if (!resend) {
-      console.warn('RESEND_API_KEYが設定されていません。メールは送信されません。');
+      console.warn('resend_keyが設定されていません。メールは送信されません。');
       console.log('フォームデータ:', emailBody);
     } else {
     try {

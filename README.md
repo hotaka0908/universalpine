@@ -112,7 +112,7 @@ npm install
 
 ```bash
 # .env
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+resend_key=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ### 4. ローカル開発サーバーの起動
@@ -259,7 +259,7 @@ vercel --prod
 
 Vercelダッシュボードで以下の環境変数を設定：
 
-- `RESEND_API_KEY`: Resend APIキー
+- `resend_key`: Resend APIキー
 
 ## 🔧 メンテナンス
 

@@ -1,7 +1,7 @@
 const { z } = require('zod');
 const { Resend } = require('resend');
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const resend = process.env.resend_key ? new Resend(process.env.resend_key) : null;
 
 const schema = z.object({
   name: z.string().min(1, '名前は必須です'),
@@ -87,7 +87,7 @@ ${d.message || '特になし'}
 `;
 
   if (!resend) {
-    console.error('RESEND_API_KEY is not set');
+          console.error('resend_key is not set');
       return res.status(500).json({ 
         error: 'サーバー設定エラーが発生しました',
         message: 'メール送信の設定が正しく行われていません。管理者にお問い合わせください。'

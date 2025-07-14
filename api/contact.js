@@ -15,8 +15,8 @@ module.exports = async function handler(req, res) {
   }
 
   // 環境変数チェック
-  if (!process.env.RESEND_API_KEY) {
-    console.error('RESEND_API_KEY is not set');
+  if (!process.env.resend_key) {
+    console.error('resend_key is not set');
     return res.status(500).json({ 
       error: 'サーバー設定エラー',
       message: 'メール送信サービスが正しく設定されていません。'
@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
   }
 
   // Resendクライアントの初期化
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(process.env.resend_key);
 
   try {
     console.log('Request body:', req.body);
