@@ -56,7 +56,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'リクエストボディが提供されていません' });
     }
 
-    const parsed = schema.safeParse(req.body);
+  const parsed = schema.safeParse(req.body);
     if (!parsed.success) {
       console.error('Validation error:', parsed.error.errors);
       return res.status(400).json({ 
@@ -64,11 +64,11 @@ module.exports = async function handler(req, res) {
         details: parsed.error.errors 
       });
     }
-    const d = parsed.data;
+  const d = parsed.data;
 
-    const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
+  const fullAddress = d.address_line1 + (d.address_line2 ? ` ${d.address_line2}` : '');
 
-    const emailBody = `
+  const emailBody = `
 【応募情報】
 
 氏名: ${d.name}
@@ -86,13 +86,13 @@ ${d.message || '特になし'}
 このメールには履歴書・職務経歴書が添付されています。
 `;
 
-    if (!resend) {
-      console.error('RESEND_API_KEY is not set');
+  if (!resend) {
+    console.error('RESEND_API_KEY is not set');
       return res.status(500).json({ 
         error: 'サーバー設定エラーが発生しました',
         message: 'メール送信の設定が正しく行われていません。管理者にお問い合わせください。'
       });
-    }
+  }
     // メインのお問い合わせメールを送信
     const mainEmailResult = await resend.emails.send({
       from: '採用応募 <onboarding@resend.dev>',
@@ -144,13 +144,13 @@ Universal Pine
     `;
 
     try {
-      await resend.emails.send({
-        from: 'Universal Pine <onboarding@resend.dev>',
-        to: [d.email],
-        subject: '採用応募受付確認 - Universal Pine',
-        text: confirmationEmail,
-        html: confirmationEmail.replace(/\n/g, '<br>')
-      });
+    await resend.emails.send({
+      from: 'Universal Pine <onboarding@resend.dev>',
+      to: [d.email],
+      subject: '採用応募受付確認 - Universal Pine',
+      text: confirmationEmail,
+      html: confirmationEmail.replace(/\n/g, '<br>')
+    });
     } catch (confirmationError) {
       console.error('Confirmation email error:', confirmationError);
       // 確認メールの送信失敗はログに記録するが、メインの処理は続行

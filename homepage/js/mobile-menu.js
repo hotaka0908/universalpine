@@ -110,13 +110,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const isCurrentlyActive = dropdown.classList.contains('active');
             
-                    // 他のドロップダウンを閉じる
-        mobileDropdowns.forEach(otherDropdown => {
-            if (otherDropdown !== dropdown) {
-                otherDropdown.classList.remove('active');
+            // 他のドロップダウンを閉じる
+            mobileDropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('active');
                 // CSSの回転で制御するため、アイコンの内容は変更しない
-            }
-        });
+                }
+            });
             
             // 現在のドロップダウンをトグル
             if (isCurrentlyActive) {
