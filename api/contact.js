@@ -97,12 +97,20 @@ ${data.message}
     // Resendを使用してメールを送信
     if (!resend) {
       console.error('RESEND_API_KEY is not set');
-      return res.status(500).json({ error: 'サーバー設定エラーが発生しました' });
+      return res.status(500).json({ 
+        error: 'サーバー設定エラーが発生しました',
+        message: 'メール送信の設定が正しく行われていません。'
+      });
     }
+
+    console.log('メール送信開始...');
+    console.log('送信先:', 'ho@universalpine.com');
+    console.log('送信者:', data.email);
+
     try {
       // メインのお問い合わせメールを送信
       const mainEmailResult = await resend.emails.send({
-        from: 'お問い合わせフォーム <onboarding@resend.dev>',
+        from: 'Universal Pine <onboarding@resend.dev>',
         to: ['ho@universalpine.com'],
         subject: `【お問い合わせ】${categoryLabels[data.category] || data.category} - ${data.name}様より`,
         text: emailBody,
@@ -110,9 +118,11 @@ ${data.message}
         reply_to: data.email
       });
 
+      console.log('Resend response:', mainEmailResult);
+
       if (mainEmailResult.error) {
         console.error('Resend error (main email):', mainEmailResult.error);
-        throw new Error('メール送信に失敗しました');
+        throw new Error(`メール送信に失敗しました: ${mainEmailResult.error.message || 'Unknown error'}`);
       }
 
       console.log('メール送信成功 (main):', mainEmailResult.data);
@@ -150,17 +160,20 @@ Universal Pine
       } else {
         console.log('確認メール送信成功:', confirmationResult.data);
       }
+
+      // 成功レスポンスを返す
+      res.status(200).json({ 
+        ok: true,
+        message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。'
+      });
+
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
-      // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
-      console.log('フォームデータ:', emailBody);
+      return res.status(500).json({ 
+        error: 'メール送信に失敗しました',
+        message: emailError.message || 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。'
+      });
     }
-
-    // 成功レスポンスを返す
-    res.status(200).json({ 
-      ok: true,
-      message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。'
-    });
 
   } catch (error) {
     console.error('Error processing contact form:', error);
