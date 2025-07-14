@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const privacy = document.getElementById('privacy').checked;
 
     // エラーメッセージをクリア
-    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.error-message').forEach(el => {
+      el.textContent = '';
+    });
 
     let isValid = true;
 
