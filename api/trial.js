@@ -1,8 +1,5 @@
 const { z } = require('zod');
-const { Resend } = require('resend');
-
-// Resendクライアントの初期化
-const resend = process.env.resend_key ? new Resend(process.env.resend_key) : null;
+const { getResendClient, isResendConfigured } = require('./utils/resend-client');
 
 // バリデーションスキーマの定義
 const schema = z.object({
@@ -78,10 +75,11 @@ ${data.message || 'なし'}
     `;
 
     // Resendを使用してメールを送信
-    if (!resend) {
+    if (!isResendConfigured()) {
       console.warn('resend_keyが設定されていません。メールは送信されません。');
       console.log('フォームデータ:', emailBody);
     } else {
+    const resend = getResendClient();
     try {
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: 'Universal Pine <noreply@universalpine.com>',

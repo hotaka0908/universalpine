@@ -1,7 +1,5 @@
 const { z } = require('zod');
-const { Resend } = require('resend');
-
-const resend = process.env.resend_key ? new Resend(process.env.resend_key) : null;
+const { getResendClient, isResendConfigured } = require('./utils/resend-client');
 
 const schema = z.object({
   name: z.string().min(1, '名前は必須です'),
@@ -86,13 +84,15 @@ ${d.message || '特になし'}
 このメールには履歴書・職務経歴書が添付されています。
 `;
 
-  if (!resend) {
+  if (!isResendConfigured()) {
           console.error('resend_key is not set');
       return res.status(500).json({ 
         error: 'サーバー設定エラーが発生しました',
         message: 'メール送信の設定が正しく行われていません。管理者にお問い合わせください。'
       });
   }
+
+  const resend = getResendClient();
     // メインのお問い合わせメールを送信
     const mainEmailResult = await resend.emails.send({
       from: '採用応募 <onboarding@resend.dev>',
