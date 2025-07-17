@@ -1,4 +1,4 @@
-const { Resend } = require('resend');
+const { getResendClient, isResendConfigured } = require('./utils/resend-client');
 
 module.exports = async function handler(req, res) {
   // CORS設定
@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
   }
 
   // 環境変数チェック
-  if (!process.env.resend_key) {
+  if (!isResendConfigured()) {
     console.error('resend_key is not set');
     return res.status(500).json({ 
       error: 'サーバー設定エラー',
@@ -23,8 +23,8 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // Resendクライアントの初期化
-  const resend = new Resend(process.env.resend_key);
+  // Resendクライアントの取得
+  const resend = getResendClient();
 
   try {
     console.log('Request body:', req.body);
