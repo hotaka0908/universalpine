@@ -19,18 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Form submission handling
-  const contactForm = document.querySelector('.contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // In a real implementation, you would send the form data to a server
-      // For now, just show a success message
-      alert('お問い合わせありがとうございます。近日中にご連絡いたします。');
-      this.reset();
-    });
-  }
+  // Form submission handling - removed generic handler to avoid conflict with contact.js
 
   // Career application button
   const applyButton = document.querySelector('.apply-button');
