@@ -20,7 +20,7 @@ cp .env.example .env
 
 #### 必要な環境変数
 
-- `resend_key`: Resendのメール送信APIキー
+- `RESEND_API_KEY`: Resendのメール送信APIキー
 
 ### 3. Resend APIキーの取得
 
@@ -29,7 +29,7 @@ cp .env.example .env
 3. `.env`ファイルに追加：
 
    ```
-   resend_key=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    ```
 
 ### 4. ドメインの設定（本番環境）
@@ -62,5 +62,5 @@ cp .env.example .env
 
 ## 開発時の注意
 
-- `resend_key`が設定されていない場合、メールは送信されませんが、APIはエラーを返しません（開発環境での動作のため）
+- `RESEND_API_KEY`が設定されていない場合、メールは送信されませんが、APIはエラーを返しません（開発環境での動作のため）
 - コンソールにフォームデータが出力されます

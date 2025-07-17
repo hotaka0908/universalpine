@@ -16,7 +16,7 @@ module.exports = async function handler(req, res) {
 
   // 環境変数チェック
   if (!isResendConfigured()) {
-    console.error('resend_key is not set');
+    console.error('RESEND_API_KEY is not set');
     return res.status(500).json({ 
       error: 'サーバー設定エラー',
       message: 'メール送信サービスが正しく設定されていません。'

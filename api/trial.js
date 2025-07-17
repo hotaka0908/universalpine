@@ -76,7 +76,7 @@ ${data.message || 'なし'}
 
     // Resendを使用してメールを送信
     if (!isResendConfigured()) {
-      console.warn('resend_keyが設定されていません。メールは送信されません。');
+      console.warn('RESEND_API_KEYが設定されていません。メールは送信されません。');
       console.log('フォームデータ:', emailBody);
     } else {
     const resend = getResendClient();

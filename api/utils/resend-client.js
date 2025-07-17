@@ -4,12 +4,12 @@ let resendClient = null;
 
 function getResendClient() {
   if (!resendClient) {
-    if (!process.env.resend_key) {
-      console.error('resend_key environment variable is not set');
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY environment variable is not set');
       return null;
     }
     
-    resendClient = new Resend(process.env.resend_key);
+    resendClient = new Resend(process.env.RESEND_API_KEY);
     console.log('Resend client initialized');
   }
   
@@ -17,7 +17,7 @@ function getResendClient() {
 }
 
 function isResendConfigured() {
-  return !!process.env.resend_key;
+  return !!process.env.RESEND_API_KEY;
 }
 
 module.exports = {

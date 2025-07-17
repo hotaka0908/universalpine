@@ -4,8 +4,8 @@ async function testEmailSend() {
   console.log('Testing Resend API email sending...');
   
   if (!isResendConfigured()) {
-    console.error('❌ resend_key environment variable is not set');
-    console.log('Please set the resend_key environment variable with your Resend API key');
+    console.error('❌ RESEND_API_KEY environment variable is not set');
+    console.log('Please set the RESEND_API_KEY environment variable with your Resend API key');
     process.exit(1);
   }
 
