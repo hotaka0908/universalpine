@@ -78,13 +78,17 @@ ${message}
     });
 
     console.log('Resend response:', result);
+    console.log('Email ID:', result.data?.id);
+    console.log('Email status:', result.data ? 'sent' : 'failed');
 
     if (result.error) {
       console.error('Resend error:', result.error);
+      console.error('Error details:', JSON.stringify(result.error, null, 2));
       throw new Error(`メール送信に失敗しました: ${result.error.message || 'Unknown error'}`);
     }
 
     console.log('メール送信成功:', result.data);
+    console.log('送信完了 - Email ID:', result.data?.id, 'to:', 'ho@universalpine.com');
 
     res.status(200).json({ 
       success: true,
