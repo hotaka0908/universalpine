@@ -117,8 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       } catch (fetchError) {
         console.log('API endpoint not available (network error), simulating success for development');
-        console.log('Form data that would be sent:', data);
-        alert('開発環境: フォームデータが正常に処理されました。本番環境ではメールが送信されます。');
+        console.log('Contact form data that would be sent:', data);
         window.location.href = '/thanks.html';
         return;
       }
@@ -128,8 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (response.status === 404) {
         console.log('API endpoint not available (404), simulating success for development');
-        console.log('Form data that would be sent:', data);
-        alert('開発環境: フォームデータが正常に処理されました。本番環境ではメールが送信されます。');
+        console.log('Contact form data that would be sent:', data);
         
         submitButton.disabled = false;
         submitButton.textContent = '送信する';
