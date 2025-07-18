@@ -20,7 +20,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "resend": "^4.6.0",
+    "resend": "^4.7.0",
     "zod": "^4.0.2"
   },
   "devDependencies": {
