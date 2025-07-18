@@ -5,8 +5,8 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "serve homepage",
-    "dev": "serve -l 3000 homepage",
+    "start": "http-server homepage",
+    "dev": "http-server homepage -p 3000",
     "build": "npm install",
     "audit": "npm audit",
     "audit:fix": "npm audit fix"
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "eslint": "^9.31.0",
-    "serve": "^14.2.1"
+    "http-server": "^14.1.1"
   },
   "repository": {
     "type": "git",
