@@ -5,16 +5,6 @@
       "runtime": "nodejs20.x"
     }
   },
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/homepage/index.html"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/homepage/$1"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
