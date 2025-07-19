@@ -27,8 +27,14 @@ module.exports = async function handler(req, res) {
   const resend = getResendClient();
 
   try {
-    console.log('Request body:', req.body);
-    const { name, email, category, message } = req.body;
+    // リクエストボディのパーシング
+    let body = req.body;
+    if (typeof body === 'string') {
+      body = JSON.parse(body);
+    }
+    
+    console.log('Request body:', body);
+    const { name, email, category, message } = body;
 
     // バリデーション
     if (!name || !email || !category || !message) {

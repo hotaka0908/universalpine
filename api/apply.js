@@ -38,8 +38,14 @@ module.exports = async function handler(req, res) {
   const resend = getResendClient();
 
   try {
-    console.log('Request body:', req.body);
-    const { name, email, phone, postal_code, address_line1, address_line2, position, message } = req.body;
+    // リクエストボディのパーシング
+    let body = req.body;
+    if (typeof body === 'string') {
+      body = JSON.parse(body);
+    }
+    
+    console.log('Request body:', body);
+    const { name, email, phone, postal_code, address_line1, address_line2, position, message } = body;
 
     // バリデーション（お問い合わせフォームと同じパターン）
     if (!name || !email || !phone || !postal_code || !address_line1 || !position) {
