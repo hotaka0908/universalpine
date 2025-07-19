@@ -1,20 +1,15 @@
-export default function handler(request) {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+module.exports = function handler(req, res) {
+  // CORS設定
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 200, headers });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
 
-  if (request.method !== 'GET') {
-    return new Response(
-      JSON.stringify({ error: 'Method not allowed' }),
-      { status: 405, headers }
-    );
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   // 環境変数の存在確認
@@ -32,15 +27,12 @@ export default function handler(request) {
     },
     api_info: {
       path: '/api/test',
-      method: request.method,
-      user_agent: request.headers.get('user-agent') || 'N/A',
+      method: req.method,
+      user_agent: req.headers['user-agent'] || 'N/A',
     }
   };
 
   console.log('Test API called:', response);
   
-  return new Response(
-    JSON.stringify(response, null, 2),
-    { status: 200, headers }
-  );
-} 
+  return res.status(200).json(response);
+}; 

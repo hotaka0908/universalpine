@@ -1,81 +1,46 @@
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(request) {
-  // CORS設定のためのヘッダー
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+module.exports = async function handler(req, res) {
+  // CORS設定
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 200, headers });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
 
-  if (request.method !== 'POST') {
-    return new Response(
-      JSON.stringify({ error: 'Method not allowed' }), 
-      { 
-        status: 405, 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...headers 
-        } 
-      }
-    );
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
     // Resend APIキーの存在確認
     if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not configured');
-      return new Response(
-        JSON.stringify({ error: 'Email service not configured' }),
-        { 
-          status: 500, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...headers 
-          } 
-        }
-      );
+      return res.status(500).json({ error: 'Email service not configured' });
     }
 
     // リクエストボディの解析
-    let body;
-    try {
-      const text = await request.text();
-      body = JSON.parse(text);
-    } catch (parseError) {
-      console.error('JSON parsing error:', parseError);
-      return new Response(
-        JSON.stringify({ error: 'Invalid JSON format' }),
-        { 
-          status: 400, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...headers 
-          } 
-        }
-      );
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (parseError) {
+        console.error('JSON parsing error:', parseError);
+        return res.status(400).json({ error: 'Invalid JSON format' });
+      }
     }
 
     const { name, email, category, message } = body;
 
     // 必須フィールドの検証
     if (!name || !email || !category || !message) {
-      return new Response(
-        JSON.stringify({ error: 'Missing required fields: name, email, category, message' }),
-        { 
-          status: 400, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...headers 
-          } 
-        }
-      );
+      return res.status(400).json({ 
+        error: 'Missing required fields: name, email, category, message' 
+      });
     }
 
     // メール送信
@@ -97,35 +62,17 @@ export default async function handler(request) {
 
     console.log('Email sent successfully:', emailData.data?.id);
 
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'お問い合わせを受け付けました。',
-        emailId: emailData.data?.id 
-      }),
-      { 
-        status: 200, 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...headers 
-        } 
-      }
-    );
+    return res.status(200).json({ 
+      success: true, 
+      message: 'お問い合わせを受け付けました。',
+      emailId: emailData.data?.id 
+    });
 
   } catch (error) {
     console.error('Contact form error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: 'Internal server error',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
-      }),
-      { 
-        status: 500, 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...headers 
-        } 
-      }
-    );
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
-}
+};

@@ -2,11 +2,10 @@
   "name": "universalpine",
   "version": "1.0.0",
   "description": "Universal Pine company website",
-  "type": "module",
   "scripts": {
     "build": "echo 'Build completed successfully'",
-    "start": "http-server homepage",
-    "dev": "http-server homepage -p 3000",
+    "start": "http-server .",
+    "dev": "http-server . -p 3000",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "audit": "npm audit",
