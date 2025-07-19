@@ -1,14 +1,85 @@
 const { Resend } = require('resend');
-const { getResendClient, isResendConfigured } = require('./utils/resend-client');
-const { 
-  setCorsHeaders, 
-  handleOptions, 
-  validateMethod, 
-  parseRequestBody, 
-  sendErrorResponse, 
-  sendSuccessResponse,
-  contactSchema 
-} = require('./utils/api-helpers');
+const { z } = require('zod');
+
+// Resend client management
+let resendClient = null;
+
+function getResendClient() {
+  if (!resendClient) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY environment variable is not configured');
+    }
+    resendClient = new Resend(apiKey);
+  }
+  return resendClient;
+}
+
+function isResendConfigured() {
+  return !!process.env.RESEND_API_KEY;
+}
+
+// Common helper functions
+function setCorsHeaders(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+function handleOptions(req, res) {
+  if (req.method === 'OPTIONS') {
+    setCorsHeaders(res);
+    return res.status(200).end();
+  }
+  return false;
+}
+
+function validateMethod(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ 
+      error: 'Method not allowed',
+      message: 'このエンドポイントはPOSTメソッドのみサポートしています。'
+    });
+  }
+  return false;
+}
+
+function parseRequestBody(req) {
+  let body = req.body;
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body);
+    } catch (parseError) {
+      throw new Error('Invalid JSON format');
+    }
+  }
+  return body;
+}
+
+function sendErrorResponse(res, statusCode, error, message, details = null) {
+  console.error('API Error:', error);
+  return res.status(statusCode).json({
+    error: error,
+    message: message,
+    details: process.env.NODE_ENV === 'development' ? details : undefined
+  });
+}
+
+function sendSuccessResponse(res, message, data = null) {
+  return res.status(200).json({
+    success: true,
+    message: message,
+    data: data
+  });
+}
+
+// Validation schema
+const contactSchema = z.object({
+  name: z.string().min(1, 'お名前は必須です'),
+  email: z.string().email('有効なメールアドレスを入力してください'),
+  category: z.string().min(1, 'カテゴリは必須です'),
+  message: z.string().min(1, 'メッセージは必須です')
+});
 
 module.exports = async function handler(req, res) {
   // CORS設定

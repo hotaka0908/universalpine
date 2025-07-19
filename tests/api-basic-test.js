@@ -48,15 +48,6 @@ class APITester {
   runTests() {
     console.log('🧪 Universal Pine API テスト開始\n');
 
-    // 必須ファイルの存在確認
-    this.test('api/utils/resend-client.js が存在する', () => {
-      this.assert(this.fileExists('api/utils/resend-client.js'), 'resend-client.js ファイルが見つかりません');
-    });
-
-    this.test('api/utils/api-helpers.js が存在する', () => {
-      this.assert(this.fileExists('api/utils/api-helpers.js'), 'api-helpers.js ファイルが見つかりません');
-    });
-
     // APIファイルの存在確認
     ['contact.js', 'apply.js', 'trial.js', 'test.js'].forEach(file => {
       this.test(`api/${file} が存在する`, () => {
@@ -76,13 +67,15 @@ class APITester {
       });
     });
 
-    // 統一されたimportパターンの確認
-    this.test('すべてのAPIファイルで共通ユーティリティをimportしている', () => {
+    // 統一されたパターンの確認
+    this.test('すべてのAPIファイルで統一されたパターンを使用している', () => {
       const apiFiles = ['api/contact.js', 'api/apply.js', 'api/trial.js'];
       apiFiles.forEach(file => {
         if (this.fileExists(file)) {
-          this.assert(this.fileContains(file, './utils/resend-client'), 
-            `${file} で resend-client をimportしていません`);
+          this.assert(this.fileContains(file, 'getResendClient'), 
+            `${file} で getResendClient 関数が見つかりません`);
+          this.assert(this.fileContains(file, 'setCorsHeaders'), 
+            `${file} で setCorsHeaders 関数が見つかりません`);
         }
       });
     });
