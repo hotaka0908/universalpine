@@ -1,111 +1,131 @@
-const { getResendClient, isResendConfigured } = require('./utils/resend-client');
+import { Resend } from 'resend';
 
-module.exports = async function handler(req, res) {
-  // CORS設定
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export default async function handler(request) {
+  // CORS設定のためのヘッダー
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers });
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (request.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }), 
+      { 
+        status: 405, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
   }
-
-  // 環境変数チェック
-  if (!isResendConfigured()) {
-    console.error('RESEND_API_KEY is not set');
-    return res.status(500).json({ 
-      error: 'サーバー設定エラー',
-      message: 'メール送信サービスが正しく設定されていません。'
-    });
-  }
-
-  // Resendクライアントの取得
-  const resend = getResendClient();
 
   try {
-    // リクエストボディのパーシング
-    let body = req.body;
-    if (typeof body === 'string') {
-      body = JSON.parse(body);
+    // Resend APIキーの存在確認
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not configured');
+      return new Response(
+        JSON.stringify({ error: 'Email service not configured' }),
+        { 
+          status: 500, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
     }
-    
-    console.log('Request body:', body);
+
+    // リクエストボディの解析
+    let body;
+    try {
+      const text = await request.text();
+      body = JSON.parse(text);
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON format' }),
+        { 
+          status: 400, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
+    }
+
     const { name, email, category, message } = body;
 
-    // バリデーション
+    // 必須フィールドの検証
     if (!name || !email || !category || !message) {
-      return res.status(400).json({ 
-        error: '必須項目が入力されていません',
-        message: 'すべての必須項目を入力してください。'
-      });
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: name, email, category, message' }),
+        { 
+          status: 400, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
     }
 
-    // カテゴリの日本語表記
-    const categoryLabels = {
-      product: '製品について',
-      media: '取材について',
-      career: '採用について',
-      partnership: '協業について',
-      other: 'その他'
-    };
-
-    // メール本文作成
-    const emailBody = `
-新しいお問い合わせがありました。
-
-【お問い合わせ内容】
-お名前: ${name}
-メールアドレス: ${email}
-カテゴリー: ${categoryLabels[category] || category}
-
-【メッセージ】
-${message}
-
------
-送信日時: ${new Date().toLocaleString('ja-JP')}
-    `;
-
-    console.log('メール送信開始...');
-    console.log('送信先:', 'ho@universalpine.com');
-    console.log('送信者:', email);
-
-    // Resendでメール送信
-    const result = await resend.emails.send({
-      from: 'Universal Pine <onboarding@resend.dev>',
+    // メール送信
+    const emailData = await resend.emails.send({
+      from: 'contact@universalpine.com',
       to: ['ho@universalpine.com'],
-      subject: `【お問い合わせ】${categoryLabels[category] || category} - ${name}様より`,
-      text: emailBody,
-      html: emailBody.replace(/\n/g, '<br>'),
-      reply_to: email
+      subject: `【お問い合わせ】${category} - ${name}様より`,
+      html: `
+        <h2>お問い合わせフォームからのメッセージ</h2>
+        <p><strong>お名前:</strong> ${name}</p>
+        <p><strong>メールアドレス:</strong> ${email}</p>
+        <p><strong>カテゴリ:</strong> ${category}</p>
+        <p><strong>メッセージ:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+        <hr>
+        <p><small>このメッセージは、universalpine.comのお問い合わせフォームから送信されました。</small></p>
+      `,
     });
 
-    console.log('Resend response:', result);
-    console.log('Email ID:', result.data?.id);
-    console.log('Email status:', result.data ? 'sent' : 'failed');
+    console.log('Email sent successfully:', emailData.data?.id);
 
-    if (result.error) {
-      console.error('Resend error:', result.error);
-      console.error('Error details:', JSON.stringify(result.error, null, 2));
-      throw new Error(`メール送信に失敗しました: ${result.error.message || 'Unknown error'}`);
-    }
-
-    console.log('メール送信成功:', result.data);
-    console.log('送信完了 - Email ID:', result.data?.id, 'to:', 'ho@universalpine.com');
-
-    res.status(200).json({ 
-      success: true,
-      message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。'
-    });
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: 'お問い合わせを受け付けました。',
+        emailId: emailData.data?.id 
+      }),
+      { 
+        status: 200, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
 
   } catch (error) {
-    console.error('メール送信エラー:', error);
-    res.status(500).json({ 
-      error: 'メール送信に失敗しました',
-      message: error.message || 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。'
-    });
+    console.error('Contact form error:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }),
+      { 
+        status: 500, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
   }
-};
+}

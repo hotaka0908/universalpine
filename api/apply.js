@@ -1,118 +1,134 @@
-const { getResendClient, isResendConfigured } = require('./utils/resend-client');
+import { Resend } from 'resend';
 
-// 職種名のマッピング
-const positionNames = {
-  'electronics-engineer': 'エレクトロニクスエンジニア',
-  'ai-engineer': 'AIエンジニア',
-  'mechanical-engineer': 'メカニカルエンジニア',
-  'embedded-engineer': '組み込みエンジニア',
-  'mobile-app-engineer': 'モバイルアプリエンジニア',
-  'open-entry': 'オープンエントリー',
-  'part-time': 'アルバイト'
-};
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-module.exports = async function handler(req, res) {
-  // CORS設定（お問い合わせフォームと同じ）
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+export default async function handler(request) {
+  // CORS設定のためのヘッダー
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers });
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (request.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }), 
+      { 
+        status: 405, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
   }
-
-  // 環境変数チェック
-  if (!isResendConfigured()) {
-    console.error('RESEND_API_KEY is not set');
-    return res.status(500).json({ 
-      error: 'サーバー設定エラー',
-      message: 'メール送信サービスが正しく設定されていません。'
-    });
-  }
-
-  // Resendクライアントの取得
-  const resend = getResendClient();
 
   try {
-    // リクエストボディのパーシング
-    let body = req.body;
-    if (typeof body === 'string') {
-      body = JSON.parse(body);
-    }
-    
-    console.log('Request body:', body);
-    const { name, email, phone, postal_code, address_line1, address_line2, position, message } = body;
-
-    // バリデーション（お問い合わせフォームと同じパターン）
-    if (!name || !email || !phone || !postal_code || !address_line1 || !position) {
-      return res.status(400).json({ 
-        error: '必須項目が入力されていません',
-        message: 'すべての必須項目を入力してください。'
-      });
+    // Resend APIキーの存在確認
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not configured');
+      return new Response(
+        JSON.stringify({ error: 'Email service not configured' }),
+        { 
+          status: 500, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
     }
 
-    // 住所の結合
-    const fullAddress = address_line1 + (address_line2 ? ` ${address_line2}` : '');
-    const positionLabel = positionNames[position] || position;
+    // リクエストボディの解析
+    let body;
+    try {
+      const text = await request.text();
+      body = JSON.parse(text);
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON format' }),
+        { 
+          status: 400, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
+    }
 
-    // メール本文作成（お問い合わせフォームと同じスタイル）
-    const emailBody = `
-【採用応募】新しい応募が届きました
+    const { name, email, phone, company, position, experience, reason } = body;
 
-■ 応募者情報
-氏名: ${name}
-メールアドレス: ${email}
-電話番号: ${phone}
-郵便番号: ${postal_code}
-住所: ${fullAddress}
+    // 必須フィールドの検証
+    if (!name || !email || !reason) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: name, email, reason' }),
+        { 
+          status: 400, 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...headers 
+          } 
+        }
+      );
+    }
 
-■ 応募内容
-応募職種: ${positionLabel}
-
-■ メッセージ
-${message || '特になし'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-この応募は Universal Pine 採用サイトから送信されました。
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    `.trim();
-
-    console.log('Sending email to ho@universalpine.com');
-
-    // メール送信（お問い合わせフォームと同じパターン）
-    const result = await resend.emails.send({
-      from: 'Universal Pine 採用 <onboarding@resend.dev>',
+    // メール送信
+    const emailData = await resend.emails.send({
+      from: 'apply@universalpine.com',
       to: ['ho@universalpine.com'],
-      subject: `【採用応募】${positionLabel} - ${name}様`,
-      text: emailBody,
-      html: emailBody.replace(/\n/g, '<br>')
+      subject: `【応募フォーム】${name}様より`,
+      html: `
+        <h2>応募フォームからの申し込み</h2>
+        <p><strong>お名前:</strong> ${name}</p>
+        <p><strong>メールアドレス:</strong> ${email}</p>
+        <p><strong>電話番号:</strong> ${phone || '未入力'}</p>
+        <p><strong>所属企業:</strong> ${company || '未入力'}</p>
+        <p><strong>役職:</strong> ${position || '未入力'}</p>
+        <p><strong>経験年数:</strong> ${experience || '未入力'}</p>
+        <p><strong>応募理由:</strong></p>
+        <p>${reason.replace(/\n/g, '<br>')}</p>
+        <hr>
+        <p><small>このメッセージは、universalpine.comの応募フォームから送信されました。</small></p>
+      `,
     });
 
-    if (result.error) {
-      console.error('Resend API error:', result.error);
-      return res.status(500).json({ 
-        error: 'メール送信に失敗しました',
-        message: '応募の送信中にエラーが発生しました。しばらくしてからもう一度お試しください。'
-      });
-    }
+    console.log('Application email sent successfully:', emailData.data?.id);
 
-    console.log('Email sent successfully:', result);
-
-    // 成功レスポンス（お問い合わせフォームと同じ形式）
-    return res.status(200).json({ 
-      success: true,
-      message: '応募が正常に送信されました。ご応募ありがとうございます。'
-    });
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: '応募を受け付けました。',
+        emailId: emailData.data?.id 
+      }),
+      { 
+        status: 200, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
 
   } catch (error) {
-    console.error('Error processing application:', error);
-    return res.status(500).json({ 
-      error: 'サーバーエラー',
-      message: '応募の処理中にエラーが発生しました。しばらくしてからもう一度お試しください。'
-    });
+    console.error('Application form error:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }),
+      { 
+        status: 500, 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...headers 
+        } 
+      }
+    );
   }
-};
+}
