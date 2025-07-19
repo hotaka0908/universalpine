@@ -1,55 +1,36 @@
 const { z } = require('zod');
 const { getResendClient, isResendConfigured } = require('./utils/resend-client');
-
-// バリデーションスキーマの定義
-const schema = z.object({
-  name: z.string().min(1, '名前は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  date: z.string().min(1, '日付は必須です'),
-  time: z.string().min(1, '時間は必須です'),
-  participants: z.string(),
-  interests: z.string().min(1, '関心のある職種を選択してください'),
-  message: z.string().optional()
-});
+const { 
+  setCorsHeaders, 
+  handleOptions, 
+  validateMethod, 
+  parseRequestBody, 
+  sendErrorResponse, 
+  sendSuccessResponse,
+  trialSchema 
+} = require('./utils/api-helpers');
 
 module.exports = async function handler(req, res) {
   // CORS設定
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(res);
 
   // OPTIONSリクエストの処理
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  if (handleOptions(req, res)) return;
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  // POSTメソッドのチェック
+  if (validateMethod(req, res)) return;
 
   try {
-    // リクエストボディの存在確認
-    if (!req.body) {
-      console.error('No request body provided');
-      return res.status(400).json({ 
-        error: 'リクエストボディが提供されていません',
-        message: 'フォームデータが正しく送信されませんでした。'
-      });
+    // リクエストボディの解析
+    const body = parseRequestBody(req);
+
+    // バリデーション
+    const validationResult = trialSchema.safeParse(body);
+    if (!validationResult.success) {
+      return sendErrorResponse(res, 400, 'Validation failed', '入力データに問題があります。', validationResult.error.errors);
     }
 
-    // リクエストボディの検証
-    const parsed = schema.safeParse(req.body);
-    
-    if (!parsed.success) {
-      console.error('Validation error:', parsed.error.errors);
-      return res.status(400).json({ 
-        error: '入力データに問題があります',
-        message: '入力内容を確認してください。',
-        details: parsed.error.errors 
-      });
-    }
-
-    const data = parsed.data;
+    const data = validationResult.data;
 
     // メール本文を作成
     const emailBody = `
@@ -76,11 +57,15 @@ ${data.message || 'なし'}
 
     // Resendを使用してメールを送信
     if (!isResendConfigured()) {
-      console.warn('RESEND_API_KEYが設定されていません。メールは送信されません。');
+      console.warn('RESEND_API_KEY が設定されていません。メールは送信されません。');
       console.log('フォームデータ:', emailBody);
-    } else {
+      return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。（開発モード）');
+    }
+
     const resend = getResendClient();
+    
     try {
+      // 管理者への通知メール
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: 'Universal Pine <noreply@universalpine.com>',
         to: ['ho@universalpine.com'],
@@ -126,24 +111,17 @@ Universal Pine
         text: confirmationEmail,
         html: confirmationEmail.replace(/\n/g, '<br>')
       });
+
+      return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。確認メールをお送りいたします。', { emailId: emailData?.id });
+
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
       console.log('フォームデータ:', emailBody);
+      return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。（メール送信エラー）');
     }
-    }
-
-    // 成功レスポンスを返す
-    res.status(200).json({ 
-      ok: true,
-      message: 'プロジェクト体験の申し込みを受け付けました。確認メールをお送りいたします。'
-    });
 
   } catch (error) {
-    console.error('Error processing trial application:', error);
-    res.status(500).json({ 
-      error: 'Internal server error',
-      message: '申し込みの処理中にエラーが発生しました。'
-    });
+    return sendErrorResponse(res, 500, 'Internal server error', '申し込みの処理中にエラーが発生しました。', error.message);
   }
-}
+};

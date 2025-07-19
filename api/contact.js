@@ -1,47 +1,43 @@
 const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const { getResendClient, isResendConfigured } = require('./utils/resend-client');
+const { 
+  setCorsHeaders, 
+  handleOptions, 
+  validateMethod, 
+  parseRequestBody, 
+  sendErrorResponse, 
+  sendSuccessResponse,
+  contactSchema 
+} = require('./utils/api-helpers');
 
 module.exports = async function handler(req, res) {
   // CORS設定
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(res);
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  // OPTIONSリクエストの処理
+  if (handleOptions(req, res)) return;
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  // POSTメソッドのチェック
+  if (validateMethod(req, res)) return;
 
   try {
     // Resend APIキーの存在確認
-    if (!process.env.RESEND_API_KEY) {
+    if (!isResendConfigured()) {
       console.error('RESEND_API_KEY is not configured');
-      return res.status(500).json({ error: 'Email service not configured' });
+      return sendErrorResponse(res, 500, 'Email service not configured', 'メール送信サービスが設定されていません。');
     }
 
     // リクエストボディの解析
-    let body = req.body;
-    if (typeof body === 'string') {
-      try {
-        body = JSON.parse(body);
-      } catch (parseError) {
-        console.error('JSON parsing error:', parseError);
-        return res.status(400).json({ error: 'Invalid JSON format' });
-      }
+    const body = parseRequestBody(req);
+
+    // バリデーション
+    const validationResult = contactSchema.safeParse(body);
+    if (!validationResult.success) {
+      return sendErrorResponse(res, 400, 'Validation failed', '入力データに問題があります。', validationResult.error.errors);
     }
 
-    const { name, email, category, message } = body;
-
-    // 必須フィールドの検証
-    if (!name || !email || !category || !message) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: name, email, category, message' 
-      });
-    }
+    const { name, email, category, message } = validationResult.data;
+    const resend = getResendClient();
 
     // メール送信
     const emailData = await resend.emails.send({
@@ -62,17 +58,9 @@ module.exports = async function handler(req, res) {
 
     console.log('Email sent successfully:', emailData.data?.id);
 
-    return res.status(200).json({ 
-      success: true, 
-      message: 'お問い合わせを受け付けました。',
-      emailId: emailData.data?.id 
-    });
+    return sendSuccessResponse(res, 'お問い合わせを受け付けました。', { emailId: emailData.data?.id });
 
   } catch (error) {
-    console.error('Contact form error:', error);
-    return res.status(500).json({ 
-      error: 'Internal server error',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
+    return sendErrorResponse(res, 500, 'Internal server error', 'お問い合わせの処理中にエラーが発生しました。', error.message);
   }
 };
