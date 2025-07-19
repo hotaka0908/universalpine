@@ -2,12 +2,13 @@
   "name": "universalpine",
   "version": "1.0.0",
   "description": "Universal Pine company website",
+  "type": "module",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "build": "echo 'Build completed successfully'",
     "start": "http-server homepage",
     "dev": "http-server homepage -p 3000",
-    "build": "npm install",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "audit": "npm audit",
     "audit:fix": "npm audit fix"
   },
@@ -30,5 +31,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hotaka0908/universalpine.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
