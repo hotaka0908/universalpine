@@ -77,11 +77,16 @@ function sendSuccessResponse(res, message, data = null) {
 const applySchema = z.object({
   name: z.string().min(1, 'お名前は必須です'),
   email: z.string().email('有効なメールアドレスを入力してください'),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  position: z.string().optional(),
-  experience: z.string().optional(),
-  reason: z.string().min(1, '応募理由は必須です')
+  phone: z.string().min(1, '電話番号は必須です'),
+  postal_code: z.string().min(1, '郵便番号は必須です'),
+  address_line1: z.string().min(1, '住所は必須です'),
+  address_line2: z.string().optional(),
+  position: z.string().min(1, '希望職種は必須です'),
+  message: z.string().optional(),
+  privacy: z.string().optional(),
+  csrf_token: z.string().optional(),
+  resume: z.any().optional(),
+  portfolio: z.any().optional()
 });
 
 module.exports = async function handler(req, res) {
@@ -110,7 +115,7 @@ module.exports = async function handler(req, res) {
       return sendErrorResponse(res, 400, 'Validation failed', '入力データに問題があります。', validationResult.error.errors);
     }
 
-    const { name, email, phone, company, position, experience, reason } = validationResult.data;
+    const { name, email, phone, postal_code, address_line1, address_line2, position, message } = validationResult.data;
     const resend = getResendClient();
 
     // メール送信
@@ -122,12 +127,12 @@ module.exports = async function handler(req, res) {
         <h2>応募フォームからの申し込み</h2>
         <p><strong>お名前:</strong> ${name}</p>
         <p><strong>メールアドレス:</strong> ${email}</p>
-        <p><strong>電話番号:</strong> ${phone || '未入力'}</p>
-        <p><strong>所属企業:</strong> ${company || '未入力'}</p>
-        <p><strong>役職:</strong> ${position || '未入力'}</p>
-        <p><strong>経験年数:</strong> ${experience || '未入力'}</p>
-        <p><strong>応募理由:</strong></p>
-        <p>${reason.replace(/\n/g, '<br>')}</p>
+        <p><strong>電話番号:</strong> ${phone}</p>
+        <p><strong>郵便番号:</strong> ${postal_code}</p>
+        <p><strong>住所:</strong> ${address_line1}</p>
+        ${address_line2 ? `<p><strong>住所2:</strong> ${address_line2}</p>` : ''}
+        <p><strong>希望職種:</strong> ${position}</p>
+        ${message ? `<p><strong>メッセージ:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>` : ''}
         <hr>
         <p><small>このメッセージは、universalpine.comの応募フォームから送信されました。</small></p>
       `,
