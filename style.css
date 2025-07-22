@@ -1448,7 +1448,7 @@ footer {
 
   /* スマホ版でのアコーディオン本文のスタイル調整 */
   .accordion-content p {
-    font-weight: bold;
+    font-weight: normal;
     font-size: 0.85rem;
     padding: calc(var(--spacing-unit) * 0.3) 0;
     color: var(--text-color);
