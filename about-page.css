@@ -891,3 +891,87 @@
         font-size: 0.8rem;
     }
 }
+
+/* Latest Message Header */
+.latest-message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Past Messages List */
+.past-messages-list {
+    max-width: 600px;
+    margin: 2rem auto 0;
+}
+
+.past-message-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.past-message-item:hover {
+    background-color: #f9fafb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.past-message-date {
+    color: #6b7280;
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.past-message-title {
+    margin: 0;
+    flex: 1;
+}
+
+.past-message-title a {
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.past-message-title a:hover {
+    color: #2563eb;
+}
+
+/* Responsive Design for Past Messages */
+@media (max-width: 768px) {
+    .latest-message-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .past-message-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .past-message-date {
+        min-width: auto;
+        font-size: 0.8rem;
+    }
+    
+    .past-message-title a {
+        font-size: 1.1rem;
+    }
+}
