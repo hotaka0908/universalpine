@@ -336,7 +336,7 @@
     }
     
     .hero-banner h1 {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
     
     .hero-banner .tagline {
@@ -449,7 +449,7 @@
     }
     
     .hero-banner h1 {
-        font-size: 2rem;
+        font-size: 1.2rem;
     }
     
     .section-title {
@@ -989,7 +989,7 @@
 /* 小さなスマートフォン向けの追加レスポンシブ対応 */
 @media (max-width: 480px) {
     .hero-banner h1 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         line-height: 1.2;
     }
     
