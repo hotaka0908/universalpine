@@ -348,6 +348,10 @@
         margin-bottom: calc(var(--spacing-unit) * 2);
     }
     
+    .philosophy-heading {
+        font-size: 1.6rem;
+    }
+    
     .detail-row {
         grid-template-columns: 1fr;
         gap: 5px;
@@ -457,7 +461,7 @@
     }
     
     .philosophy-heading {
-        font-size: 2rem;
+        font-size: 1.4rem;
     }
     
     .founder-name {
