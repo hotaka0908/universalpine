@@ -141,13 +141,16 @@
     <!-- Latest Message Full Content -->
     <section class="section bg-light">
         <div class="container">
+            <div class="latest-message-header">
+                <div class="message-date">2025年7月22日</div>
+                <span class="latest-badge">最新</span>
+            </div>
             <div class="main-image-container">
                 <img src="../images/main2.jpg" alt="代表取締役社長 船橋穂天" class="main-image">
             </div>
             <div class="message-container">
                 <div class="message-content">
                     <div class="message-text">
-                        <div class="message-date">2025年7月22日</div>
                         <h2 class="message-title">夢は大きく地道にコツコツ</h2>
                         <p>人は大きな夢を持つことが大事です。</p>
                         <p>「空を飛びたい」「馬より早く走りたい」「月に行きたい」
