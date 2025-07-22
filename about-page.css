@@ -72,7 +72,7 @@
 .section-title {
     text-align: center;
     margin-bottom: calc(var(--spacing-unit) * 4);
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -118,7 +118,7 @@
 }
 
 .philosophy-heading {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     margin: 0 0 calc(var(--spacing-unit) * 2);
     color: var(--primary-color);
     font-weight: 700;
@@ -336,7 +336,7 @@
     }
     
     .hero-banner h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
     }
     
     .hero-banner .tagline {
@@ -587,7 +587,7 @@
 
 .company-logo h2 {
     font-family: 'Open Sans', sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
     margin: 0;
@@ -973,5 +973,18 @@
     
     .past-message-title a {
         font-size: 1.1rem;
+    }
+}
+
+/* 小さなスマートフォン向けの追加レスポンシブ対応 */
+@media (max-width: 480px) {
+    .hero-banner h1 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .hero-banner {
+        height: 200px;
+        padding: 15px;
     }
 }
