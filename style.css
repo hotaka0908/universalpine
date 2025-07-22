@@ -1446,6 +1446,15 @@ footer {
     text-align: center;
   }
 
+  /* スマホ版でのアコーディオン本文のスタイル調整 */
+  .accordion-content p {
+    font-weight: bold;
+    font-size: 0.85rem;
+    padding: calc(var(--spacing-unit) * 0.3) 0;
+    color: var(--text-color);
+    line-height: 1.3;
+  }
+
   header .container {
     flex-direction: row;
     padding: calc(var(--spacing-unit) * 1);
