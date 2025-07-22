@@ -62,7 +62,7 @@
 
 /* Section Styling */
 .section {
-    padding: calc(var(--spacing-unit) * 6) 0;
+    padding: calc(var(--spacing-unit) * 1) 0;
 }
 
 .section.bg-light {
