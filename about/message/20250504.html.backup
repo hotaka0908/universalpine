@@ -135,18 +135,29 @@
         <div class="container">
             <span class="section-label">CEO MESSAGE</span>
             <h1>代表メッセージ</h1>
+            <p class="date">2025年5月4日</p>
         </div>
     </section>
+
+    <!-- Message Navigation -->
+    <section class="message-navigation">
+        <div class="container">
+            <a href="../message.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                メッセージ一覧に戻る
+            </a>
+        </div>
+    </section>
+
     <!-- CEO Message Section -->
     <section class="section bg-light">
         <div class="container">
             <div class="main-image-container">
-                <img src="../../images/message302.jpg" alt="代表取締役社長 船橋穂天" class="main-image">
+                <img src="../../images/main2.jpg" alt="代表取締役社長 船橋穂天" class="main-image">
             </div>
             <div class="message-container">
                 <div class="message-content">
                     <div class="message-text">
-                        <div class="message-date">2025年5月4日</div>
                         <h2 class="message-title">人類の転換期</h2>
                         <p>今は人類の転換期だと感じてます。</p>
                         <p>ぼくが初めてAIを触った時の感動は今でも忘れません。
