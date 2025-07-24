@@ -151,7 +151,8 @@
 
 .values-list li {
     margin-bottom: calc(var(--spacing-unit) * 1);
-        text-align: center;    line-height: 1.6;
+        text-align: center;
+    line-height: 1.6;
 }
 
 /* Main Image Styling */
@@ -428,7 +429,8 @@
     .founder-title {
         font-size: 1rem;
         margin-bottom: calc(var(--spacing-unit) * 1);
-        text-align: center;    }
+        text-align: center;
+    }
     
     .main-image-container {
         margin: 0 auto;
@@ -990,7 +992,8 @@
         padding: calc(var(--spacing-unit) * 0.3) 0;
         line-height: 1.3;
         margin-bottom: calc(var(--spacing-unit) * 1);
-        text-align: center;    }
+        text-align: center;
+    }
 }
 
 /* 小さなスマートフォン向けの追加レスポンシブ対応 */
