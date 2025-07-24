@@ -159,7 +159,7 @@
     margin: 0 auto;
     margin-top: 0;
     margin-bottom: 0;
-    padding: 0;
+    padding: 10px 15px;
     text-align: center;
     border: 1px solid #eee;
 }
@@ -430,7 +430,7 @@
     
     .main-image-container {
         margin: 0 auto;
-        padding: 0;
+        padding: 8px 12px;
     }
     
     .company-details-container,
@@ -993,7 +993,7 @@
 /* 小さなスマートフォン向けの追加レスポンシブ対応 */
 @media (max-width: 480px) {
     .hero-banner h1 {
-        font-size: 1.2rem;
+        font-size: 0.9rem;
         line-height: 1.2;
     }
     
