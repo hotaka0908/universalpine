@@ -1,7 +1,7 @@
 /* Product Page Specific Styles */
 
 /* Video Player */
-.inline-video {
+.inline-video, .inline-image {
     object-fit: contain;
     max-width: 100%;
     height: auto;
@@ -666,5 +666,37 @@
     .timeline-content::before {
         left: -40px;
         width: 40px;
+    }
+}
+
+/* Hero Image Responsive Sizing */
+.inline-image {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* タブレット向け調整 */
+@media (max-width: 992px) {
+    .inline-image {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .inline-image {
+        max-width: 400px;
+    }
+}
+
+/* スマートフォン向け調整 */
+@media (max-width: 480px) {
+    .inline-image {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 360px) {
+    .inline-image {
+        max-width: 250px;
     }
 }
