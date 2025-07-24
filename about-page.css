@@ -151,7 +151,7 @@
 
 .values-list li {
     margin-bottom: calc(var(--spacing-unit) * 1);
-    line-height: 1.6;
+        text-align: center;    line-height: 1.6;
 }
 
 /* Main Image Styling */
@@ -211,6 +211,7 @@
 .message-text p {
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     line-height: 1.8;
+    text-align: center;
 }
 
 /* CEO signature styles moved to unified section above */
@@ -427,7 +428,7 @@
     .founder-title {
         font-size: 1rem;
         margin-bottom: calc(var(--spacing-unit) * 1);
-    }
+        text-align: center;    }
     
     .main-image-container {
         margin: 0 auto;
@@ -574,6 +575,7 @@
 .timeline-content p {
     font-size: 1rem;
     line-height: 1.6;
+    text-align: center;
 }
 
 /* Company Logo Styling */
@@ -988,7 +990,7 @@
         padding: calc(var(--spacing-unit) * 0.3) 0;
         line-height: 1.3;
         margin-bottom: calc(var(--spacing-unit) * 1);
-    }
+        text-align: center;    }
 }
 
 /* 小さなスマートフォン向けの追加レスポンシブ対応 */
@@ -1013,4 +1015,10 @@
 /* Philosophy Content Category */
 .philosophy-content-category {
     margin-top: calc(var(--spacing-unit) * 1);
+    text-align: center;
+}
+
+/* Company Details Text Alignment */
+.detail-content {
+    text-align: center;
 }
