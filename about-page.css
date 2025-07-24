@@ -442,7 +442,7 @@
     .message-container,
     .timeline-container {
         padding: calc(var(--spacing-unit) * 2);
-        margin: 20px 0;
+        margin: 20px auto;
     }
     
     .company-logo-image {
@@ -510,7 +510,7 @@
     .message-container,
     .timeline-container {
         padding: calc(var(--spacing-unit) * 1.5);
-        margin: 15px 0;
+        margin: 15px auto;
     }
     
     .company-logo-image {
