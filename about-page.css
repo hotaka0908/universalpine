@@ -1002,3 +1002,14 @@
         padding: 15px;
     }
 }
+
+/* Philosophy Title Category */
+.philosophy-title-category {
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+/* Philosophy Content Category */
+.philosophy-content-category {
+    margin-top: calc(var(--spacing-unit) * 1);
+}
