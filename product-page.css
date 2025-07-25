@@ -567,6 +567,7 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
+    text-align: center;
 }
 
 @keyframes gradientWave {
@@ -599,6 +600,7 @@
     position: relative;
     margin-bottom: calc(var(--spacing-unit) * 3);
     padding-left: 180px;
+    text-align: center;
 }
 
 .timeline-date {
@@ -612,6 +614,7 @@
 
 .timeline-content {
     position: relative;
+    text-align: center;
 }
 
 @keyframes gradientWaveHorizontal {
@@ -648,6 +651,7 @@
 .timeline-content h3 {
     margin-bottom: calc(var(--spacing-unit) * 1);
     color: var(--accent-color);
+    text-align: center;
 }
 
 /* 現在のアイテムのスタイル */
@@ -755,11 +759,12 @@
     
     .timeline-item {
         padding-left: 70px;
+        text-align: center;
     }
     
     .timeline-date {
         width: auto;
-        text-align: left;
+        text-align: center;
         left: 45px;
         top: -25px;
         font-size: 0.9rem;
@@ -768,6 +773,14 @@
     .timeline-content::before {
         left: -40px;
         width: 40px;
+    }
+    
+    .timeline-content {
+        text-align: center;
+    }
+    
+    .timeline-content h3 {
+        text-align: center;
     }
 }
 
