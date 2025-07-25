@@ -554,6 +554,7 @@
 .development-report {
     padding: calc(var(--spacing-unit) * 6) 0;
     background-color: var(--light-bg);
+    text-align: center;
 }
 
 .development-report h2 {
