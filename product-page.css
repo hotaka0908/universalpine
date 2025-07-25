@@ -74,7 +74,7 @@
 .hero-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     max-width: 95vw;
     margin: 0 auto;
@@ -160,7 +160,7 @@
     font-size: 64px;
     font-weight: 700;
     margin-bottom: 32px;
-    text-align: center;
+    text-align: left;
     color: #333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -468,10 +468,12 @@
 
     .product-hero h1 {
         font-size: 2.5rem;
+        text-align: left;
     }
 
     .product-hero h2 {
         font-size: 2.5rem;
+        text-align: left;
     }
 
     .product-hero .tagline {
@@ -511,10 +513,12 @@
 
     .product-hero h1 {
         font-size: 2rem;
+        text-align: left;
     }
 
     .product-hero h2 {
         font-size: 2rem;
+        text-align: left;
     }
 
     .product-hero .tagline {
