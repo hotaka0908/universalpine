@@ -237,22 +237,24 @@
 }
 
 .hero-lead {
-    font-size: 18px;
+    font-size: 28px;
     max-width: 600px;
-    margin: 0 auto 16px;
+    margin: 0 0 16px 0;
     color: #333;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 600;
+    text-align: left;
 }
 
 .hero-content p {
-    font-size: 16px;
+    font-size: 22px;
     max-width: 600px;
-    margin: 0 auto 12px;
+    margin: 0 0 12px 0;
     color: #333;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     line-height: 1.5;
+    text-align: left;
 }
 
 .hero-content p:last-of-type {
@@ -475,6 +477,16 @@
         font-size: 2.5rem;
         text-align: left;
     }
+    
+    .hero-lead {
+        font-size: 24px;
+        text-align: left;
+    }
+    
+    .hero-content p {
+        font-size: 20px;
+        text-align: left;
+    }
 
     .product-hero .tagline {
         font-size: 1.2rem;
@@ -518,6 +530,16 @@
 
     .product-hero h2 {
         font-size: 2rem;
+        text-align: left;
+    }
+    
+    .hero-lead {
+        font-size: 20px;
+        text-align: left;
+    }
+    
+    .hero-content p {
+        font-size: 18px;
         text-align: left;
     }
 
