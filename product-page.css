@@ -588,7 +588,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 140px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 6px;
     background: linear-gradient(to bottom, #ff0000, #ff9900, #ffff00, #33cc33, #3399ff, #9933ff, #ff0000);
     background-size: 100% 400%;
@@ -600,22 +601,27 @@
 .timeline-item {
     position: relative;
     margin-bottom: calc(var(--spacing-unit) * 3);
-    padding-left: 180px;
+    padding-left: 0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .timeline-date {
-    position: absolute;
-    left: 0;
-    width: 100px;
-    text-align: right;
+    position: relative;
+    width: auto;
+    text-align: center;
     font-weight: 700;
     color: #000000;
+    margin-bottom: 10px;
 }
 
 .timeline-content {
     position: relative;
     text-align: center;
+    width: 100%;
+    max-width: 600px;
 }
 
 @keyframes gradientWaveHorizontal {
@@ -634,12 +640,13 @@
 .timeline-content::before {
     content: '';
     position: absolute;
-    left: -40px;
+    left: 50%;
     top: 15px;
     width: 30px;
     height: 3px;
     background-color: #000000;
     border-radius: 2px;
+    transform: translateX(-50%);
 }
 
 /* 現在進行中の項目の接続線 */
@@ -755,29 +762,34 @@
 
 @media (max-width: 768px) {
     .timeline::before {
-        left: 30px;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .timeline-item {
-        padding-left: 70px;
+        padding-left: 0;
         text-align: center;
     }
     
     .timeline-date {
         width: auto;
         text-align: center;
-        left: 45px;
-        top: -25px;
+        position: relative;
+        left: auto;
+        top: auto;
         font-size: 0.9rem;
+        margin-bottom: 10px;
     }
     
     .timeline-content::before {
-        left: -40px;
+        left: 50%;
         width: 40px;
+        transform: translateX(-50%);
     }
     
     .timeline-content {
         text-align: center;
+        max-width: 500px;
     }
     
     .timeline-content h3 {
