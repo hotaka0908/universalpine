@@ -80,7 +80,7 @@
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    padding: 0 5px;
+    padding: 0 20px;
 }
 
 /* Hero Cards */
@@ -824,11 +824,19 @@
     .product-hero {
         padding: 60px 0;
     }
+    
+    .hero-content {
+        padding: 0 18px;
+    }
 }
 
 @media (max-width: 480px) {
     .product-hero {
         padding: 40px 0;
+    }
+    
+    .hero-content {
+        padding: 0 15px;
     }
 }
 
