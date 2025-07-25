@@ -181,14 +181,17 @@
     top: 50%;
     transform: translateY(-50%);
     writing-mode: vertical-rl;
-    text-orientation: mixed;
+    text-orientation: upright;
     font-size: 6rem;
     font-weight: 700;
     color: #333;
     text-shadow: 3px 3px 12px rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     z-index: 10;
     pointer-events: none;
+    white-space: nowrap;
+    width: auto;
+    height: auto;
 }
 
 .hero-subtitle {
@@ -749,7 +752,7 @@
     .hero-text-overlay {
         font-size: 4.8rem;
         right: 3%;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.08em;
     }
 }
 
@@ -758,6 +761,7 @@
         font-size: 3.5rem;
         right: 2%;
         text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.9);
+        letter-spacing: 0.05em;
     }
 }
 
@@ -765,6 +769,7 @@
     .hero-text-overlay {
         font-size: 2.8rem;
         right: 2%;
+        letter-spacing: 0.03em;
     }
 }
 
