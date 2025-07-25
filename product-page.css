@@ -194,6 +194,39 @@
     height: auto;
 }
 
+/* Character Animation Styles */
+.hero-text-overlay span {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: inline-block;
+}
+
+/* Hover Animation - Characters appear one by one */
+.hero-video:hover .hero-text-overlay .char-1 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+
+.hero-video:hover .hero-text-overlay .char-2 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+
+.hero-video:hover .hero-text-overlay .char-3 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.8s;
+}
+
+.hero-video:hover .hero-text-overlay .char-4 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 1.1s;
+}
+
 .hero-subtitle {
     font-size: 64px;
     font-weight: 700;
