@@ -568,21 +568,9 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
-    text-align: center;
 }
 
-@keyframes gradientWave {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 0% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-
+/* タイムライン中央線 */
 .timeline::before {
     content: '';
     position: absolute;
@@ -598,50 +586,50 @@
     animation: gradientWave 8s ease infinite;
 }
 
+@keyframes gradientWave {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 .timeline-item {
     position: relative;
     margin-bottom: calc(var(--spacing-unit) * 3);
-    padding-left: 0;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .timeline-date {
-    position: relative;
-    width: auto;
-    text-align: center;
     font-weight: 700;
     color: #000000;
     margin-bottom: 10px;
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 .timeline-content {
     position: relative;
-    text-align: center;
     width: 100%;
     max-width: 600px;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
-@keyframes gradientWaveHorizontal {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 0%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-
-/* 接続線 - 標準 */
+/* 接続線 */
 .timeline-content::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 15px;
+    top: -15px;
     width: 30px;
     height: 3px;
     background-color: #000000;
@@ -651,9 +639,15 @@
 
 /* 現在進行中の項目の接続線 */
 .timeline-item.current .timeline-content::before {
-    background: linear-gradient(to right, rgba(255, 0, 0, 0.7), rgba(255, 153, 0, 0.7), rgba(255, 255, 0, 0.7), rgba(51, 204, 51, 0.7), rgba(51, 153, 255, 0.7), rgba(153, 51, 255, 0.7), rgba(255, 0, 0, 0.7));
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.7), rgba(255, 153, 0, 0.7), rgba(255, 255, 0, 0.7), rgba(51, 204, 51, 0.7), rgba(51, 153, 255, 0.7), rgba(153, 51, 255, 0.7));
     background-size: 400% 100%;
     animation: gradientWaveHorizontal 6s ease infinite;
+}
+
+@keyframes gradientWaveHorizontal {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 0%; }
+    100% { background-position: 0% 0%; }
 }
 
 .timeline-content h3 {
@@ -662,12 +656,9 @@
     text-align: center;
 }
 
-/* 現在のアイテムのスタイル */
 .timeline-item.current .timeline-content h3 {
     font-weight: bold;
 }
-
-/* 現在進行中マーカー */
 .current-marker {
     display: inline-block;
     background-color: #000000;
@@ -760,40 +751,24 @@
     font-size: 1.5rem;
 }
 
+/* タイムライン モバイル対応 */
 @media (max-width: 768px) {
-    .timeline::before {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .timeline-item {
-        padding-left: 0;
-        text-align: center;
+    .timeline {
+        padding: 0 15px;
     }
     
     .timeline-date {
-        width: auto;
-        text-align: center;
-        position: relative;
-        left: auto;
-        top: auto;
         font-size: 0.9rem;
-        margin-bottom: 10px;
-    }
-    
-    .timeline-content::before {
-        left: 50%;
-        width: 40px;
-        transform: translateX(-50%);
+        padding: 6px 12px;
     }
     
     .timeline-content {
-        text-align: center;
         max-width: 500px;
+        padding: 15px;
     }
     
-    .timeline-content h3 {
-        text-align: center;
+    .timeline-content::before {
+        width: 25px;
     }
 }
 
