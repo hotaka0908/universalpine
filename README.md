@@ -4,6 +4,37 @@ AI技術を活用した革新的なネックレス型ウェアラブルデバイ
 
 **本番URL**: [https://universalpine.com](https://universalpine.com)
 
+## ⚠️ Vercel 設定ルール
+
+### vercel.json ルーティングパターン
+
+**✅ 推奨パターン (OK)**
+```json
+{
+  "source": "/api/:path*",           // 正確なAPI routes
+  "source": "/:path*.(css|js)",      // ファイル拡張子指定
+  "source": "/(.*)",                 // 汎用パターン
+}
+```
+
+**❌ 避けるべきパターン (NG)**
+```json
+{
+  "source": "/api/(.*)",             // 正規表現は使用不可
+  "source": "/(.*\\.(css|js))",      // エスケープ文字は使用不可
+  "source": "/complex/regex/.*"      // 複雑な正規表現は使用不可
+}
+```
+
+### 修正例
+```json
+// 修正前 (NG)
+"source": "/(.*\\.(css|js))"
+
+// 修正後 (OK)  
+"source": "/:path*.(css|js)"
+```
+
 ## 🚀 プロジェクト概要
 
 Universal Pineは、AI技術を活用して人々の生活をより良くすることをミッションとする企業です。このプロジェクトは、静的HTMLとNode.js APIを組み合わせたハイブリッド構成で構築されています。
