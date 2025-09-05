@@ -445,6 +445,16 @@
         margin: 20px auto;
     }
     
+    .timeline {
+        padding-left: calc(var(--spacing-unit) * 2);
+    }
+    
+    .timeline-item::before {
+        left: -22px;
+        width: 12px;
+        height: 12px;
+    }
+    
     .company-logo-image {
         max-width: 250px;
     }
@@ -513,6 +523,33 @@
         margin: 15px auto;
     }
     
+    .timeline {
+        padding-left: calc(var(--spacing-unit) * 1.5);
+    }
+    
+    .timeline-item::before {
+        left: -18px;
+        width: 10px;
+        height: 10px;
+    }
+    
+    .timeline-date {
+        font-size: 0.85rem;
+        padding: 3px 8px;
+    }
+    
+    .timeline-content {
+        padding: calc(var(--spacing-unit) * 1);
+    }
+    
+    .timeline-content h4 {
+        font-size: 1rem;
+    }
+    
+    .timeline-content p {
+        font-size: 0.9rem;
+    }
+    
     .company-logo-image {
         max-width: 200px;
     }
@@ -564,20 +601,38 @@
 }
 
 .timeline-date {
-    font-weight: 600;
-    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
     color: var(--primary-color);
+    background-color: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 12px;
+    display: inline-block;
+    border: 1px solid #e9ecef;
+}
+
+.timeline-content {
+    background-color: #fafafa;
+    padding: calc(var(--spacing-unit) * 1.5);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    margin-top: calc(var(--spacing-unit) * 0.5);
 }
 
 .timeline-content h4 {
-    font-size: 1.2rem;
-    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 0.75);
+    color: var(--primary-color);
 }
 
 .timeline-content p {
-    font-size: 1rem;
-    line-height: 1.6;
-    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    text-align: left;
+    margin: 0;
 }
 
 /* Company Logo Styling */
