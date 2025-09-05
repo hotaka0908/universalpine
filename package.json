@@ -9,9 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "audit": "npm audit",
-    "audit:fix": "npm audit fix",
-    "test": "node tests/api-basic-test.js",
-    "test:api": "node tests/api-basic-test.js"
+    "audit:fix": "npm audit fix"
   },
   "keywords": [
     "website",
