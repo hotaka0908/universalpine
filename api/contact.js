@@ -57,7 +57,6 @@ function parseRequestBody(req) {
 }
 
 function sendErrorResponse(res, statusCode, error, message, details = null) {
-  console.error('API Error:', error);
   return res.status(statusCode).json({
     error: error,
     message: message,
@@ -127,7 +126,6 @@ module.exports = async function handler(req, res) {
       `,
     });
 
-    console.log('Email sent successfully:', emailData.data?.id);
 
     return sendSuccessResponse(res, 'お問い合わせを受け付けました。', { emailId: emailData.data?.id });
 

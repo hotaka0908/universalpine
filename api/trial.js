@@ -132,7 +132,6 @@ ${data.message || 'なし'}
     // Resendを使用してメールを送信
     if (!isResendConfigured()) {
       console.warn('RESEND_API_KEY が設定されていません。メールは送信されません。');
-      console.log('フォームデータ:', emailBody);
       return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。（開発モード）');
     }
 
@@ -154,7 +153,6 @@ ${data.message || 'なし'}
         throw new Error('メール送信に失敗しました');
       }
 
-      console.log('メール送信成功:', emailData);
 
       // 申込者にも確認メールを送信
       const confirmationEmail = `
@@ -191,7 +189,6 @@ Universal Pine
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       // メール送信に失敗してもフォーム送信は成功とする（ユーザーエクスペリエンスのため）
-      console.log('フォームデータ:', emailBody);
       return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。（メール送信エラー）');
     }
 

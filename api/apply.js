@@ -138,7 +138,6 @@ module.exports = async function handler(req, res) {
       `,
     });
 
-    console.log('Application email sent successfully:', emailData.data?.id);
 
     return sendSuccessResponse(res, '応募を受け付けました。', { emailId: emailData.data?.id });
 

@@ -14,9 +14,6 @@ function addNewNews(date, title, category = 'info', categoryText = 'お知らせ
     // NewsManagerが利用可能な場合、自動的に追加
     if (window.NewsManager) {
         window.NewsManager.addNews(newsItem);
-        console.log('新しいニュースが追加されました:', newsItem);
-    } else {
-        console.error('NewsManagerが見つかりません');
     }
 }
 

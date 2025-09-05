@@ -1,9 +1,6 @@
-console.log('Apply.js script loaded');
 
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('DOMContentLoaded event fired');
   const applyForm = document.getElementById('apply-form');
-  console.log('Apply form element:', applyForm);
 
   if (!applyForm) {
     console.error('Apply form not found');
@@ -12,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // バリデーション関数（お問い合わせフォームと同じパターン）
   function validateForm() {
-    console.log('validateForm called');
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -21,19 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const position = document.getElementById('position').value;
     const privacy = document.getElementById('privacy').checked;
     
-    console.log('Validation values:');
-    console.log('- name:', `"${name}"`, 'length:', name.length);
-    console.log('- email:', `"${email}"`, 'length:', email.length);
-    console.log('- phone:', `"${phone}"`, 'length:', phone.length);
-    console.log('- postalCode:', `"${postalCode}"`, 'length:', postalCode.length);
-    console.log('- addressLine1:', `"${addressLine1}"`, 'length:', addressLine1.length);
-    console.log('- position:', `"${position}"`);
-    console.log('- privacy:', privacy);
 
     // エラーメッセージをクリア
-    console.log('Clearing error messages');
     document.querySelectorAll('.error-message').forEach(el => {
-      console.log('Clearing error element:', el.id, 'current text:', el.textContent);
       el.textContent = '';
       el.style.display = 'none';
     });
@@ -107,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.validateForm = validateForm;
   
   applyForm.addEventListener('submit', async function (e) {
-    console.log('Form submit event triggered');
     e.preventDefault();
 
     // バリデーションチェック
@@ -128,8 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
       // プライバシーポリシーのチェック状態を確実に送信
       data.privacy = document.getElementById('privacy').checked ? 'on' : '';
 
-      console.log('送信データ:', data);
-      console.log('APIエンドポイント:', '/api/apply');
 
       let response;
       try {
@@ -141,18 +124,12 @@ document.addEventListener('DOMContentLoaded', function () {
           body: JSON.stringify(data)
         });
       } catch (fetchError) {
-        console.log('API endpoint not available (network error), simulating success for development');
-        console.log('Application form data that would be sent:', data);
         window.location.href = '/thanks.html';
         return;
       }
 
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (response.status === 404) {
-        console.log('API endpoint not available (404), simulating success for development');
-        console.log('Application form data that would be sent:', data);
         
         submitButton.disabled = false;
         submitButton.textContent = '応募する';
@@ -168,8 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       const result = await response.json();
-      console.log('Response data:', result);
-      console.log('送信成功:', result);
       window.location.href = '/thanks.html';
 
     } catch (error) {
