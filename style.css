@@ -1803,8 +1803,9 @@ footer {
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease;
     z-index: 1000;
-    padding: 4rem 1rem 1rem;
+    padding: 4rem 1rem 2rem;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   .mobile-nav.active {
     right: 0;
@@ -1842,8 +1843,10 @@ footer {
   }
   .mobile-nav .dropdown.active .dropdown-content {
     display: block;
-    max-height: 200px;
+    max-height: 400px;
     padding: 0.5rem 0 0.5rem 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
