@@ -290,26 +290,13 @@
 .founder-profile {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--spacing-unit) * 1);
 }
 
-.profile-item {
-    display: flex;
-    align-items: flex-start;
-    gap: calc(var(--spacing-unit) * 1);
-}
-
-.profile-label {
-    flex: 0 0 80px;
-    font-weight: 600;
-    color: var(--primary-color);
-    font-size: 0.9rem;
-}
-
-.profile-value {
-    flex: 1;
-    font-size: 0.95rem;
-    line-height: 1.6;
+.founder-bio {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: calc(var(--spacing-unit) * 1.2);
+    text-align: left;
     color: var(--text-color);
 }
 
@@ -332,19 +319,9 @@
         height: 192px;
     }
 
-    .profile-item {
-        flex-direction: column;
-        gap: calc(var(--spacing-unit) * 0.3);
-        text-align: left;
-    }
-
-    .profile-label {
-        flex: none;
-        font-weight: 700;
-    }
-
-    .profile-value {
+    .founder-bio {
         font-size: 0.9rem;
+        margin-bottom: calc(var(--spacing-unit) * 1);
     }
 }
 
