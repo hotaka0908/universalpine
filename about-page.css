@@ -228,6 +228,11 @@
     max-width: none;
 }
 
+.message-text p * {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
 /* CEO signature styles moved to unified section above */
 
 /* Founders Styling */
