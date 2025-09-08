@@ -382,13 +382,7 @@
     }
     
     .timeline {
-        padding-left: calc(var(--spacing-unit) * 2);
-    }
-    
-    .timeline-item::before {
-        left: -22px;
-        width: 12px;
-        height: 12px;
+        padding-left: 0;
     }
     
     .company-logo-image {
@@ -437,22 +431,11 @@
     }
     
     .timeline {
-        padding-left: calc(var(--spacing-unit) * 1.5);
-    }
-    
-    .timeline-item::before {
-        left: -18px;
-        width: 10px;
-        height: 10px;
+        padding-left: 0;
     }
     
     .timeline-date {
         font-size: 0.85rem;
-        padding: 3px 8px;
-    }
-    
-    .timeline-content {
-        padding: calc(var(--spacing-unit) * 1);
     }
     
     .timeline-content h4 {
@@ -479,18 +462,7 @@
 }
 
 .timeline {
-    position: relative;
-    padding-left: calc(var(--spacing-unit) * 3);
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 10px;
-    width: 2px;
-    background-color: var(--light-bg);
+    padding-left: 0;
 }
 
 .timeline-item {
@@ -502,34 +474,15 @@
     margin-bottom: 0;
 }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -30px;
-    top: 5px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-}
 
 .timeline-date {
     font-weight: 700;
     font-size: 0.9rem;
     margin-bottom: calc(var(--spacing-unit) * 0.75);
     color: var(--primary-color);
-    background-color: #f8f9fa;
-    padding: 4px 12px;
-    border-radius: 12px;
-    display: inline-block;
-    border: 1px solid #e9ecef;
 }
 
 .timeline-content {
-    background-color: #fafafa;
-    padding: calc(var(--spacing-unit) * 1.5);
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-color);
     margin-top: calc(var(--spacing-unit) * 0.5);
 }
 
