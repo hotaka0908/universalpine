@@ -400,6 +400,10 @@
         padding: 15px;
     }
     
+    .section-label {
+        font-size: 16px;
+    }
+    
     .hero-banner h1 {
         font-size: 1.2rem;
     }
