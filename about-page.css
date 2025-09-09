@@ -332,6 +332,10 @@
         padding: 20px;
     }
     
+    .section-label {
+        font-size: 16px;
+    }
+    
     .hero-banner h1 {
         font-size: 1.4rem;
     }
