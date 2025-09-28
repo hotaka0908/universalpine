@@ -1092,16 +1092,6 @@ nav a:hover {
   margin-bottom: 0;
 }
 
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -30px;
-  top: 5px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-}
 
 .timeline-date {
   font-weight: 600;
