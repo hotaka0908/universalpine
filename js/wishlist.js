@@ -107,9 +107,7 @@
             const newCount = Math.min(currentCount + 1, MAX_WISHLIST_CLICKS);
             setStoredClickCount(newCount);
 
-            const reachedLimit = newCount >= MAX_WISHLIST_CLICKS;
-
-            if (reachedLimit) {
+            if (newCount >= MAX_WISHLIST_CLICKS) {
                 showMessage('押せる上限は5回です。', 'info');
                 button.disabled = true;
                 button.classList.add('clicked');
