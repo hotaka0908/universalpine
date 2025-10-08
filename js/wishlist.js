@@ -7,6 +7,36 @@
         : 'https://universalpine.com';
 
     const WISHLIST_API_URL = `${API_BASE_URL}/api/wishlist-count`;
+    const MAX_WISHLIST_CLICKS = 5;
+    const WISHLIST_CLICK_COUNT_KEY = 'wishlist_click_count';
+    const LEGACY_WISHLIST_KEY = 'wishlist_clicked';
+
+    function getStoredClickCount() {
+        const storedValue = localStorage.getItem(WISHLIST_CLICK_COUNT_KEY);
+        if (!storedValue) {
+            return 0;
+        }
+
+        const parsed = parseInt(storedValue, 10);
+        if (Number.isNaN(parsed) || parsed < 0) {
+            return 0;
+        }
+
+        return Math.min(parsed, MAX_WISHLIST_CLICKS);
+    }
+
+    function setStoredClickCount(count) {
+        localStorage.setItem(WISHLIST_CLICK_COUNT_KEY, String(count));
+    }
+
+    function migrateLegacyWishlistState() {
+        if (localStorage.getItem(LEGACY_WISHLIST_KEY) === 'true') {
+            if (!localStorage.getItem(WISHLIST_CLICK_COUNT_KEY)) {
+                setStoredClickCount(1);
+            }
+            localStorage.removeItem(LEGACY_WISHLIST_KEY);
+        }
+    }
 
     // ページロード時にカウントを取得して表示
     async function loadWishlistCount() {
@@ -43,9 +73,14 @@
     async function handleWishlistClick() {
         const button = document.getElementById('wishlist-button');
 
-        // 既にクリック済みかチェック（localStorage使用）
-        if (localStorage.getItem('wishlist_clicked') === 'true') {
-            showMessage('既に「欲しい」を押しています', 'info');
+        migrateLegacyWishlistState();
+
+        const currentCount = getStoredClickCount();
+
+        // 既に最大回数に到達しているかチェック
+        if (currentCount >= MAX_WISHLIST_CLICKS) {
+            button.disabled = true;
+            button.classList.add('clicked');
             return;
         }
 
@@ -68,10 +103,15 @@
             const data = await response.json();
             updateCountDisplay(data.count);
 
-            // クリック済みをlocalStorageに保存
-            localStorage.setItem('wishlist_clicked', 'true');
+            const newCount = Math.min(currentCount + 1, MAX_WISHLIST_CLICKS);
+            setStoredClickCount(newCount);
 
             showMessage('ありがとうございます！', 'success');
+
+            if (newCount < MAX_WISHLIST_CLICKS) {
+                button.disabled = false;
+                button.classList.remove('clicked');
+            }
 
         } catch (error) {
             console.error('Error updating wishlist:', error);
@@ -115,7 +155,11 @@
         }
 
         // 既にクリック済みの場合、ボタンのスタイルを変更
-        if (localStorage.getItem('wishlist_clicked') === 'true') {
+        migrateLegacyWishlistState();
+
+        const storedCount = getStoredClickCount();
+
+        if (storedCount >= MAX_WISHLIST_CLICKS) {
             button.classList.add('clicked');
             button.disabled = true;
         }
