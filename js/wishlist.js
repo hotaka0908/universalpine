@@ -97,7 +97,9 @@
                     fetch(WISHLIST_API_URL)
                         .then(res => res.json())
                         .then(data => updateCountDisplay(data.count))
-                        .catch(() => countElement.textContent = originalText);
+                        .catch(() => {
+                            countElement.textContent = originalText;
+                        });
                 }, 500);
             }
         }, 2000);
