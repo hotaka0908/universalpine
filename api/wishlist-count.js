@@ -1,4 +1,10 @@
-const { kv } = require('@vercel/kv');
+const { createClient } = require('@vercel/kv');
+
+// KV client with custom prefix support
+const kv = createClient({
+  url: process.env.kv_KV_REST_API_URL || process.env.KV_REST_API_URL,
+  token: process.env.kv_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
 // CORS設定
 function setCorsHeaders(res) {
