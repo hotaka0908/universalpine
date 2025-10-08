@@ -35,7 +35,7 @@
         const countElement = document.getElementById('wishlist-count');
         if (countElement) {
             const formattedCount = count.toLocaleString('ja-JP');
-            countElement.textContent = `${formattedCount}人が欲しいと思っています`;
+            countElement.textContent = `${formattedCount}人が欲しいと思っています。`;
         }
     }
 
