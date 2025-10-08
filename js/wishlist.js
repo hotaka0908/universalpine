@@ -81,6 +81,7 @@
         if (currentCount >= MAX_WISHLIST_CLICKS) {
             button.disabled = true;
             button.classList.add('clicked');
+            showMessage('押せる上限は5回です。', 'info');
             return;
         }
 
@@ -106,9 +107,12 @@
             const newCount = Math.min(currentCount + 1, MAX_WISHLIST_CLICKS);
             setStoredClickCount(newCount);
 
-            showMessage('ありがとうございます！', 'success');
-
-            if (newCount < MAX_WISHLIST_CLICKS) {
+            if (newCount >= MAX_WISHLIST_CLICKS) {
+                showMessage('押せる上限は5回です。', 'info');
+                button.disabled = true;
+                button.classList.add('clicked');
+            } else {
+                showMessage('ありがとうございます！', 'success');
                 button.disabled = false;
                 button.classList.remove('clicked');
             }
