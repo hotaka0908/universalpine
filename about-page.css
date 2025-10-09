@@ -395,9 +395,9 @@
     }
     
     .hero-banner h1 {
-        font-size: 1.2rem;
+        font-size: 2rem;
     }
-    
+
     .section-title {
         font-size: 1.8rem;
         margin-top: calc(var(--spacing-unit) * 1.5);
@@ -928,17 +928,7 @@
 }
 
 /* 小さなスマートフォン向けの追加レスポンシブ対応 */
-@media (max-width: 480px) {
-    .hero-banner h1 {
-        font-size: 0.9rem;
-        line-height: 1.2;
-    }
-    
-    .hero-banner {
-        height: 200px;
-        padding: 15px;
-    }
-}
+/* 重複削除: .hero-banner スタイルは上の @media (max-width: 480px) で定義済み */
 
 /* Philosophy Title Category */
 .philosophy-title-category {
