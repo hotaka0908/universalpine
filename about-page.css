@@ -181,7 +181,6 @@
     border-radius: 12px;
     padding: calc(var(--spacing-unit) * 2.5);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    border-left: 4px solid var(--primary-color);
 }
 
 .message-content {
@@ -209,15 +208,6 @@
 .message-text {
     width: 100%;
 }
-
-.message-date {
-    color: var(--primary-color);
-    margin-bottom: calc(var(--spacing-unit) * 1);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-
 
 .message-text p {
     margin-bottom: calc(var(--spacing-unit) * 1.2);
@@ -412,8 +402,6 @@
         font-size: 1.8rem;
         margin-top: calc(var(--spacing-unit) * 1.5);
         margin-bottom: calc(var(--spacing-unit) * 1.5);
-    }        margin-top: calc(var(--spacing-unit) * 1.5);
-        font-size: 1.4rem;
     }
     
     
@@ -471,6 +459,11 @@
 
 .timeline {
     padding-left: 0;
+}
+
+/* 縦線を非表示 */
+.timeline::before {
+    display: none;
 }
 
 .timeline-item {
