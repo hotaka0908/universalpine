@@ -60,6 +60,30 @@
     text-align: center;
 }
 
+.inspiration-section {
+    margin: 6rem 0;
+    background-color: #f8f8f8;
+}
+
+.inspiration-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 5rem 8vw;
+}
+
+.inspiration-inner p {
+    font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.8;
+    color: #111;
+    text-align: left;
+    margin-bottom: 2.5rem;
+}
+
+.inspiration-inner p:last-child {
+    margin-bottom: 0;
+}
+
 .job-list {
     margin-top: 40px;
     max-width: 900px;
@@ -192,6 +216,19 @@
     
     .accordion-header h3 {
         font-size: 1.1rem;
+    }
+
+    .inspiration-section {
+        margin: 4rem 0;
+    }
+
+    .inspiration-inner {
+        padding: 3.5rem 6vw;
+    }
+
+    .inspiration-inner p {
+        font-size: clamp(1.1rem, 4.5vw, 1.8rem);
+        margin-bottom: 1.8rem;
     }
     
     .accordion-content {
