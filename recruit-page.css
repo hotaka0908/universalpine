@@ -59,6 +59,14 @@
     display: inline;
 }
 
+/* Tablet and mobile: intentional line break for better readability */
+@media (max-width: 768px) {
+    .mission-heading .mission-first,
+    .mission-heading .mission-second {
+        display: block;
+    }
+}
+
 .vision-box p {
     line-height: 1.8;
     margin-bottom: 0;
@@ -241,11 +249,6 @@
 @media (max-width: 480px) {
     .recruit-hero {
         padding: 60px 0;
-    }
-
-    .mission-heading .mission-first,
-    .mission-heading .mission-second {
-        display: block;
     }
 
     .recruit-hero h1 {
