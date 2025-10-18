@@ -54,6 +54,19 @@
     text-align: center;
 }
 
+.mission-heading .mission-first,
+.mission-heading .mission-second {
+    display: inline;
+}
+
+/* Tablet and mobile: intentional line break for better readability */
+@media (max-width: 768px) {
+    .mission-heading .mission-first,
+    .mission-heading .mission-second {
+        display: block;
+    }
+}
+
 .vision-box p {
     line-height: 1.8;
     margin-bottom: 0;
@@ -237,7 +250,7 @@
     .recruit-hero {
         padding: 60px 0;
     }
-    
+
     .recruit-hero h1 {
         font-size: 1.8rem;
     }
