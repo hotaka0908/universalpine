@@ -54,6 +54,11 @@
     text-align: center;
 }
 
+.mission-heading .mission-first,
+.mission-heading .mission-second {
+    display: inline;
+}
+
 .vision-box p {
     line-height: 1.8;
     margin-bottom: 0;
@@ -237,7 +242,12 @@
     .recruit-hero {
         padding: 60px 0;
     }
-    
+
+    .mission-heading .mission-first,
+    .mission-heading .mission-second {
+        display: block;
+    }
+
     .recruit-hero h1 {
         font-size: 1.8rem;
     }
