@@ -33,6 +33,6 @@
     "url": "git+https://github.com/hotaka0908/universalpine.git"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.x"
   }
 }

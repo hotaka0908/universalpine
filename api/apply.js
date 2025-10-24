@@ -19,6 +19,17 @@ function isResendConfigured() {
   return !!process.env.RESEND_API_KEY;
 }
 
+// HTML escape function to prevent XSS
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Common helper functions
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -122,17 +133,17 @@ module.exports = async function handler(req, res) {
     const emailData = await resend.emails.send({
       from: 'apply@universalpine.com',
       to: ['ho@universalpine.com'],
-      subject: `【応募フォーム】${name}様より`,
+      subject: `【応募フォーム】${escapeHtml(name)}様より`,
       html: `
         <h2>応募フォームからの申し込み</h2>
-        <p><strong>お名前:</strong> ${name}</p>
-        <p><strong>メールアドレス:</strong> ${email}</p>
-        <p><strong>電話番号:</strong> ${phone}</p>
-        <p><strong>郵便番号:</strong> ${postal_code}</p>
-        <p><strong>住所:</strong> ${address_line1}</p>
-        ${address_line2 ? `<p><strong>住所2:</strong> ${address_line2}</p>` : ''}
-        <p><strong>希望職種:</strong> ${position}</p>
-        ${message ? `<p><strong>メッセージ:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>` : ''}
+        <p><strong>お名前:</strong> ${escapeHtml(name)}</p>
+        <p><strong>メールアドレス:</strong> ${escapeHtml(email)}</p>
+        <p><strong>電話番号:</strong> ${escapeHtml(phone)}</p>
+        <p><strong>郵便番号:</strong> ${escapeHtml(postal_code)}</p>
+        <p><strong>住所:</strong> ${escapeHtml(address_line1)}</p>
+        ${address_line2 ? `<p><strong>住所2:</strong> ${escapeHtml(address_line2)}</p>` : ''}
+        <p><strong>希望職種:</strong> ${escapeHtml(position)}</p>
+        ${message ? `<p><strong>メッセージ:</strong></p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>` : ''}
         <hr>
         <p><small>このメッセージは、universalpine.comの応募フォームから送信されました。</small></p>
       `,

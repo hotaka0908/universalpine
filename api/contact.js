@@ -19,6 +19,17 @@ function isResendConfigured() {
   return !!process.env.RESEND_API_KEY;
 }
 
+// HTML escape function to prevent XSS
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Common helper functions
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,6 +68,7 @@ function parseRequestBody(req) {
 }
 
 function sendErrorResponse(res, statusCode, error, message, details = null) {
+  console.error('API Error:', error);
   return res.status(statusCode).json({
     error: error,
     message: message,
@@ -113,14 +125,14 @@ module.exports = async function handler(req, res) {
     const emailData = await resend.emails.send({
       from: 'contact@universalpine.com',
       to: ['ho@universalpine.com'],
-      subject: `【お問い合わせ】${category} - ${name}様より`,
+      subject: `【お問い合わせ】${escapeHtml(category)} - ${escapeHtml(name)}様より`,
       html: `
         <h2>お問い合わせフォームからのメッセージ</h2>
-        <p><strong>お名前:</strong> ${name}</p>
-        <p><strong>メールアドレス:</strong> ${email}</p>
-        <p><strong>カテゴリ:</strong> ${category}</p>
+        <p><strong>お名前:</strong> ${escapeHtml(name)}</p>
+        <p><strong>メールアドレス:</strong> ${escapeHtml(email)}</p>
+        <p><strong>カテゴリ:</strong> ${escapeHtml(category)}</p>
         <p><strong>メッセージ:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
         <hr>
         <p><small>このメッセージは、universalpine.comのお問い合わせフォームから送信されました。</small></p>
       `,

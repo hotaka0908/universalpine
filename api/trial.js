@@ -19,6 +19,17 @@ function isResendConfigured() {
   return !!process.env.RESEND_API_KEY;
 }
 
+// HTML escape function to prevent XSS
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Common helper functions
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -142,9 +153,9 @@ ${data.message || 'なし'}
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: 'Universal Pine <noreply@universalpine.com>',
         to: ['ho@universalpine.com'],
-        subject: `プロジェクト体験申込 - ${data.name}`,
+        subject: `プロジェクト体験申込 - ${escapeHtml(data.name)}`,
         text: emailBody,
-        html: emailBody.replace(/\n/g, '<br>'),
+        html: escapeHtml(emailBody).replace(/\n/g, '<br>'),
         reply_to: data.email
       });
 
@@ -181,7 +192,7 @@ Universal Pine
         to: [data.email],
         subject: 'プロジェクト体験お申し込み確認',
         text: confirmationEmail,
-        html: confirmationEmail.replace(/\n/g, '<br>')
+        html: escapeHtml(confirmationEmail).replace(/\n/g, '<br>')
       });
 
       return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。確認メールをお送りいたします。', { emailId: emailData?.id });
