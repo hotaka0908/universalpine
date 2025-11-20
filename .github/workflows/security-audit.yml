@@ -35,7 +35,7 @@ jobs:
 
       - name: Generate audit report
         if: always()
-        run: npm audit --json > npm-audit-report.json
+        run: npm audit --json > npm-audit-report.json || true
 
       - name: Upload audit report
         if: always()
