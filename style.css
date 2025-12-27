@@ -605,7 +605,7 @@ nav a:hover {
 
 /* Careers Section */
 .careers-simple {
-  background-image: url("images/careers.jpg");
+  background-image: url("images/careers.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -744,7 +744,7 @@ nav a:hover {
 
 /* Contact Simple Section */
 .contact-simple {
-  background-image: url("images/contact_bg.jpeg");
+  background-image: url("images/contact_bg.webp");
   background-size: cover;
   background-position: center;
   position: relative;
