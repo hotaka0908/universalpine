@@ -6,9 +6,20 @@ const kv = createClient({
   token: process.env.kv_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
 });
 
+// 許可するオリジンのリスト
+const ALLOWED_ORIGINS = [
+  'https://universalpine.com',
+  'https://www.universalpine.com'
+];
+
 // CORS設定
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+function setCorsHeaders(res, req) {
+  const origin = req?.headers?.origin;
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', 'https://universalpine.com');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
@@ -16,7 +27,7 @@ function setCorsHeaders(res) {
 // OPTIONSリクエストの処理
 function handleOptions(req, res) {
   if (req.method === 'OPTIONS') {
-    setCorsHeaders(res);
+    setCorsHeaders(res, req);
     return res.status(200).end();
   }
   return false;
@@ -62,7 +73,7 @@ async function checkRateLimit(identifier) {
 
 module.exports = async function handler(req, res) {
   // CORS設定
-  setCorsHeaders(res);
+  setCorsHeaders(res, req);
 
   // OPTIONSリクエストの処理
   if (handleOptions(req, res)) return;

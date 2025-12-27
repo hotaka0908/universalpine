@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body.style.overflow = 'hidden';
         body.style.position = 'fixed';
         body.style.width = '100%';
-        menuToggle.innerHTML = '✕';
+        menuToggle.textContent = '✕';
         
         // ARIA属性の更新
         menuToggle.setAttribute('aria-expanded', true);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body.style.overflow = '';
         body.style.position = '';
         body.style.width = '';
-        menuToggle.innerHTML = '☰';
+        menuToggle.textContent = '☰';
         
         // ARIA属性の更新
         menuToggle.setAttribute('aria-expanded', false);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!link.querySelector('.dropdown-icon')) {
             const icon = document.createElement('span');
             icon.className = 'dropdown-icon';
-            icon.innerHTML = '〉';
+            icon.textContent = '〉';
             link.appendChild(icon);
         }
         

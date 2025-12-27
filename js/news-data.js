@@ -43,18 +43,40 @@ function getLatestNews(count = 3) {
         .slice(0, count);
 }
 
-// ニュースHTMLを生成
-function generateNewsHTML(news) {
-    return `
-        <div class="news-entry">
-            <a href="${news.url}" class="news-link">
-                <span class="news-date">${news.date}</span>
-                <span class="news-title">${news.title}</span>
-                <span class="news-category ${news.category}">${news.categoryText}</span>
-                <span class="news-arrow"><i class="fas fa-chevron-right"></i></span>
-            </a>
-        </div>
-    `;
+// ニュースDOM要素を生成（XSS対策としてDOM APIを使用）
+function createNewsElement(news) {
+    const entry = document.createElement('div');
+    entry.className = 'news-entry';
+
+    const link = document.createElement('a');
+    link.href = news.url;
+    link.className = 'news-link';
+
+    const date = document.createElement('span');
+    date.className = 'news-date';
+    date.textContent = news.date;
+
+    const title = document.createElement('span');
+    title.className = 'news-title';
+    title.textContent = news.title;
+
+    const category = document.createElement('span');
+    category.className = `news-category ${news.category}`;
+    category.textContent = news.categoryText;
+
+    const arrow = document.createElement('span');
+    arrow.className = 'news-arrow';
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-chevron-right';
+    arrow.appendChild(icon);
+
+    link.appendChild(date);
+    link.appendChild(title);
+    link.appendChild(category);
+    link.appendChild(arrow);
+    entry.appendChild(link);
+
+    return entry;
 }
 
 // ニュースセクションを更新
@@ -63,8 +85,14 @@ function updateNewsSection() {
     if (!newsList) return;
 
     const latestNews = getLatestNews(3);
-    const newsHTML = latestNews.map(generateNewsHTML).join('');
-    newsList.innerHTML = newsHTML;
+
+    // 既存の内容をクリア
+    newsList.textContent = '';
+
+    // DOM要素を追加
+    latestNews.forEach(news => {
+        newsList.appendChild(createNewsElement(news));
+    });
 }
 
 // 新しいニュースを追加

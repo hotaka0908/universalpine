@@ -30,16 +30,27 @@ function escapeHtml(unsafe) {
     .replace(/'/g, '&#039;');
 }
 
+// 許可するオリジンのリスト
+const ALLOWED_ORIGINS = [
+  'https://universalpine.com',
+  'https://www.universalpine.com'
+];
+
 // Common helper functions
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+function setCorsHeaders(res, req) {
+  const origin = req?.headers?.origin;
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', 'https://universalpine.com');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 function handleOptions(req, res) {
   if (req.method === 'OPTIONS') {
-    setCorsHeaders(res);
+    setCorsHeaders(res, req);
     return res.status(200).end();
   }
   return false;
@@ -105,7 +116,10 @@ const applySchema = z.object({
 function isSpamBot(body) {
   // If honeypot field has any value, it's likely a bot
   if (body.honeypot && body.honeypot.trim() !== '') {
-    console.log('Spam detected: honeypot field filled');
+    // 本番環境ではログを抑制
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Spam detected: honeypot field filled');
+    }
     return true;
   }
   return false;
@@ -113,7 +127,7 @@ function isSpamBot(body) {
 
 module.exports = async function handler(req, res) {
   // CORS設定
-  setCorsHeaders(res);
+  setCorsHeaders(res, req);
 
   // OPTIONSリクエストの処理
   if (handleOptions(req, res)) return;

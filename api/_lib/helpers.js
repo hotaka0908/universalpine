@@ -13,9 +13,21 @@ function escapeHtml(unsafe) {
     .replace(/'/g, '&#039;');
 }
 
+// 許可するオリジンのリスト
+const ALLOWED_ORIGINS = [
+  'https://universalpine.com',
+  'https://www.universalpine.com'
+];
+
 // CORS設定
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+function setCorsHeaders(res, req) {
+  const origin = req?.headers?.origin;
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    // デフォルトは本番ドメイン
+    res.setHeader('Access-Control-Allow-Origin', 'https://universalpine.com');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
@@ -23,7 +35,7 @@ function setCorsHeaders(res) {
 // OPTIONSリクエストの処理
 function handleOptions(req, res) {
   if (req.method === 'OPTIONS') {
-    setCorsHeaders(res);
+    setCorsHeaders(res, req);
     return res.status(200).end();
   }
   return false;
