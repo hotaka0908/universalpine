@@ -92,8 +92,19 @@ const trialSchema = z.object({
   time: z.string().min(1, '時間は必須です'),
   participants: z.string(),
   interests: z.string().min(1, '関心のある職種を選択してください'),
-  message: z.string().optional()
+  message: z.string().optional(),
+  honeypot: z.string().optional()
 });
+
+// Honeypot spam detection
+function isSpamBot(body) {
+  // If honeypot field has any value, it's likely a bot
+  if (body.honeypot && body.honeypot.trim() !== '') {
+    console.log('Spam detected: honeypot field filled');
+    return true;
+  }
+  return false;
+}
 
 module.exports = async function handler(req, res) {
   // CORS設定
@@ -108,6 +119,12 @@ module.exports = async function handler(req, res) {
   try {
     // リクエストボディの解析
     const body = parseRequestBody(req);
+
+    // スパムボット検出（ハニーポット）
+    if (isSpamBot(body)) {
+      // ボットには成功したように見せかける（再試行を防ぐため）
+      return sendSuccessResponse(res, 'プロジェクト体験の申し込みを受け付けました。');
+    }
 
     // バリデーション
     const validationResult = trialSchema.safeParse(body);

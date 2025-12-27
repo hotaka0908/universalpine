@@ -89,8 +89,19 @@ const contactSchema = z.object({
   name: z.string().min(1, 'お名前は必須です'),
   email: z.string().email('有効なメールアドレスを入力してください'),
   category: z.string().min(1, 'カテゴリは必須です'),
-  message: z.string().min(1, 'メッセージは必須です')
+  message: z.string().min(1, 'メッセージは必須です'),
+  honeypot: z.string().optional()
 });
+
+// Honeypot spam detection
+function isSpamBot(body) {
+  // If honeypot field has any value, it's likely a bot
+  if (body.honeypot && body.honeypot.trim() !== '') {
+    console.log('Spam detected: honeypot field filled');
+    return true;
+  }
+  return false;
+}
 
 module.exports = async function handler(req, res) {
   // CORS設定
@@ -111,6 +122,12 @@ module.exports = async function handler(req, res) {
 
     // リクエストボディの解析
     const body = parseRequestBody(req);
+
+    // スパムボット検出（ハニーポット）
+    if (isSpamBot(body)) {
+      // ボットには成功したように見せかける（再試行を防ぐため）
+      return sendSuccessResponse(res, 'お問い合わせを受け付けました。');
+    }
 
     // バリデーション
     const validationResult = contactSchema.safeParse(body);

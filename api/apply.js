@@ -97,8 +97,19 @@ const applySchema = z.object({
   privacy: z.string().optional(),
   csrf_token: z.string().optional(),
   resume: z.any().optional(),
-  portfolio: z.any().optional()
+  portfolio: z.any().optional(),
+  honeypot: z.string().optional()
 });
+
+// Honeypot spam detection
+function isSpamBot(body) {
+  // If honeypot field has any value, it's likely a bot
+  if (body.honeypot && body.honeypot.trim() !== '') {
+    console.log('Spam detected: honeypot field filled');
+    return true;
+  }
+  return false;
+}
 
 module.exports = async function handler(req, res) {
   // CORS設定
@@ -119,6 +130,12 @@ module.exports = async function handler(req, res) {
 
     // リクエストボディの解析
     const body = parseRequestBody(req);
+
+    // スパムボット検出（ハニーポット）
+    if (isSpamBot(body)) {
+      // ボットには成功したように見せかける（再試行を防ぐため）
+      return sendSuccessResponse(res, '応募を受け付けました。');
+    }
 
     // バリデーション
     const validationResult = applySchema.safeParse(body);
