@@ -319,6 +319,13 @@ nav a:hover {
   padding: calc(var(--spacing-unit) * 4) 0;
 }
 
+/* Hide news section on mobile (index.html only) */
+@media (max-width: 768px) {
+  #news {
+    display: none;
+  }
+}
+
 /* News Item Styles */
 .news-item {
   display: flex;
