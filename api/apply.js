@@ -104,11 +104,10 @@ const applySchema = z.object({
   address_line1: z.string().min(1, '住所は必須です'),
   address_line2: z.string().optional(),
   position: z.string().min(1, '希望職種は必須です'),
+  documents: z.string().optional(),
   message: z.string().optional(),
   privacy: z.string().optional(),
   csrf_token: z.string().optional(),
-  resume: z.any().optional(),
-  portfolio: z.any().optional(),
   honeypot: z.string().optional()
 });
 
@@ -157,7 +156,7 @@ module.exports = async function handler(req, res) {
       return sendErrorResponse(res, 400, 'Validation failed', '入力データに問題があります。', validationResult.error.errors);
     }
 
-    const { name, email, phone, postal_code, address_line1, address_line2, position, message } = validationResult.data;
+    const { name, email, phone, postal_code, address_line1, address_line2, position, documents, message } = validationResult.data;
     const resend = getResendClient();
 
     // メール送信
@@ -174,7 +173,8 @@ module.exports = async function handler(req, res) {
         <p><strong>住所:</strong> ${escapeHtml(address_line1)}</p>
         ${address_line2 ? `<p><strong>住所2:</strong> ${escapeHtml(address_line2)}</p>` : ''}
         <p><strong>希望職種:</strong> ${escapeHtml(position)}</p>
-        ${message ? `<p><strong>メッセージ:</strong></p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>` : ''}
+        ${documents ? `<p><strong>履歴書・職務経歴書:</strong></p><p>${escapeHtml(documents).replace(/\n/g, '<br>')}</p>` : ''}
+        ${message ? `<p><strong>応募する理由:</strong></p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>` : ''}
         <hr>
         <p><small>このメッセージは、universalpine.comの応募フォームから送信されました。</small></p>
       `,

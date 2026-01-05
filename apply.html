@@ -110,7 +110,7 @@
             <h2 class="section-title">応募フォーム</h2>
             <!-- 説明文を削除 -->
             
-            <form id="apply-form" class="apply-form" method="post" enctype="multipart/form-data" autocomplete="on">
+            <form id="apply-form" class="apply-form" method="post" autocomplete="on">
                 <!-- CSRF Protection Token -->
                 <input type="hidden" name="csrf_token" id="csrf_token" value="">
                 <!-- ハニーポットトラップ（スパム対策） -->
@@ -166,22 +166,15 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="resume">履歴書</label>
-                    <input type="file" id="resume" name="resume">
-                    <p class="form-note">PDFまたはWord形式でアップロードしてください。（任意）</p>
+                    <label for="documents">履歴書・職務経歴書</label>
+                    <textarea id="documents" name="documents" rows="3" placeholder="Googleドライブ等の共有リンクをご記載ください。"></textarea>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="portfolio">職務経歴書</label>
-                    <input type="file" id="portfolio" name="portfolio">
-                    <p class="form-note">PDFまたはWord形式でアップロードしてください。（任意）</p>
+                    <label for="message">応募する理由</label>
+                    <textarea id="message" name="message" rows="5" placeholder="300字以内でご入力ください。"></textarea>
                 </div>
-                
-                <div class="form-group">
-                    <label for="message">応募先へのメッセージ</label>
-                    <textarea id="message" name="message" rows="5" placeholder="※AIを80%活用し、300字程度でご入力ください。"></textarea>
-                </div>
-                
+
                 <div class="form-group checkbox-group">
                     <div class="privacy-check-container">
                         <input type="checkbox" id="privacy" name="privacy" required>
