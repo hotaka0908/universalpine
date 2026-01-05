@@ -59,11 +59,11 @@
     display: inline;
 }
 
-/* Tablet and mobile: intentional line break for better readability */
+/* Keep mission text on one line on mobile */
 @media (max-width: 768px) {
     .mission-heading .mission-first,
     .mission-heading .mission-second {
-        display: block;
+        display: inline;
     }
 }
 
