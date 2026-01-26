@@ -200,8 +200,6 @@
     color: var(--primary-color);
     margin-bottom: calc(var(--spacing-unit) * 2);
     font-weight: 600;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: calc(var(--spacing-unit) * 0.8);
     display: inline-block;
 }
 
