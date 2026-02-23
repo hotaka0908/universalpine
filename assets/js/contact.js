@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     } catch (error) {
       console.error('送信エラー:', error);
-      alert(`送信に失敗しました: ${error.message}`);
+      alert('送信に失敗しました。しばらく時間をおいてから再度お試しください。');
       
       // 送信ボタンを再有効化
       submitButton.disabled = false;

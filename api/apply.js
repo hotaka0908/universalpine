@@ -97,15 +97,15 @@ function sendSuccessResponse(res, message, data = null) {
 
 // Validation schema
 const applySchema = z.object({
-  name: z.string().min(1, 'お名前は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  phone: z.string().min(1, '電話番号は必須です'),
-  postal_code: z.string().min(1, '郵便番号は必須です'),
-  address_line1: z.string().min(1, '住所は必須です'),
-  address_line2: z.string().optional(),
-  position: z.string().min(1, '希望職種は必須です'),
-  documents: z.string().optional(),
-  message: z.string().optional(),
+  name: z.string().min(1, 'お名前は必須です').max(100, 'お名前は100文字以内で入力してください'),
+  email: z.string().email('有効なメールアドレスを入力してください').max(254, 'メールアドレスが長すぎます'),
+  phone: z.string().min(1, '電話番号は必須です').max(20, '電話番号が長すぎます'),
+  postal_code: z.string().min(1, '郵便番号は必須です').max(10, '郵便番号が長すぎます'),
+  address_line1: z.string().min(1, '住所は必須です').max(200, '住所は200文字以内で入力してください'),
+  address_line2: z.string().max(200, '住所は200文字以内で入力してください').optional(),
+  position: z.string().min(1, '希望職種は必須です').max(50, '希望職種は50文字以内で入力してください'),
+  documents: z.string().max(10000, 'ドキュメントが長すぎます').optional(),
+  message: z.string().max(5000, 'メッセージは5000文字以内で入力してください').optional(),
   privacy: z.string().optional(),
   csrf_token: z.string().optional(),
   honeypot: z.string().optional()

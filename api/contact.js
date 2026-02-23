@@ -97,10 +97,10 @@ function sendSuccessResponse(res, message, data = null) {
 
 // Validation schema
 const contactSchema = z.object({
-  name: z.string().min(1, 'お名前は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  category: z.string().min(1, 'カテゴリは必須です'),
-  message: z.string().min(1, 'メッセージは必須です'),
+  name: z.string().min(1, 'お名前は必須です').max(100, 'お名前は100文字以内で入力してください'),
+  email: z.string().email('有効なメールアドレスを入力してください').max(254, 'メールアドレスが長すぎます'),
+  category: z.string().min(1, 'カテゴリは必須です').max(50, 'カテゴリは50文字以内で入力してください'),
+  message: z.string().min(1, 'メッセージは必須です').max(5000, 'メッセージは5000文字以内で入力してください'),
   honeypot: z.string().optional()
 });
 
