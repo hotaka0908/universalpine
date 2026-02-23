@@ -97,13 +97,13 @@ function sendSuccessResponse(res, message, data = null) {
 
 // Validation schema
 const trialSchema = z.object({
-  name: z.string().min(1, '名前は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  date: z.string().min(1, '日付は必須です'),
-  time: z.string().min(1, '時間は必須です'),
-  participants: z.string(),
-  interests: z.string().min(1, '関心のある職種を選択してください'),
-  message: z.string().optional(),
+  name: z.string().min(1, '名前は必須です').max(100, '名前は100文字以内で入力してください'),
+  email: z.string().email('有効なメールアドレスを入力してください').max(254, 'メールアドレスが長すぎます'),
+  date: z.string().min(1, '日付は必須です').max(20, '日付の形式が不正です'),
+  time: z.string().min(1, '時間は必須です').max(20, '時間の形式が不正です'),
+  participants: z.string().max(10, '参加人数の形式が不正です'),
+  interests: z.string().min(1, '関心のある職種を選択してください').max(500, '関心のある職種は500文字以内で入力してください'),
+  message: z.string().max(5000, 'メッセージは5000文字以内で入力してください').optional(),
   honeypot: z.string().optional()
 });
 

@@ -33,10 +33,17 @@
     </script>
     
     <script type="text/javascript">
-        // URLパラメータからjob情報を取得する関数
+        // 許可する職種パラメータのホワイトリスト
+        const VALID_JOB_TYPES = ['electronics', 'ai', 'embedded', 'fullstack', 'parttime', 'other'];
+
+        // URLパラメータからjob情報を取得する関数（ホワイトリストで検証）
         function getJobParameter() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('job');
+            const jobParam = urlParams.get('job');
+            if (jobParam && VALID_JOB_TYPES.includes(jobParam)) {
+                return jobParam;
+            }
+            return null;
         }
         
         // ページ読み込み時に実行
@@ -559,7 +566,7 @@
             // 応募ボタンのリンクを更新
             const applyButton = document.querySelector('.btn-apply');
             if (applyButton) {
-                applyButton.href = `apply.html?job=${jobType}`;
+                applyButton.href = `apply.html?job=${encodeURIComponent(jobType)}`;
             }
         }
     </script>
