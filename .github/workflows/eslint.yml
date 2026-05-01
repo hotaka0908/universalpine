@@ -2,13 +2,13 @@ name: ESLint
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
     paths:
       - '**/*.js'
       - 'eslint.config.js'
       - '.github/workflows/eslint.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
     paths:
       - '**/*.js'
       - 'eslint.config.js'
