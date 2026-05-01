@@ -5,6 +5,10 @@ on:
     - cron: '0 1 1 * *' # 毎月1日の午前1時に実行（Dependabotとの重複を避けるため）
   workflow_dispatch: # 手動実行も可能
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   security-fix:
     runs-on: ubuntu-latest
