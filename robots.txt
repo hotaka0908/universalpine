@@ -1,0 +1,88 @@
+# Universal Pine - robots.txt
+# https://universalpine.com/
+
+# ----------------------------------------------------------------
+# 検索エンジン（標準クローラー）
+# ----------------------------------------------------------------
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /deploy-package/
+Disallow: /upload-package/
+Disallow: /node_modules/
+Disallow: /thanks.html
+
+# ----------------------------------------------------------------
+# AI クローラー / LLM 学習・検索エージェント（明示的に許可）
+# ----------------------------------------------------------------
+
+# OpenAI ChatGPT 学習用クローラー
+User-agent: GPTBot
+Allow: /
+
+# OpenAI ChatGPT のブラウジング / 検索エージェント
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic Claude 学習用クローラー
+User-agent: ClaudeBot
+Allow: /
+
+# Anthropic Claude のユーザーリクエスト時取得
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Google Gemini / Vertex AI 学習用
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# Common Crawl（多くの LLM 訓練データの基盤）
+User-agent: CCBot
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# DuckDuckGo の AI 連携
+User-agent: DuckAssistBot
+Allow: /
+
+# ----------------------------------------------------------------
+# Sitemap
+# ----------------------------------------------------------------
+Sitemap: https://universalpine.com/sitemap.xml

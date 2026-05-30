@@ -1,0 +1,43 @@
+# Universal Pine
+
+> Universal Pine（ユニバーサルパイン）は、AI技術を活用した革新的なネックレス型ウェアラブルデバイス「AIネックレス」を開発する日本のテクノロジー企業です。音声で操作できるAIアシスタントを身につけることで、日常生活をより豊かに、より便利にすることを目指しています。
+
+## 概要
+
+- **会社名**: Universal Pine（ユニバーサルパイン）
+- **事業内容**: AI技術を活用したウェアラブルデバイス（AIネックレス）の開発・提供
+- **主要製品**: AIネックレス（音声認識、リアルタイム翻訳、情報検索などを搭載した音声操作型AIアシスタント）
+- **理念**: AI技術で人々の生活をより良くする
+- **公式サイト**: https://universalpine.com/
+
+## 主要ページ
+
+- [トップページ](https://universalpine.com/): Universal Pineの全体像と最新情報
+- [製品情報（AIネックレス）](https://universalpine.com/product.html): AIネックレスの機能・特徴・仕様
+- [会社情報](https://universalpine.com/about.html): 企業理念、創業者紹介、沿革
+- [代表メッセージ](https://universalpine.com/about/message.html): 代表からのメッセージ
+- [プロジェクト](https://universalpine.com/project.html): 現在進行中のプロジェクト紹介
+- [ニュース一覧](https://universalpine.com/news.html): プレスリリースとお知らせ
+
+## ニュース・プレスリリース
+
+- [2025-12-26 プレスリリース](https://universalpine.com/news/press/20251226.html)
+- [2025-06-20 お知らせ](https://universalpine.com/news/info/20250620.html)
+- [2025-05-03 お知らせ](https://universalpine.com/news/info/20250503.html)
+- [2025-02-26 オフィス関連お知らせ](https://universalpine.com/news/info/20250226-office.html)
+- [2025-02-26 お知らせ](https://universalpine.com/news/info/20250226.html)
+
+## 採用情報
+
+- [採用ページ](https://universalpine.com/recruit.html): 採用情報トップ
+- [募集職種詳細](https://universalpine.com/jobsdetail.html): 募集中のポジション詳細
+- [応募フォーム](https://universalpine.com/apply.html): 採用エントリー
+
+## お問い合わせ・トライアル
+
+- [無料トライアル](https://universalpine.com/freetrial.html): AIネックレスの無料トライアル申込
+- [お問い合わせ](https://universalpine.com/contact.html): 一般お問い合わせ窓口
+
+## その他
+
+- [プライバシーポリシー](https://universalpine.com/privacy-policy.html)
