@@ -35,6 +35,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- 創業者の著書 -->
+  <url>
+    <loc>https://universalpine.com/book/ai-device.html</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- ニュース一覧 -->
   <url>
     <loc>https://universalpine.com/news.html</loc>
