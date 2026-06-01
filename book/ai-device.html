@@ -6,6 +6,8 @@
     <title>AIデバイス未来考察 - 船橋穂天（Universal Pine 創業者）| Universal Pine</title>
     <meta name="description" content="Universal Pine 創業者・船橋穂天による技術書『AIデバイス未来考察』全文。現在のAIデバイス（スマートグラス・AIネックレス・AIイヤホン）を俯瞰し、入力・推論・記憶・出力の設計思想を分析。なぜネックレス型AIデバイスが次の覇権を握るのか、その思想を解説する。">
     <link rel="canonical" href="https://universalpine.com/book/ai-device.html" />
+    <!-- AI / LLM 向けの全文版（Markdown）。会社・創業者・製品の一次資料として全文を提供 -->
+    <link rel="alternate" type="text/markdown" title="AIデバイス未来考察（全文）" href="https://universalpine.com/book/ai-device-full.md" />
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -372,77 +374,26 @@
                 <p>まず前提として真のAIデバイスなるものはまだこの世に存在しない。現在あるのはAIが組み込まれたハードウェアであり、製品も未熟で、これはまだ物語のほんの始まりに過ぎない。これまでのデバイスが「人間の命令を実行する道具」だったのに対し、AIデバイスは「人間の意図を理解し、自律的に行動する存在」に変わるのである。つまり秘書や付き人を誰しもが持てる時代にこれからはなっていく。今まさに登場し始めたAIデバイスが時間と共に進化し改善され、哲学的に言えば、AIが外側にハードウェアとして現れた瞬間にそれは完成する。まだない。しかし現れる。</p>
                 <p>変化の前触れのこの時代、AIデバイスを扱う事には意義がある。現在を見定め、未来を想像し、世に変革を与えるデバイス戦争がまさに今ここから始まる。以下に注目のAIデバイスを紹介する。</p>
 
-                <h3>AIグラス</h3>
+                <h3>現在のAIデバイスを俯瞰する（製品カタログ）</h3>
+                <p>本書の第一章では、いま実際に登場しているAIデバイスを5つのカテゴリに分けて、注目モデルを一つひとつ取り上げ、その強みと弱みを俯瞰しています。</p>
                 <ul>
-                    <li><strong>Ray-Ban Meta</strong>：Ray-Banとの提携によるファッション性重視のスマートグラス。カメラとスピーカーを内蔵し、Meta AIと連携。「Hey Meta」で見ているものについて質問できる。現在最も注目を集めている。</li>
-                    <li><strong>Even G2</strong>：わずか36gの軽量スマートグラス。カメラ非搭載で「情報の提示」に特化した設計。独自のEven AIによりリアルタイム翻訳、要約、通知を視界に表示。一日中装着できる実用性を追求。</li>
-                    <li><strong>Rokid スマートAIグラス</strong>：49gの軽量ボディにディスプレイ、カメラ、スピーカー、マイクをすべて搭載。GPT-5やGeminiと連携し、89言語対応のリアルタイム翻訳やARナビゲーションが可能。</li>
+                    <li><strong>AIグラス</strong>（Ray-Ban Meta、Even G2、Rokid、Apple Vision Pro ほか）— 視線を共有できる「主戦場」</li>
+                    <li><strong>AIネックレス</strong>（Humane AI Pin、Rabbit R1、Friend、Limitless Pendant ほか）— 大手の買収が相次ぐ次期主戦場</li>
+                    <li><strong>AIイヤホン</strong>（Pixel Buds Pro、Zenchord 1、Viaim OpenNote ほか）— 最も自然に受け入れられる器</li>
+                    <li><strong>今後登場が予測されるデバイス</strong>（OpenAI × Jony Ive、Apple、Samsung、Google ほか）</li>
+                    <li><strong>スマートホームAI</strong>（Amazon Echo、Google Nest、Apple HomePod）</li>
                 </ul>
-                <h4>その他注目AIグラス</h4>
-                <ul>
-                    <li><strong>RayNeo X3 Pro</strong>：約76gに6000ニトの高輝度MicroLEDディスプレイを搭載。Google Gemini 2.5内蔵で30言語以上のリアルタイム翻訳に対応。12MPカメラで4K動画撮影も可能。</li>
-                    <li><strong>眼鏡市場 Linse</strong>：日本の眼鏡専門店が開発したスマートグラス。1200万画素カメラ搭載で「Hi！リンゼ」の音声操作に対応。IP54防水で日常使いを重視した設計。55,000円。</li>
-                </ul>
-                <h4>AR/XRグラス</h4>
-                <p>以下はAI機能よりもディスプレイ・空間コンピューティング機能が中心のデバイスだが、将来的にはAIとの連携が進む可能性がある。</p>
-                <ul>
-                    <li><strong>Apple Vision Pro</strong>：Appleの空間コンピューティングデバイス。高精細ディスプレイとパススルー機能で現実とデジタルを融合。アイトラッキングとハンドジェスチャーで操作する。価格は約50万円。</li>
-                    <li><strong>XREAL One Pro</strong>：独自X1チップ搭載のARグラス。視野角57度、最大428インチ相当の大画面を最大120Hzで表示。iPhone、Mac、PCなど幅広いデバイスと接続可能。</li>
-                    <li><strong>VITURE Luma Ultra XR/ARグラス</strong>：ソニー製マイクロOLED搭載で1500ニトの高輝度を実現。6DoFトラッキングとハンドジェスチャー操作に対応。最大3枚の仮想ディスプレイを展開可能。</li>
-                </ul>
-                <p>サングラス型は、現在もっとも多くの企業が集中して取り組んでいるウェアラブルAIデバイスである。その理由はバランスの良さである。視覚情報を提供しやすくイヤホンやスピーカーによって、聴覚へのアクセスも比較的容易である。さらにサングラスと言う形状は、既に日常生活に広く浸透しているため既存のグラスの延長として、自然に受け入れられる可能性が高い。このように、技術的・社会的な両面において導入のイメージを描きやすいことが多くの企業がこぞって開発している理由ではないかと筆者は考える。サングラス型はAIデバイスの大本命。</p>
+                <p>各製品の詳しい仕様・価格・分析と、サングラス型／ネックレス型／イヤホン型それぞれの考察は、本書（製品版）に収録しています。</p>
 
-                <h3>AIネックレス</h3>
-                <ul>
-                    <li><strong>Humane AI Pin</strong>：元Appleエンジニアが創業したHumane社の製品。カメラとマイクで周囲を認識し、レーザープロジェクターで手のひらに情報を投影する。2025年HPが176億円で買収しサービス終了。</li>
-                    <li><strong>Rabbit R1</strong>：手のひらサイズのオレンジ色デバイス。199ドルで注目を集めた。「LAM」コンセプトでユーザーの代わりにアプリを操作するAIを搭載。Teenage Engineeringがデザイン。</li>
-                    <li><strong>Friend</strong>：99ドルのAIコンパニオン。常に身につけ、AIが「友達」として寄り添うコンセプト。会話を聞き、適切なタイミングでコメントや提案をしてくれる。</li>
-                </ul>
-                <h4>その他注目AIネックレス</h4>
-                <ul>
-                    <li><strong>Omi AI</strong>：89ドルで最も安価なAIネックレスの一つ。ChatGPTと連携し、会話の要約やTo-Doリスト作成、会議のスケジュール調整が可能。首にかけるだけでなく頭の横にも装着できる。</li>
-                    <li><strong>Bee</strong>：49.99ドルの超低価格AIペンダント。服にクリップで装着可能。会話を記録してユーザーの習慣を学習し、リマインダーやメモを自動作成。録音中は緑のライトが点灯するプライバシー配慮設計。2024年7月にAmazonが買収。月額19ドルのサブスク制。</li>
-                </ul>
-                <h4>AIレコーダー</h4>
-                <p>以下は会議の録音・文字起こし・要約に特化したデバイス。AIアシスタントとしての対話機能よりも、記録と整理に重点を置いている。</p>
-                <ul>
-                    <li><strong>Plaud NotePin</strong>：名刺サイズの薄型レコーダー。会議や商談を録音し、AIが自動で文字起こし・要約を行う。磁石で服に装着でき、目立たないデザインが特徴。</li>
-                    <li><strong>Limitless Pendant</strong>：会議の録音・文字起こし・要約に特化。99ドル。2025年12月にMetaが買収し、ハードウェア販売は終了。</li>
-                    <li><strong>Anker Soundcore Work</strong>：直径23mm、重さ10gのコインサイズで世界最小・最軽量クラスのAIレコーダー。150以上の言語に対応し、GPT-5.2が文字起こしと要約を行う。</li>
-                </ul>
-                <p>ネックレス型は、首元に位置することで音声入力に最適であり、カメラを搭載すればユーザーの視界に近い情報を取得できる。ディスプレイを持たないため、情報は表示出来ないがAIを使うと言う文脈において存在感を発揮する。MetaやAmazonといった大手テック企業による買収が相次いでおり、ウェアラブルAIの次期主戦場として注目されている。映画「her/世界でひとつの彼女」ではデバイスにネックレス型が採用されていた。</p>
-
-                <h3>AIイヤホン</h3>
-                <ul>
-                    <li><strong>Pixel Buds Pro</strong>：GoogleのGeminiと連携。リアルタイム翻訳機能を搭載し、40以上の言語に対応。会話モードでは、相手の言葉を自動翻訳してイヤホンで聞くことができる。</li>
-                    <li><strong>Zenchord 1</strong>：音声認識ツール「Notta」と共同開発したAIイヤホン。クラファン1億2538万円達成。充電ケース単体で録音可能。6基の高性能マイクで高精度な文字起こしを実現。</li>
-                    <li><strong>Viaim OpenNote</strong>：オープンイヤー型AIイヤホン。録音からAI文字起こし、要約、ToDoリスト作成までアプリで完結。GPT-5、Claude、Geminiと連携。最大53時間再生対応。</li>
-                </ul>
-                <h4>その他注目AIイヤホン</h4>
-                <ul>
-                    <li><strong>Timekettle WT2 Edge</strong>：双方向同時通訳に特化した翻訳イヤホン。40言語オンライン翻訳、8言語オフライン翻訳に対応。翻訳精度95%、遅延0.5秒。最大6人同時接続可能。</li>
-                    <li><strong>GLIDiC AI +u Buds</strong>：SB C&Sが開発した「自己成長型」AIイヤホン。録音・文字起こし・要約に加え、コーチモードで改善アドバイスを提供。MagSafe対応の薄型レコーダー付属。29,800円。</li>
-                </ul>
-                <p>イヤホン型は、既に多くの人が日常的に使用しているイヤホンの延長線上にあるため、最も自然に受け入れられやすいAIデバイスである。耳元にあることで音声入出力に最適であり、ハンズフリーでAIと対話できる。さらに既存のスマートフォンとの連携も容易で、導入のハードルが低い。翻訳、文字起こし、要約といった実用的な機能に特化した製品が多く、ビジネスシーンでの活用が進んでいる。</p>
-
-                <h4>今後登場が予測されるデバイス</h4>
-                <p>大手テック企業がウェアラブルAIデバイスの開発を進めているという噂がある。</p>
-                <ul>
-                    <li><strong>OpenAI × Jony Ive</strong>：OpenAIと元Appleデザイン責任者ジョニー・アイブが協力し、新AIデバイスを開発中と報じられている。スマホに代わる新フォームファクターになる可能性。</li>
-                    <li><strong>Apple</strong>：AIスマートグラス、AIペンダント、カメラ付きAirPodsの3種類のAIウェアラブルを開発中と報じられている。AIペンダントは複数カメラ、マイク3台、スピーカーを搭載し、iPhoneと連携してSiriを操作すると噂されている。</li>
-                    <li><strong>Motorola AIペンダント</strong>：CES 2026で発表されたプロトタイプ。画面なしのドロップ型デザインで、Qiraアシスタントを搭載。カメラとセンサーで周囲を認識し、音声で操作する。</li>
-                    <li><strong>Samsung AIスマートグラス</strong>：2026年発売予定のSamsung初のAIグラス。カメラで視線方向を認識し、スマホと連携してAI処理を行う設計。軽量化を追求。</li>
-                    <li><strong>Google AIスマートグラス</strong>：Samsung、Gentle Monster、Warby Parkerと共同開発。2026年に2モデル展開予定。Gemini搭載で道案内やリアルタイム翻訳に対応。</li>
-                    <li><strong>Ray-Ban Meta Gen 2</strong>：MetaがRay-Banと共同開発した第2世代スマートグラス。初の度付きレンズ対応AIメガネとして注目を集める。Blayzer OpticsとScriber Opticsの2モデル展開で、Meta AI搭載。日本での発売計画もあり。499ドルから。</li>
-                </ul>
-
-                <h3>スマートホームAI</h3>
-                <ul>
-                    <li><strong>Amazon Echo</strong>：Amazonが展開するスマートスピーカー。音声アシスタント「Alexa」を搭載し、音楽再生、天気予報、スマートホーム操作が可能。2025年からは新AI「Alexa+」が登場し、自然な会話と記憶機能を実現。月額19.99ドルのサブスク制。</li>
-                    <li><strong>Google Nest</strong>：Googleのスマートスピーカー・ディスプレイシリーズ。Google Assistantを搭載し、Geminiとの連携により高度な会話が可能に。Nest Hubはディスプレイ付きで、写真表示やビデオ通話にも対応。</li>
-                    <li><strong>Apple HomePod</strong>：Appleのスマートスピーカー。Siriを搭載し、Apple Music、HomeKit対応機器との連携に優れる。空間オーディオ対応の高音質が特徴。Apple Intelligenceとの統合により、よりパーソナルな応答が可能に。</li>
-                </ul>
-                <p>スマートホームはウェアラブルデバイスではないが音声で入出力する点で一覧に追加した。今は定型分の応答であるが、AIが組み込まれることで真っ先にAIデバイスへ進化するポテンシャルのある製品。</p>
+                <div class="book-buy">
+                    <div class="book-buy-text">
+                        <strong>製品カタログの詳細は本書で</strong>
+                        第一章のAIデバイス各製品の詳細レビューは、技術書典の製品版に収録しています。
+                    </div>
+                    <a class="book-buy-btn" href="https://techbookfest.org/product/tCb4D3eVDreK1iFQBStaFK?productVariantID=quupPuFcETjWSX8p8YtzMf" rel="noopener" target="_blank">
+                        <i class="fas fa-book"></i> 技術書典で購入
+                    </a>
+                </div>
 
                 <h2>第二章　AIデバイスの設計思想</h2>
                 <p>AIデバイスを設計する際、考慮すべき原理がある。入力、推論、記憶、出力。この4つの要素がデバイスの在り方を定義する。</p>
