@@ -22,7 +22,7 @@
   "dependencies": {
     "@vercel/kv": "^3.0.0",
     "resend": "^6.26.0",
-    "zod": "^4.5.4"
+    "zod": "^4.6.2"
   },
   "devDependencies": {
     "eslint": "^10.10.0",
