@@ -8,17 +8,18 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write # 作成したPRブランチで Security Audit を起動するため
 
 jobs:
   security-fix:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: 'npm'
@@ -35,18 +36,19 @@ jobs:
           git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
+        id: create-pr
         if: steps.git-check.outputs.changes == 'true'
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'fix: npm audit automatic fix'
           title: '🔒 セキュリティ修正: npm audit fix の自動適用'
           body: |
             このPRは、npm audit fixによって自動的に生成されました。
-            
+
             ## 変更内容
             - 依存パッケージの脆弱性を修正
-            
+
             ## 確認事項
             - [ ] アプリケーションが正常に動作することを確認してください
           branch: security/npm-audit-fix
@@ -55,3 +57,11 @@ jobs:
             security
             dependencies
             automated-pr
+
+      # GITHUB_TOKEN で作成したPRでは pull_request イベントのワークフローが起動せず、
+      # 必須チェック (security-audit) が報告されないままマージできなくなるため、明示的に起動する
+      - name: Run Security Audit on the PR branch
+        if: steps.create-pr.outputs.pull-request-operation == 'created' || steps.create-pr.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run security-audit.yml --ref security/npm-audit-fix
