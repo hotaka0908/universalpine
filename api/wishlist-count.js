@@ -1,4 +1,5 @@
 const { createClient } = require('@vercel/kv');
+const { checkRateLimit } = require('./_lib/rate-limit');
 
 // KV client with custom prefix support
 const kv = createClient({
@@ -49,28 +50,6 @@ function sendSuccessResponse(res, count) {
   });
 }
 
-// レート制限チェック
-async function checkRateLimit(identifier) {
-  const RATE_LIMIT_KEY = `ratelimit:wishlist:${identifier}`;
-  const MAX_REQUESTS = 10; // 10回まで
-  const WINDOW_SECONDS = 60; // 60秒間
-
-  try {
-    const requests = await kv.incr(RATE_LIMIT_KEY);
-
-    // 初回リクエスト時に有効期限を設定
-    if (requests === 1) {
-      await kv.expire(RATE_LIMIT_KEY, WINDOW_SECONDS);
-    }
-
-    return requests <= MAX_REQUESTS;
-  } catch (error) {
-    console.error('Rate limit check error:', error);
-    // エラー時は通過させる（可用性優先）
-    return true;
-  }
-}
-
 module.exports = async function handler(req, res) {
   // CORS設定
   setCorsHeaders(res, req);
@@ -90,8 +69,7 @@ module.exports = async function handler(req, res) {
     // POSTリクエスト: カウント増加
     if (req.method === 'POST') {
       // レート制限チェック（IPアドレスベース）
-      const clientIp = req.headers['x-forwarded-for']?.split(',')[0] || req.headers['x-real-ip'] || 'unknown';
-      const isAllowed = await checkRateLimit(clientIp);
+      const isAllowed = await checkRateLimit(req, 'wishlist', { max: 10, windowSeconds: 60 });
 
       if (!isAllowed) {
         return sendErrorResponse(res, 429, 'Too many requests', 'リクエストが多すぎます。しばらく時間をおいてから再度お試しください。');

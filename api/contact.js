@@ -1,99 +1,15 @@
-const { Resend } = require('resend');
 const { z } = require('zod');
-
-// Resend client management
-let resendClient = null;
-
-function getResendClient() {
-  if (!resendClient) {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      throw new Error('RESEND_API_KEY environment variable is not configured');
-    }
-    resendClient = new Resend(apiKey);
-  }
-  return resendClient;
-}
-
-function isResendConfigured() {
-  return !!process.env.RESEND_API_KEY;
-}
-
-// HTML escape function to prevent XSS
-function escapeHtml(unsafe) {
-  if (typeof unsafe !== 'string') return unsafe;
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-// 許可するオリジンのリスト
-const ALLOWED_ORIGINS = [
-  'https://universalpine.com',
-  'https://www.universalpine.com'
-];
-
-// Common helper functions
-function setCorsHeaders(res, req) {
-  const origin = req?.headers?.origin;
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  } else {
-    res.setHeader('Access-Control-Allow-Origin', 'https://universalpine.com');
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-}
-
-function handleOptions(req, res) {
-  if (req.method === 'OPTIONS') {
-    setCorsHeaders(res, req);
-    return res.status(200).end();
-  }
-  return false;
-}
-
-function validateMethod(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      error: 'Method not allowed',
-      message: 'このエンドポイントはPOSTメソッドのみサポートしています。'
-    });
-  }
-  return false;
-}
-
-function parseRequestBody(req) {
-  let body = req.body;
-  if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch (parseError) {
-      throw new Error('Invalid JSON format');
-    }
-  }
-  return body;
-}
-
-function sendErrorResponse(res, statusCode, error, message, details = null) {
-  console.error('API Error:', error);
-  return res.status(statusCode).json({
-    error: error,
-    message: message,
-    details: process.env.NODE_ENV === 'development' ? details : undefined
-  });
-}
-
-function sendSuccessResponse(res, message, data = null) {
-  return res.status(200).json({
-    success: true,
-    message: message,
-    data: data
-  });
-}
+const { getResendClient, isResendConfigured } = require('./_lib/resend-client');
+const {
+  escapeHtml,
+  setCorsHeaders,
+  handleOptions,
+  validateMethod,
+  parseRequestBody,
+  sendErrorResponse,
+  sendSuccessResponse
+} = require('./_lib/helpers');
+const { checkRateLimit } = require('./_lib/rate-limit');
 
 // Validation schema
 const contactSchema = z.object({
@@ -150,6 +66,13 @@ module.exports = async function handler(req, res) {
     }
 
     const { name, email, category, message } = validationResult.data;
+    // レート制限（IP単位: 10分間に10回まで）。ハニーポットと入力検証の後に行い、
+    // ボットや入力ミスが同じ回線（モバイル回線・社内NAT）の他の人の枠を消費しないようにする。
+    const allowed = await checkRateLimit(req, 'contact', { max: 10, windowSeconds: 600 });
+    if (!allowed) {
+      return sendErrorResponse(res, 429, 'Too many requests', '送信回数が上限に達しました。しばらく時間をおいてから再度お試しください。');
+    }
+
     const resend = getResendClient();
 
     // メール送信

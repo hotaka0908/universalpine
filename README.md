@@ -27,7 +27,6 @@ universalpine/
 ├── recruit.html             # 採用情報
 ├── news.html                # ニュース
 ├── apply.html               # 採用応募フォーム
-├── freetrial.html           # プロジェクト体験予約
 ├── thanks.html              # 送信完了ページ
 ├── privacy-policy.html      # プライバシーポリシー
 ├── jobsdetail.html          # 採用詳細
@@ -50,7 +49,6 @@ universalpine/
 ├── api/                     # サーバーサイドAPI
 │   ├── contact.js           # お問い合わせAPI
 │   ├── apply.js             # 採用応募API
-│   ├── trial.js             # プロジェクト体験予約API
 │   ├── wishlist-count.js    # ウィッシュリストカウントAPI
 │   └── _lib/                # 共通ヘルパー
 ├── package.json             # Node.js依存関係
@@ -140,12 +138,6 @@ npm audit
 - **メソッド**: POST
 - **用途**: 採用への応募
 - **機能**: 応募情報の処理、確認メール送信
-
-### プロジェクト体験予約 (`/api/trial`)
-
-- **メソッド**: POST
-- **用途**: プロジェクト体験の予約申し込み
-- **機能**: 予約情報の処理、確認メール送信
 
 ## セキュリティ機能
 

@@ -8,3 +8,20 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+
+# 本番に不要な開発用ファイル（公開URLから取得できないようにする）
+README.md
+api/README.md
+api/.env.example
+EFFICIENCY_IMPROVEMENTS_REPORT.md
+IMPROVEMENT_REPORT.md
+WISHLIST_SETUP.md
+lint-fix-report.md
+optimization-checklist.md
+*.sh
+security-test.js
+eslint.config.js
+deploy-package
+upload-package
+.claude
+.github
