@@ -142,12 +142,6 @@ module.exports = async function handler(req, res) {
       return sendErrorResponse(res, 500, 'Email service not configured', 'メール送信サービスが設定されていません。');
     }
 
-    // レート制限（IP単位: 10分間に5回まで）
-    const allowed = await checkRateLimit(req, 'apply', { max: 5, windowSeconds: 600 });
-    if (!allowed) {
-      return sendErrorResponse(res, 429, 'Too many requests', '送信回数が上限に達しました。しばらく時間をおいてから再度お試しください。');
-    }
-
     // リクエストボディの解析
     const body = parseRequestBody(req);
 
@@ -164,6 +158,13 @@ module.exports = async function handler(req, res) {
     }
 
     const { name, email, phone, postal_code, address_line1, address_line2, position, documents, message } = validationResult.data;
+    // レート制限（IP単位: 10分間に10回まで）。ハニーポットと入力検証の後に行い、
+    // ボットや入力ミスが同じ回線（モバイル回線・社内NAT）の他の人の枠を消費しないようにする。
+    const allowed = await checkRateLimit(req, 'apply', { max: 10, windowSeconds: 600 });
+    if (!allowed) {
+      return sendErrorResponse(res, 429, 'Too many requests', '送信回数が上限に達しました。しばらく時間をおいてから再度お試しください。');
+    }
+
     const resend = getResendClient();
 
     // メール送信
