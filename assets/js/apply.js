@@ -124,24 +124,21 @@ document.addEventListener('DOMContentLoaded', function () {
           body: JSON.stringify(data)
         });
       } catch (fetchError) {
-        window.location.href = '/thanks.html';
-        return;
+        throw new Error('ネットワークエラーが発生しました');
       }
 
 
-      if (response.status === 404) {
-        
-        submitButton.disabled = false;
-        submitButton.textContent = '応募する';
-        
-        window.location.href = '/thanks.html';
-        return;
-      }
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error Response:', errorText);
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
+        let serverMessage = '';
+        try {
+          const errorBody = await response.json();
+          serverMessage = errorBody.message || '';
+        } catch (parseError) {
+          serverMessage = '';
+        }
+        console.error('API Error Response:', response.status);
+        throw new Error(serverMessage || `API Error: ${response.status}`);
       }
 
       const result = await response.json();
@@ -149,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     } catch (error) {
       console.error('送信エラー:', error);
-      alert('送信に失敗しました。しばらく時間をおいてから再度お試しください。');
+      alert(error.message && !error.message.startsWith('API Error') ? error.message : '送信に失敗しました。しばらく時間をおいてから再度お試しください。');
       
       // 送信ボタンを再有効化
       submitButton.disabled = false;

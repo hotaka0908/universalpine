@@ -99,12 +99,7 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- 無料トライアル / お問い合わせ -->
-  <url>
-    <loc>https://universalpine.com/freetrial.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- お問い合わせ -->
   <url>
     <loc>https://universalpine.com/contact.html</loc>
     <changefreq>monthly</changefreq>

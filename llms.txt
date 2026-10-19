@@ -38,9 +38,8 @@
 - [募集職種詳細](https://universalpine.com/jobsdetail.html): 募集中のポジション詳細
 - [応募フォーム](https://universalpine.com/apply.html): 採用エントリー
 
-## お問い合わせ・トライアル
+## お問い合わせ
 
-- [無料トライアル](https://universalpine.com/freetrial.html): AIネックレスの無料トライアル申込
 - [お問い合わせ](https://universalpine.com/contact.html): 一般お問い合わせ窓口
 
 ## その他

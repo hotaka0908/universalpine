@@ -1,5 +1,6 @@
 const { Resend } = require('resend');
 const { z } = require('zod');
+const { checkRateLimit } = require('./_lib/rate-limit');
 
 // Resend client management
 let resendClient = null;
@@ -132,6 +133,12 @@ module.exports = async function handler(req, res) {
     if (!isResendConfigured()) {
       console.error('RESEND_API_KEY is not configured');
       return sendErrorResponse(res, 500, 'Email service not configured', 'メール送信サービスが設定されていません。');
+    }
+
+    // レート制限（IP単位: 10分間に5回まで）
+    const allowed = await checkRateLimit(req, 'contact', { max: 5, windowSeconds: 600 });
+    if (!allowed) {
+      return sendErrorResponse(res, 429, 'Too many requests', '送信回数が上限に達しました。しばらく時間をおいてから再度お試しください。');
     }
 
     // リクエストボディの解析
